@@ -255,7 +255,7 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
           </fieldset>
         </form>
 
-        <a href="https://seyyahname.com" className="mt-6 inline-flex min-h-11 items-center px-3 text-xs text-zinc-500 transition-colors hover:text-zinc-300">
+        <a href="https://seyyahname.com" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center px-3 text-xs text-zinc-500 transition-colors hover:text-zinc-300">
           ← Back to seyyahname.com
         </a>
         <p className="mt-1 flex items-center justify-center gap-1.5 font-mono text-[11px] text-zinc-600">

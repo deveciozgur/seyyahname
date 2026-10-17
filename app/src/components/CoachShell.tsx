@@ -156,7 +156,7 @@ function Nav({ pathname }: { pathname: string }) {
 function TopBar({ pathname, llm, onLogout }: { pathname: string; llm: boolean; onLogout: () => void }) {
   const current = NAV.find((n) => isActive(pathname, n.href));
   return (
-    <div className="sticky top-0 z-20 hidden h-[52px] items-center gap-3 border-b border-line bg-paper/80 px-7 backdrop-blur-md lg:flex">
+    <header className="sticky top-0 z-20 hidden h-[52px] items-center gap-3 border-b border-line bg-paper/80 px-7 backdrop-blur-md lg:flex">
       <span className="text-[13px] text-ink-3">
         {APP_NAME} <span className="mx-1">›</span> <b className="font-medium text-ink">{current?.title}</b>
       </span>
@@ -169,7 +169,7 @@ function TopBar({ pathname, llm, onLogout }: { pathname: string; llm: boolean; o
       </span>
       <ThemeSwitch />
       <LockButton onLogout={onLogout} />
-    </div>
+    </header>
   );
 }
 

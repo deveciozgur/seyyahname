@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import { MagnifyingGlass, BookmarkSimple, MagicWand, Plus, Checks, Eye, X, ArrowRight, SealCheck, Cards } from '@phosphor-icons/react';
 import { api } from '@/api';
-import { FUNCTIONS, FUNCTION_INFO, LEVELS, SKILLS, cap } from '@/lib/cefr';
+import { LEVELS } from '@/lib/cefr';
 import { bandStatus, canDoById, curriculum } from '@/lib/core/curriculum';
 import { SKILL_ICONS } from './ui';
 import { Button, LevelBadge, Panel, Segmented, Skeleton } from './ui';
@@ -214,7 +214,7 @@ function VocabularyVault({ rows, reload, loading }) {
           onChange={setSort}
           items={[
             { id: 'newest', label: 'Newest' },
-            { id: 'az', label: 'A-Z' },
+            { id: 'az', label: 'A–Z' },
             { id: 'level', label: 'Level' },
           ]}
         />

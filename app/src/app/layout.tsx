@@ -6,12 +6,17 @@ import './globals.css';
 const NAME = 'Seyyahname AI Coach';
 const DESCRIPTION = 'Seyyahname: Full-stack AI English learning coach featuring CEFR curriculum, SM-2 vocabulary system, and real-time streaming feedback.';
 
-/** Canonical origin for OpenGraph/Twitter URLs: SITE_URL on the server, else localhost in development. */
+/**
+ * Canonical origin for canonical/OpenGraph/Twitter URLs. Most pages are prerendered, so this is read at
+ * build time: SITE_URL if set, the production domain for production builds, localhost in development.
+ */
+const PRODUCTION_URL = 'https://app.seyyahname.com';
 function siteUrl(): URL {
+  const fallback = process.env.NODE_ENV === 'production' ? PRODUCTION_URL : `http://localhost:${process.env.PORT || 3000}`;
   try {
-    return new URL(process.env.SITE_URL || `http://localhost:${process.env.PORT || 3000}`);
+    return new URL(process.env.SITE_URL || fallback);
   } catch {
-    return new URL('http://localhost:3000');
+    return new URL(PRODUCTION_URL);
   }
 }
 

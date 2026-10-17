@@ -65,7 +65,7 @@ Environment variables (hosting panel, or `app/.env` / `.env.local`). Template: `
 | `GEMINI_API_KEY` | none | Enables the Coach chat and AI feedback |
 | `GEMINI_MODEL` | `gemini-flash-latest` | Gemini model id |
 | `DATA_DIR` | `data` | State files; relative to the app folder (also for the standalone server) or absolute |
-| `SITE_URL` | `http://localhost:$PORT` | Public origin for OpenGraph / Twitter links |
+| `SITE_URL` | `https://app.seyyahname.com` (production build), `http://localhost:$PORT` (dev) | Public origin for canonical / OpenGraph / Twitter links; read at build time |
 | `PORT` | `3000` | Port of `npm start` |
 
 ## Architecture

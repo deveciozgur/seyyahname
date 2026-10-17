@@ -112,7 +112,7 @@ export default function WritingModule({ level, tasks, onActivitySaved, passedIds
           </div>
         )}
 
-        <Panel className="overflow-hidden">
+        <Panel className="overflow-hidden focus-within:ring-2 focus-within:ring-amber/40">
           <label htmlFor="writing-input" className="sr-only">
             Your text
           </label>

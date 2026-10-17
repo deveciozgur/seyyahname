@@ -6,7 +6,7 @@ import { api } from '@/api';
 import DailyLoot from './DailyLoot';
 import QuickPlay, { THEME_ICONS } from './QuickPlay';
 import { THEMES } from '@/data/tasks-themes';
-import { BANDS, FUNCTIONS, FUNCTION_INFO, LEVELS, MASTERY, SKILLS, bandLevel, cap, nextBand } from '@/lib/cefr';
+import { BANDS, FUNCTIONS, LEVELS, MASTERY, SKILLS, bandLevel, nextBand } from '@/lib/cefr';
 import { tasksFor } from '@/data/tasks';
 import { readStored, writeStored } from '@/lib/useActivity';
 import { SKILL_ICONS, Segmented, LevelBadge, Button } from './ui';

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Gatekeeper from '@/components/Gatekeeper';
 import { env } from '@/lib/server/env';
 
-export const metadata: Metadata = { title: { absolute: 'Unlock · Seyyahname Studio' } };
+export const metadata: Metadata = { title: { absolute: 'Unlock · Seyyahname Studio' }, alternates: { canonical: '/unlock' } };
 
 const APP_PATHS = ['/', '/curriculum', '/vault', '/archive', '/coach'];
 

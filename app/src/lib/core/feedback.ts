@@ -146,7 +146,6 @@ export async function generateFeedback(input, ask: AskJson | null) {
     return result;
   } catch (err) {
     const reason = err instanceof SyntaxError ? 'The AI response could not be read' : err.message;
-    console.warn(`[feedback] falling back to heuristic engine: ${reason}`);
     return { ...heuristicFeedback(input), warning: `${reason}. Showing offline feedback instead.` };
   }
 }

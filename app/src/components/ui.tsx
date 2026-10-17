@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 import { BookOpenText, PenNib, Headphones, Microphone, CheckCircle, TrendUp, FileText, WarningCircle, Check, SealCheck, Lightbulb } from '@phosphor-icons/react';
-import { FUNCTIONS, FUNCTION_INFO, LEVELS, MASTERY, band, cap, canDoStatement, levelIndex } from '@/lib/cefr';
+import { FUNCTIONS, FUNCTION_INFO, LEVELS, MASTERY, band, canDoStatement, levelIndex } from '@/lib/cefr';
 import { WinsBurst } from './momentum';
 import { canDoById } from '@/lib/core/curriculum';
 import { FUNCTION_LABELS, fnLabel, skillLabel } from '@/lib/labels';

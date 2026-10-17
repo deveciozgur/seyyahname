@@ -49,7 +49,7 @@ function makeRound(interests) {
   const preferred = shuffle(ITEMS.filter((it) => interests.includes(it.theme)));
   const rest = shuffle(ITEMS.filter((it) => !interests.includes(it.theme)));
   return [...preferred, ...rest].slice(0, 5).map((it) => {
-    const order = shuffle(it.options.map((o, i) => i));
+    const order = shuffle(it.options.map((_o, i) => i));
     return { ...it, options: order.map((i) => it.options[i]), answer: order.indexOf(it.answer) };
   });
 }

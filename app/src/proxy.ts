@@ -21,5 +21,5 @@ export async function proxy(req: NextRequest) {
 
 export const config = {
   // Everything except the API, build assets and public metadata files.
-  matcher: ['/((?!api/|_next/static|_next/image|icon.svg|robots.txt|opengraph-image|twitter-image|favicon.ico).*)'],
+  matcher: ['/((?!api/|_next/static|_next/image|icon.svg|apple-icon|robots.txt|opengraph-image|twitter-image|favicon.ico).*)'],
 };

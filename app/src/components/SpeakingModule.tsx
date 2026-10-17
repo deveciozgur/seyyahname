@@ -276,7 +276,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
                 onChange={(e) => r.setFinalText(e.target.value)}
                 rows={4}
                 placeholder={Recognition ? 'Your words will appear here as you speak.' : 'Live transcription is not available in this browser. Record yourself, then type what you said in English.'}
-                className="block min-h-[136px] w-full resize-y bg-transparent text-[17px] leading-8 placeholder:text-ink-3 focus:outline-none"
+                className="block min-h-[136px] w-full resize-y rounded-md bg-transparent text-[17px] leading-8 placeholder:text-ink-3"
               />
             )}
           </div>

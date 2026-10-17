@@ -44,7 +44,7 @@ Open the panel's "Environment variables" section (or create `app/.env`; template
 | `GEMINI_MODEL` | No | Defaults to `gemini-flash-latest` (Google's current Flash model). |
 | `DATA_DIR` | No | Data folder. Relative paths start at the `app/` folder; safest is an absolute path outside the app (`/home/USER/seyyahname-data`). |
 | `SESSION_DAYS` | No | Session length in days (default 7). |
-| `SITE_URL` | No | Public address used for share previews (OpenGraph/Twitter), e.g. `https://app.seyyahname.com`. |
+| `SITE_URL` | No | Public address for canonical links and share previews (OpenGraph/Twitter). Read at **build** time (most pages are prerendered); defaults to `https://app.seyyahname.com` in production builds. |
 | `PORT` | Set by the panel | Port for `npm start` (default 3000). |
 
 ## 3. Start the app
