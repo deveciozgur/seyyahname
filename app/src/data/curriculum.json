@@ -1,0 +1,600 @@
+{
+  "version": 1,
+  "title": "Seyyahname Master English Curriculum (A1-C2)",
+  "rules": {
+    "mastery_evidence": 3,
+    "pass_score": 80,
+    "evidence_skills": ["speaking", "writing"],
+    "note": "A Can-Do is mastered after 3 successful demonstrations (score 80+, confirmed by Triple-Layer feedback) in different speaking or writing tasks at the active sub-band. When every Can-Do of the active sub-band is mastered, the learner moves to the next sub-band."
+  },
+  "levels": [
+    {
+      "level": "A1",
+      "name": "Beginner",
+      "name_tr": "Başlangıç",
+      "summary_tr": "Kendini tanıtma, temel ihtiyaçlar, günlük rutin ve yakın çevre.",
+      "sub_bands": [
+        {
+          "id": "A1.1",
+          "goal": "Can introduce themselves and express basic needs.",
+          "goal_tr": "Kendini tanıtabilir ve temel ihtiyaçlarını ifade edebilir.",
+          "grammar_targets": [
+            { "id": "A1.1-G1", "title": "Verb 'be' (am / is / are)", "explanation_tr": "Kim olduğunu, yaşını, nereli olduğunu 'be' ile söyle; olumsuz için 'not', soru için yer değiştir.", "example": "I am Mehmet. I'm 30. Are you a teacher? No, I'm not." },
+            { "id": "A1.1-G2", "title": "Subject pronouns and possessive adjectives", "explanation_tr": "I/you/he/she/it/we/they ve my/your/his/her/our/their. Türkçedeki 'o' İngilizcede he/she/it olarak ayrılır.", "example": "This is my sister. Her name is Elif. She lives in Izmir." },
+            { "id": "A1.1-G3", "title": "a / an and regular plurals", "explanation_tr": "Meslek ve tekil sayılabilir isimlerden önce a/an kullan; çoğulda -s ekle.", "example": "I'm an engineer. I have two brothers and a dog." },
+            { "id": "A1.1-G4", "title": "Question words: what, where, how old, how", "explanation_tr": "Kişisel bilgi soruları: What's your name? Where are you from? How old are you?", "example": "Where are you from? I'm from Turkey." }
+          ],
+          "lexical_domains": [
+            { "id": "A1.1-LX1", "title": "Personal information", "title_tr": "Kişisel bilgiler", "items": [
+              { "word": "first name", "meaning_tr": "ad", "example": "My first name is Mehmet." },
+              { "word": "surname", "meaning_tr": "soyadı", "example": "How do you spell your surname?" },
+              { "word": "be from", "meaning_tr": "-li olmak, -den gelmek", "example": "I'm from Istanbul." },
+              { "word": "live in", "meaning_tr": "-de yaşamak", "example": "I live in Ankara." },
+              { "word": "married", "meaning_tr": "evli", "example": "She is married with two children." },
+              { "word": "job", "meaning_tr": "iş, meslek", "example": "What's your job? I'm a nurse." }
+            ] },
+            { "id": "A1.1-LX2", "title": "Basic needs and polite requests", "title_tr": "Temel ihtiyaçlar ve kibar istekler", "items": [
+              { "word": "I'd like", "meaning_tr": "... istiyorum (kibar)", "example": "I'd like a coffee, please." },
+              { "word": "Can I have", "meaning_tr": "... alabilir miyim", "example": "Can I have some water, please?" },
+              { "word": "Excuse me", "meaning_tr": "affedersiniz", "example": "Excuse me, where is the toilet?" },
+              { "word": "How much", "meaning_tr": "ne kadar (fiyat)", "example": "How much is this sandwich?" },
+              { "word": "help", "meaning_tr": "yardım etmek", "example": "Can you help me, please?" },
+              { "word": "thank you", "meaning_tr": "teşekkür ederim", "example": "Thank you very much!" }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "A1.1-CD1", "skill": "speaking", "function": "interactional", "text": "Can introduce themselves and answer simple questions about name, age, nationality and where they live." },
+            { "id": "A1.1-CD2", "skill": "speaking", "function": "transactional", "text": "Can ask for basic things such as food, drinks or the toilet using simple polite phrases." },
+            { "id": "A1.1-CD3", "skill": "writing", "function": "interactional", "text": "Can write a short, simple self-introduction with name, age, country and job." },
+            { "id": "A1.1-CD4", "skill": "writing", "function": "transactional", "text": "Can fill in a simple form or note with personal details." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "A1.1-L1", "wrong": "I have 30 years.", "right": "I am 30 (years old).", "note_tr": "Yaş İngilizcede 'have' ile değil 'be' ile söylenir." },
+            { "id": "A1.1-L2", "wrong": "I teacher.", "right": "I am a teacher.", "note_tr": "Türkçedeki '-im' eki İngilizcede 'am' fiiline karşılık gelir; düşürme." },
+            { "id": "A1.1-L3", "wrong": "My sister, he is a doctor.", "right": "My sister is a doctor. She ...", "note_tr": "Türkçede 'o' cinsiyetsizdir; İngilizcede he (erkek), she (kadın), it (nesne)." }
+          ],
+          "speaking_scenarios": [
+            { "id": "A1.1-SC1", "type": "role-play", "title": "Hotel check-in", "setting": "You arrive at a small hotel in London. The receptionist asks for your details.", "task": "Say hello, give your name, spell your surname, say where you are from and ask for the Wi-Fi password.", "target_can_do": "A1.1-CD2", "target_grammar": "A1.1-G1" },
+            { "id": "A1.1-SC2", "type": "daily", "title": "A new classmate", "setting": "It is the first day of an English course. A classmate starts talking to you.", "task": "Introduce yourself: name, age, city, job and one thing about your family. Ask two questions back.", "target_can_do": "A1.1-CD1", "target_grammar": "A1.1-G4" },
+            { "id": "A1.1-SC3", "type": "interview", "title": "Language school registration", "setting": "A secretary fills in your registration form at a language school.", "task": "Answer questions about your name, address, phone number, nationality and job.", "target_can_do": "A1.1-CD4", "target_grammar": "A1.1-G2" }
+          ]
+        },
+        {
+          "id": "A1.2",
+          "goal": "Can describe daily routines and their immediate surroundings in simple terms.",
+          "goal_tr": "Günlük rutinini ve yakın çevresini basit cümlelerle anlatabilir.",
+          "grammar_targets": [
+            { "id": "A1.2-G1", "title": "Present simple and 3rd person -s", "explanation_tr": "Alışkanlıklar için present simple; he/she/it ile fiile -s ekle (works, goes, has).", "example": "I get up at 7. My brother works in a bank." },
+            { "id": "A1.2-G2", "title": "Adverbs of frequency", "explanation_tr": "always, usually, often, sometimes, never fiilden önce, 'be' fiilinden sonra gelir.", "example": "I usually walk to work. I'm never late." },
+            { "id": "A1.2-G3", "title": "There is / there are + prepositions of place", "explanation_tr": "Bir yerde ne olduğunu söyle: in, on, under, next to, opposite, between.", "example": "There's a café next to the bank. There are two chairs in the kitchen." },
+            { "id": "A1.2-G4", "title": "can / can't for ability", "explanation_tr": "Yetenek için can + fiil (to yok!).", "example": "I can swim, but I can't drive." }
+          ],
+          "lexical_domains": [
+            { "id": "A1.2-LX1", "title": "Daily routine", "title_tr": "Günlük rutin", "items": [
+              { "word": "get up", "meaning_tr": "kalkmak", "example": "I get up at seven." },
+              { "word": "have breakfast", "meaning_tr": "kahvaltı yapmak", "example": "We have breakfast at home." },
+              { "word": "go to work", "meaning_tr": "işe gitmek", "example": "She goes to work by bus." },
+              { "word": "take a shower", "meaning_tr": "duş almak", "example": "I take a shower every morning." },
+              { "word": "finish work", "meaning_tr": "işi bitirmek", "example": "I finish work at six." },
+              { "word": "go to bed", "meaning_tr": "yatmak", "example": "I usually go to bed at eleven." }
+            ] },
+            { "id": "A1.2-LX2", "title": "Home and town", "title_tr": "Ev ve şehir", "items": [
+              { "word": "next to", "meaning_tr": "yanında", "example": "The café is next to the park." },
+              { "word": "opposite", "meaning_tr": "karşısında", "example": "The bank is opposite the station." },
+              { "word": "bus stop", "meaning_tr": "otobüs durağı", "example": "There's a bus stop near my house." },
+              { "word": "neighbourhood", "meaning_tr": "mahalle", "example": "My neighbourhood is quiet." },
+              { "word": "living room", "meaning_tr": "oturma odası", "example": "We watch TV in the living room." },
+              { "word": "supermarket", "meaning_tr": "süpermarket", "example": "I go to the supermarket on Saturdays." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "A1.2-CD1", "skill": "speaking", "function": "interactional", "text": "Can describe their daily routine and habits in simple sentences." },
+            { "id": "A1.2-CD2", "skill": "speaking", "function": "transactional", "text": "Can ask and answer where places are in a town using simple prepositions." },
+            { "id": "A1.2-CD3", "skill": "writing", "function": "interactional", "text": "Can write a short message about their day, home and habits." },
+            { "id": "A1.2-CD4", "skill": "writing", "function": "evaluative", "text": "Can say what they like and dislike with a simple reason." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "A1.2-L1", "wrong": "She work in a hospital.", "right": "She works in a hospital.", "note_tr": "he/she/it ile present simple fiile -s gelir." },
+            { "id": "A1.2-L2", "wrong": "I make my homework.", "right": "I do my homework.", "note_tr": "Türkçedeki 'yapmak' bazen 'do', bazen 'make' olur: do homework, make a cake." },
+            { "id": "A1.2-L3", "wrong": "I go to home.", "right": "I go home.", "note_tr": "'home' ile 'to' kullanılmaz." }
+          ],
+          "speaking_scenarios": [
+            { "id": "A1.2-SC1", "type": "daily", "title": "My weekday", "setting": "A new friend asks what a normal weekday looks like for you.", "task": "Describe your day from morning to night with times and at least two frequency adverbs.", "target_can_do": "A1.2-CD1", "target_grammar": "A1.2-G2" },
+            { "id": "A1.2-SC2", "type": "role-play", "title": "Directions in a new town", "setting": "You are lost in a small town and ask a local for help.", "task": "Ask where the bank, the station and a café are, and repeat the directions back.", "target_can_do": "A1.2-CD2", "target_grammar": "A1.2-G3" },
+            { "id": "A1.2-SC3", "type": "interview", "title": "Flatmate interview", "setting": "You want to share a flat. The owner asks about your habits.", "task": "Talk about when you get up, what you can cook and what you like doing at home.", "target_can_do": "A1.2-CD4", "target_grammar": "A1.2-G1" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "A2",
+      "name": "Elementary",
+      "name_tr": "Temel",
+      "summary_tr": "Geçmiş olaylar, basit alışveriş ve işlemler, planlar ve karşılaştırmalar.",
+      "sub_bands": [
+        {
+          "id": "A2.1",
+          "goal": "Can talk about past events and handle simple everyday transactions.",
+          "goal_tr": "Geçmiş olayları anlatabilir ve basit günlük işlemleri halledebilir.",
+          "grammar_targets": [
+            { "id": "A2.1-G1", "title": "Past simple: regular and irregular verbs", "explanation_tr": "Bitmiş olaylar: worked, went, saw. Olumsuz ve soruda 'did' + yalın fiil.", "example": "Last weekend I went to Bursa. We didn't stay long." },
+            { "id": "A2.1-G2", "title": "Past of 'be': was / were", "explanation_tr": "I/he/she/it was, you/we/they were.", "example": "The hotel was nice but the rooms were small." },
+            { "id": "A2.1-G3", "title": "Countable / uncountable: some, any, much, many", "explanation_tr": "information, advice, money sayılamaz; çoğul -s almaz.", "example": "Can I have some information? How many tickets do you need?" },
+            { "id": "A2.1-G4", "title": "Polite requests: Could I...? / I'd like...", "explanation_tr": "Kibarca istemek için could, would like ve please kullan.", "example": "Could I have a return ticket to Oxford, please?" }
+          ],
+          "lexical_domains": [
+            { "id": "A2.1-LX1", "title": "Shopping and money", "title_tr": "Alışveriş ve para", "items": [
+              { "word": "receipt", "meaning_tr": "fiş, makbuz", "example": "Can I have the receipt, please?" },
+              { "word": "change", "meaning_tr": "para üstü", "example": "Here's your change." },
+              { "word": "discount", "meaning_tr": "indirim", "example": "Is there a student discount?" },
+              { "word": "try on", "meaning_tr": "denemek (kıyafet)", "example": "Can I try on this jacket?" },
+              { "word": "refund", "meaning_tr": "para iadesi", "example": "I'd like a refund, please." },
+              { "word": "on sale", "meaning_tr": "indirimde", "example": "These shoes are on sale." }
+            ] },
+            { "id": "A2.1-LX2", "title": "Travel and transport", "title_tr": "Seyahat ve ulaşım", "items": [
+              { "word": "return ticket", "meaning_tr": "gidiş-dönüş bilet", "example": "A return ticket to York, please." },
+              { "word": "platform", "meaning_tr": "peron", "example": "The train leaves from platform 4." },
+              { "word": "delay", "meaning_tr": "gecikme", "example": "There's a twenty-minute delay." },
+              { "word": "book", "meaning_tr": "rezervasyon yapmak", "example": "I booked a room online." },
+              { "word": "check in", "meaning_tr": "giriş yapmak (otel/havalimanı)", "example": "We checked in at three." },
+              { "word": "luggage", "meaning_tr": "bagaj", "example": "My luggage didn't arrive." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "A2.1-CD1", "skill": "speaking", "function": "transactional", "text": "Can handle simple transactions in shops, cafés, hotels and stations." },
+            { "id": "A2.1-CD2", "skill": "speaking", "function": "interactional", "text": "Can tell a simple story about a past weekend, trip or event." },
+            { "id": "A2.1-CD3", "skill": "writing", "function": "interactional", "text": "Can write a short email to a friend describing a past event." },
+            { "id": "A2.1-CD4", "skill": "writing", "function": "transactional", "text": "Can write a simple request, booking or order message." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "A2.1-L1", "wrong": "I didn't went.", "right": "I didn't go.", "note_tr": "'did' kullandıysan fiil yalın kalır; geçmiş zaman zaten did'de." },
+            { "id": "A2.1-L2", "wrong": "Yesterday I go to the cinema.", "right": "Yesterday I went to the cinema.", "note_tr": "Türkçede bağlam yeter, İngilizcede fiil zamana göre değişmeli." },
+            { "id": "A2.1-L3", "wrong": "Can you give me some informations?", "right": "Can you give me some information?", "note_tr": "information, advice, furniture sayılamaz; -s almaz." }
+          ],
+          "speaking_scenarios": [
+            { "id": "A2.1-SC1", "type": "role-play", "title": "At the train station", "setting": "You need a ticket to Cambridge for tomorrow morning.", "task": "Ask for a return ticket, the price, the platform and whether there are delays.", "target_can_do": "A2.1-CD1", "target_grammar": "A2.1-G4" },
+            { "id": "A2.1-SC2", "type": "daily", "title": "My last holiday", "setting": "A colleague asks about your last holiday.", "task": "Tell the story: where you went, who with, what you did and one problem that happened.", "target_can_do": "A2.1-CD2", "target_grammar": "A2.1-G1" },
+            { "id": "A2.1-SC3", "type": "role-play", "title": "Returning a faulty item", "setting": "The headphones you bought last week stopped working.", "task": "Explain the problem, show the receipt and ask for a refund or a new pair.", "target_can_do": "A2.1-CD1", "target_grammar": "A2.1-G2" }
+          ]
+        },
+        {
+          "id": "A2.2",
+          "goal": "Can describe plans, make basic comparisons and give simple directions.",
+          "goal_tr": "Planlarını anlatabilir, basit karşılaştırmalar yapabilir ve yol tarif edebilir.",
+          "grammar_targets": [
+            { "id": "A2.2-G1", "title": "Future: be going to and present continuous for arrangements", "explanation_tr": "Plan ve niyet için 'going to', kesinleşmiş randevu için present continuous.", "example": "I'm going to learn to drive. I'm meeting Ali on Friday." },
+            { "id": "A2.2-G2", "title": "Comparatives and superlatives", "explanation_tr": "Kısa sıfatlarda -er/-est, uzunlarda more/most; ikisini birden kullanma.", "example": "Izmir is warmer than Ankara. It's the most beautiful city I know." },
+            { "id": "A2.2-G3", "title": "Imperatives for directions and instructions", "explanation_tr": "Yol tarifi için fiille başla: Turn left, Go straight on, Take the second right.", "example": "Go straight on, then turn right at the traffic lights." },
+            { "id": "A2.2-G4", "title": "Present continuous vs present simple", "explanation_tr": "Şu an olanlar için continuous, alışkanlıklar için simple.", "example": "I usually drive, but today I'm taking the bus." }
+          ],
+          "lexical_domains": [
+            { "id": "A2.2-LX1", "title": "Plans and invitations", "title_tr": "Planlar ve davetler", "items": [
+              { "word": "make plans", "meaning_tr": "plan yapmak", "example": "Let's make plans for the weekend." },
+              { "word": "be free", "meaning_tr": "müsait olmak", "example": "Are you free on Saturday?" },
+              { "word": "invite", "meaning_tr": "davet etmek", "example": "She invited me to her party." },
+              { "word": "turn down", "meaning_tr": "reddetmek", "example": "I had to turn down the invitation." },
+              { "word": "arrange", "meaning_tr": "ayarlamak, düzenlemek", "example": "We arranged to meet at eight." },
+              { "word": "How about", "meaning_tr": "... ne dersin", "example": "How about going to the cinema?" }
+            ] },
+            { "id": "A2.2-LX2", "title": "Describing places and people", "title_tr": "Yer ve insanları betimleme", "items": [
+              { "word": "crowded", "meaning_tr": "kalabalık", "example": "The market is always crowded." },
+              { "word": "peaceful", "meaning_tr": "huzurlu", "example": "The village is very peaceful." },
+              { "word": "lively", "meaning_tr": "canlı, hareketli", "example": "Kadıköy is a lively area." },
+              { "word": "friendly", "meaning_tr": "cana yakın", "example": "The people are really friendly." },
+              { "word": "expensive", "meaning_tr": "pahalı", "example": "London is more expensive than Istanbul." },
+              { "word": "convenient", "meaning_tr": "elverişli, kullanışlı", "example": "The hotel is in a convenient location." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "A2.2-CD1", "skill": "speaking", "function": "interactional", "text": "Can make, accept and decline invitations and simple arrangements." },
+            { "id": "A2.2-CD2", "skill": "speaking", "function": "transactional", "text": "Can give and follow simple directions." },
+            { "id": "A2.2-CD3", "skill": "writing", "function": "evaluative", "text": "Can compare two places, products or options with simple reasons." },
+            { "id": "A2.2-CD4", "skill": "writing", "function": "interactional", "text": "Can write about future plans for a holiday, weekend or the coming year." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "A2.2-L1", "wrong": "It is more cheaper.", "right": "It is cheaper.", "note_tr": "-er ve more birlikte kullanılmaz." },
+            { "id": "A2.2-L2", "wrong": "I am agree with you.", "right": "I agree with you.", "note_tr": "'agree' bir fiildir; önüne 'am' gelmez." },
+            { "id": "A2.2-L3", "wrong": "Turn the right.", "right": "Turn right.", "note_tr": "Yön tarifinde 'right/left' önüne 'the' gelmez." }
+          ],
+          "speaking_scenarios": [
+            { "id": "A2.2-SC1", "type": "role-play", "title": "Planning the weekend", "setting": "A friend calls to make plans for Saturday.", "task": "Suggest two activities, decline one politely, agree a time and a place to meet.", "target_can_do": "A2.2-CD1", "target_grammar": "A2.2-G1" },
+            { "id": "A2.2-SC2", "type": "role-play", "title": "Helping a tourist", "setting": "A tourist asks you how to get to the museum from the main square.", "task": "Give clear directions with at least three imperatives and one landmark.", "target_can_do": "A2.2-CD2", "target_grammar": "A2.2-G3" },
+            { "id": "A2.2-SC3", "type": "daily", "title": "Two cities", "setting": "A friend from abroad asks which city to visit in Turkey.", "task": "Compare two cities you know: weather, prices, people and things to do. Recommend one.", "target_can_do": "A2.2-CD3", "target_grammar": "A2.2-G2" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "B1",
+      "name": "Intermediate",
+      "name_tr": "Orta",
+      "summary_tr": "Görüş bildirme, deneyim anlatma, varsayımsal durumlar ve iş e-postaları.",
+      "sub_bands": [
+        {
+          "id": "B1.1",
+          "goal": "Can give and explain opinions on familiar topics.",
+          "goal_tr": "Tanıdık konularda görüş bildirip gerekçelendirebilir.",
+          "grammar_targets": [
+            { "id": "B1.1-G1", "title": "Present perfect vs past simple", "explanation_tr": "Zamanı belli bitmiş olay: past simple. Hayat deneyimi ve bugüne etkisi: present perfect.", "example": "I've been to Rome twice. I went there last May." },
+            { "id": "B1.1-G2", "title": "Present perfect with for / since / just / already / yet", "explanation_tr": "Bugüne kadar süren durumlar: 'since' başlangıç noktası, 'for' süre.", "example": "I've worked here since 2020. I haven't finished yet." },
+            { "id": "B1.1-G3", "title": "Linking ideas: although, however, because of, so", "explanation_tr": "Fikirleri bağla; 'however' cümle başında virgülle, 'although' cümle içinde.", "example": "Although the job is stressful, I enjoy it. However, the pay is low." },
+            { "id": "B1.1-G4", "title": "Opinion language", "explanation_tr": "In my opinion, I think that, I'm not sure that, As far as I'm concerned.", "example": "In my opinion, working from home saves time." }
+          ],
+          "lexical_domains": [
+            { "id": "B1.1-LX1", "title": "Opinions and agreement", "title_tr": "Görüş ve katılma", "items": [
+              { "word": "I see your point", "meaning_tr": "ne demek istediğini anlıyorum", "example": "I see your point, but I disagree." },
+              { "word": "on the other hand", "meaning_tr": "öte yandan", "example": "On the other hand, it's very expensive." },
+              { "word": "I'm not convinced", "meaning_tr": "ikna olmadım", "example": "I'm not convinced it's a good idea." },
+              { "word": "That's a fair point", "meaning_tr": "haklı bir nokta", "example": "That's a fair point about the cost." },
+              { "word": "to be honest", "meaning_tr": "açıkçası", "example": "To be honest, I prefer the old version." },
+              { "word": "it depends on", "meaning_tr": "-e bağlı", "example": "It depends on the weather." }
+            ] },
+            { "id": "B1.1-LX2", "title": "Work and study", "title_tr": "İş ve eğitim", "items": [
+              { "word": "deadline", "meaning_tr": "son teslim tarihi", "example": "The deadline is Friday." },
+              { "word": "colleague", "meaning_tr": "iş arkadaşı", "example": "My colleagues are very supportive." },
+              { "word": "apply for", "meaning_tr": "başvurmak", "example": "I applied for a new job." },
+              { "word": "be responsible for", "meaning_tr": "-den sorumlu olmak", "example": "I'm responsible for the budget." },
+              { "word": "gain experience", "meaning_tr": "deneyim kazanmak", "example": "I want to gain experience abroad." },
+              { "word": "work-life balance", "meaning_tr": "iş-özel hayat dengesi", "example": "A good work-life balance matters to me." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "B1.1-CD1", "skill": "speaking", "function": "evaluative", "text": "Can give and briefly justify opinions and plans on familiar topics." },
+            { "id": "B1.1-CD2", "skill": "speaking", "function": "interactional", "text": "Can describe experiences, events, hopes and ambitions." },
+            { "id": "B1.1-CD3", "skill": "writing", "function": "evaluative", "text": "Can write a short opinion paragraph with reasons and examples." },
+            { "id": "B1.1-CD4", "skill": "writing", "function": "interactional", "text": "Can write a personal letter describing experiences and feelings." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "B1.1-L1", "wrong": "I am living here since 2019.", "right": "I have lived (been living) here since 2019.", "note_tr": "'since/for' ile bugüne süren durumlarda present perfect gerekir." },
+            { "id": "B1.1-L2", "wrong": "It depends to the price.", "right": "It depends on the price.", "note_tr": "Türkçedeki '-e bağlı' İngilizcede 'depend on' olur." },
+            { "id": "B1.1-L3", "wrong": "I'm interested about history.", "right": "I'm interested in history.", "note_tr": "interested in, good at, afraid of: edatları kalıp olarak öğren." }
+          ],
+          "speaking_scenarios": [
+            { "id": "B1.1-SC1", "type": "interview", "title": "First job interview", "setting": "You are interviewed for a junior position in a company you like.", "task": "Talk about your experience, one achievement and why you want the job. Use present perfect at least twice.", "target_can_do": "B1.1-CD2", "target_grammar": "B1.1-G1" },
+            { "id": "B1.1-SC2", "type": "daily", "title": "Social media debate", "setting": "Friends discuss whether social media is good for teenagers.", "task": "Give your opinion with two reasons, react to the opposite view and conclude.", "target_can_do": "B1.1-CD1", "target_grammar": "B1.1-G4" },
+            { "id": "B1.1-SC3", "type": "daily", "title": "A life experience", "setting": "A new friend asks about the most interesting thing you have ever done.", "task": "Describe the experience, how you felt and what you learned from it.", "target_can_do": "B1.1-CD2", "target_grammar": "B1.1-G2" }
+          ]
+        },
+        {
+          "id": "B1.2",
+          "goal": "Can handle hypothetical situations and write everyday professional emails.",
+          "goal_tr": "Varsayımsal durumları konuşabilir ve gündelik iş e-postaları yazabilir.",
+          "grammar_targets": [
+            { "id": "B1.2-G1", "title": "First and second conditional", "explanation_tr": "Gerçek olasılık: If + present, will. Hayali durum: If + past, would. 'If' tarafında would kullanma.", "example": "If it rains, we'll stay in. If I had more time, I would travel more." },
+            { "id": "B1.2-G2", "title": "Passive voice (present and past)", "explanation_tr": "Yapanı değil eylemi öne çıkar: be + V3.", "example": "The report was sent yesterday. Breakfast is served at eight." },
+            { "id": "B1.2-G3", "title": "Relative clauses: who, which, that, where", "explanation_tr": "İsimleri tanımla: insanlar için who, nesneler için which/that, yerler için where.", "example": "The colleague who helped me is from Spain." },
+            { "id": "B1.2-G4", "title": "Reported speech (statements and requests)", "explanation_tr": "Aktarırken zaman bir geri gider: 'I'm tired' → She said she was tired.", "example": "He told me that the meeting had been cancelled." }
+          ],
+          "lexical_domains": [
+            { "id": "B1.2-LX1", "title": "Email and workplace communication", "title_tr": "E-posta ve iş iletişimi", "items": [
+              { "word": "I'm writing to", "meaning_tr": "... amacıyla yazıyorum", "example": "I'm writing to ask about the invoice." },
+              { "word": "regarding", "meaning_tr": "ile ilgili olarak", "example": "Regarding your last email, ..." },
+              { "word": "please find attached", "meaning_tr": "ekte bulabilirsiniz", "example": "Please find attached the updated plan." },
+              { "word": "follow up", "meaning_tr": "takip etmek", "example": "I'm following up on our call." },
+              { "word": "look forward to hearing from you", "meaning_tr": "yanıtınızı bekliyorum", "example": "I look forward to hearing from you." },
+              { "word": "at your earliest convenience", "meaning_tr": "en kısa sürede (resmî)", "example": "Please reply at your earliest convenience." }
+            ] },
+            { "id": "B1.2-LX2", "title": "Problems and solutions", "title_tr": "Sorunlar ve çözümler", "items": [
+              { "word": "deal with", "meaning_tr": "ilgilenmek, halletmek", "example": "I'll deal with the problem today." },
+              { "word": "sort out", "meaning_tr": "çözmek, düzeltmek", "example": "We need to sort out the booking." },
+              { "word": "come up with", "meaning_tr": "(fikir) bulmak", "example": "She came up with a great idea." },
+              { "word": "run out of", "meaning_tr": "-i bitmek, tükenmek", "example": "We've run out of paper." },
+              { "word": "figure out", "meaning_tr": "çözmek, anlamak", "example": "I can't figure out how it works." },
+              { "word": "make a complaint", "meaning_tr": "şikâyette bulunmak", "example": "I'd like to make a complaint." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "B1.2-CD1", "skill": "speaking", "function": "evaluative", "text": "Can discuss hypothetical situations and their consequences." },
+            { "id": "B1.2-CD2", "skill": "speaking", "function": "transactional", "text": "Can deal with most situations while travelling, including making a complaint." },
+            { "id": "B1.2-CD3", "skill": "writing", "function": "transactional", "text": "Can write a clear professional email making a request or a complaint." },
+            { "id": "B1.2-CD4", "skill": "writing", "function": "evaluative", "text": "Can write a short report on a familiar topic giving advantages and disadvantages." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "B1.2-L1", "wrong": "If I would have money, I would buy a car.", "right": "If I had money, I would buy a car.", "note_tr": "'If' cümlesinde 'would' kullanılmaz." },
+            { "id": "B1.2-L2", "wrong": "Can you explain me the problem?", "right": "Can you explain the problem to me?", "note_tr": "explain/describe + şey + to + kişi." },
+            { "id": "B1.2-L3", "wrong": "I'm waiting your answer.", "right": "I look forward to hearing from you.", "note_tr": "'wait for' edatsız olmaz; resmî e-postada kalıp ifadeyi kullan." }
+          ],
+          "speaking_scenarios": [
+            { "id": "B1.2-SC1", "type": "role-play", "title": "Hotel complaint", "setting": "Your hotel room is noisy and the air conditioning is broken.", "task": "Complain politely at reception, explain the problems and negotiate a solution.", "target_can_do": "B1.2-CD2", "target_grammar": "B1.2-G2" },
+            { "id": "B1.2-SC2", "type": "professional", "title": "Delay update to a client", "setting": "A project you manage will be one week late.", "task": "Explain the reason, what has been done and propose a new date. Use the passive at least once.", "target_can_do": "B1.2-CD3", "target_grammar": "B1.2-G2" },
+            { "id": "B1.2-SC3", "type": "daily", "title": "If you won the lottery", "setting": "Friends imagine winning a big prize.", "task": "Say what you would do, what you wouldn't change and why.", "target_can_do": "B1.2-CD1", "target_grammar": "B1.2-G1" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "B2",
+      "name": "Upper-Intermediate",
+      "name_tr": "Orta üstü",
+      "summary_tr": "Tutarlı argüman, artı-eksi tartma, geçmişe dair çıkarım ve üslup geçişleri.",
+      "sub_bands": [
+        {
+          "id": "B2.1",
+          "goal": "Can build a clear argument and weigh pros and cons.",
+          "goal_tr": "Net bir argüman kurabilir, avantaj ve dezavantajları tartabilir.",
+          "grammar_targets": [
+            { "id": "B2.1-G1", "title": "Contrast and concession: despite, whereas, even though", "explanation_tr": "despite / in spite of + isim/-ing; even though + cümle; whereas iki durumu karşılaştırır.", "example": "Despite the cost, the plan makes sense. Even though it's risky, it's worth trying." },
+            { "id": "B2.1-G2", "title": "Modals of speculation (present)", "explanation_tr": "must (kesine yakın), might/could (olası), can't (imkânsız) + be/fiil.", "example": "She must be busy; she can't be at home." },
+            { "id": "B2.1-G3", "title": "Narrative tenses: past continuous and past perfect", "explanation_tr": "Arka plan için past continuous, daha önceki olay için past perfect.", "example": "I was driving home when I realised I had left my phone at work." },
+            { "id": "B2.1-G4", "title": "Gerund vs infinitive with meaning change", "explanation_tr": "stop doing / stop to do, remember doing / remember to do farklı anlamlar taşır.", "example": "I stopped smoking. I stopped to buy a coffee." }
+          ],
+          "lexical_domains": [
+            { "id": "B2.1-LX1", "title": "Argument and discussion", "title_tr": "Argüman ve tartışma", "items": [
+              { "word": "raise an issue", "meaning_tr": "bir konuyu gündeme getirmek", "example": "I'd like to raise an issue about safety." },
+              { "word": "a key factor", "meaning_tr": "önemli bir etken", "example": "Price is a key factor." },
+              { "word": "outweigh", "meaning_tr": "ağır basmak", "example": "The benefits outweigh the risks." },
+              { "word": "on balance", "meaning_tr": "her şey göz önüne alındığında", "example": "On balance, I support the idea." },
+              { "word": "take into account", "meaning_tr": "hesaba katmak", "example": "We should take costs into account." },
+              { "word": "drawback", "meaning_tr": "dezavantaj, sakınca", "example": "The main drawback is the noise." }
+            ] },
+            { "id": "B2.1-LX2", "title": "Technology and society", "title_tr": "Teknoloji ve toplum", "items": [
+              { "word": "cutting-edge", "meaning_tr": "son teknoloji", "example": "They use cutting-edge software." },
+              { "word": "privacy concerns", "meaning_tr": "gizlilik kaygıları", "example": "The app raised privacy concerns." },
+              { "word": "rely on", "meaning_tr": "-e güvenmek, bağımlı olmak", "example": "We rely too much on our phones." },
+              { "word": "automation", "meaning_tr": "otomasyon", "example": "Automation will change many jobs." },
+              { "word": "user-friendly", "meaning_tr": "kullanıcı dostu", "example": "The new design is more user-friendly." },
+              { "word": "screen time", "meaning_tr": "ekran süresi", "example": "Parents worry about screen time." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "B2.1-CD1", "skill": "speaking", "function": "evaluative", "text": "Can present a clear argument, weighing advantages and disadvantages of options." },
+            { "id": "B2.1-CD2", "skill": "speaking", "function": "interactional", "text": "Can take an active part in discussion, accounting for and sustaining their views." },
+            { "id": "B2.1-CD3", "skill": "writing", "function": "evaluative", "text": "Can write an essay developing an argument with supporting details." },
+            { "id": "B2.1-CD4", "skill": "writing", "function": "interactional", "text": "Can write clear, detailed descriptions of real or imaginary events and experiences." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "B2.1-L1", "wrong": "Despite of the rain, we went out.", "right": "Despite the rain, we went out.", "note_tr": "'despite' edat almaz; 'in spite of' ise 'of' ile kullanılır." },
+            { "id": "B2.1-L2", "wrong": "According to me, it's wrong.", "right": "In my view / I'd argue that it's wrong.", "note_tr": "'according to' başkalarının görüşü için kullanılır, kendin için değil." },
+            { "id": "B2.1-L3", "wrong": "I want to say my idea.", "right": "I'd like to share / put forward my view.", "note_tr": "Türkçe 'fikrimi söylemek' motamot çevrilmez; share/express/put forward." }
+          ],
+          "speaking_scenarios": [
+            { "id": "B2.1-SC1", "type": "professional", "title": "Remote work debate", "setting": "Your team debates whether to keep working remotely three days a week.", "task": "Present both sides, give your recommendation and respond to one objection.", "target_can_do": "B2.1-CD1", "target_grammar": "B2.1-G1" },
+            { "id": "B2.1-SC2", "type": "interview", "title": "Scholarship interview", "setting": "A panel interviews you for a scholarship abroad.", "task": "Explain your goals, a challenge you overcame and how the scholarship would help.", "target_can_do": "B2.1-CD2", "target_grammar": "B2.1-G3" },
+            { "id": "B2.1-SC3", "type": "daily", "title": "Car-free city centres", "setting": "A local radio show asks listeners for their opinions.", "task": "Argue for or against banning cars from the city centre, with evidence and a counter-argument.", "target_can_do": "B2.1-CD1", "target_grammar": "B2.1-G2" }
+          ]
+        },
+        {
+          "id": "B2.2",
+          "goal": "Can speculate about the past and switch confidently between formal and informal register.",
+          "goal_tr": "Geçmişe dair çıkarım yapabilir; resmî ve gündelik üslup arasında güvenle geçiş yapabilir.",
+          "grammar_targets": [
+            { "id": "B2.2-G1", "title": "Third conditional", "explanation_tr": "Geçmişte olmamış durumlar: If + past perfect, would have + V3.", "example": "If I had left earlier, I wouldn't have missed the flight." },
+            { "id": "B2.2-G2", "title": "Modals of deduction (past)", "explanation_tr": "must have, might have, can't have + V3 ile geçmişe dair çıkarım.", "example": "He must have forgotten. She can't have seen the message." },
+            { "id": "B2.2-G3", "title": "Formal vs informal register", "explanation_tr": "Resmîde kısaltma ve phrasal verb yerine Latin kökenli fiiller: get → obtain, ask for → request.", "example": "Informal: Can you get back to me? Formal: I would appreciate a reply." },
+            { "id": "B2.2-G4", "title": "wish / if only", "explanation_tr": "Bugüne dair pişmanlık: wish + past; geçmişe dair: wish + past perfect.", "example": "I wish I spoke Spanish. If only I had studied harder." }
+          ],
+          "lexical_domains": [
+            { "id": "B2.2-LX1", "title": "Formal equivalents", "title_tr": "Resmî karşılıklar", "items": [
+              { "word": "obtain", "meaning_tr": "elde etmek (get)", "example": "You must obtain a permit first." },
+              { "word": "request", "meaning_tr": "talep etmek (ask for)", "example": "I would like to request an extension." },
+              { "word": "assist", "meaning_tr": "yardımcı olmak (help)", "example": "Our staff will assist you." },
+              { "word": "inform", "meaning_tr": "bilgilendirmek (tell)", "example": "Please inform us of any changes." },
+              { "word": "require", "meaning_tr": "gerektirmek (need)", "example": "The role requires travel." },
+              { "word": "commence", "meaning_tr": "başlamak (start)", "example": "The meeting will commence at nine." }
+            ] },
+            { "id": "B2.2-LX2", "title": "Feelings and regret", "title_tr": "Duygular ve pişmanlık", "items": [
+              { "word": "in hindsight", "meaning_tr": "geriye dönüp bakınca", "example": "In hindsight, it was a mistake." },
+              { "word": "let someone down", "meaning_tr": "birini hayal kırıklığına uğratmak", "example": "I didn't want to let the team down." },
+              { "word": "be relieved", "meaning_tr": "rahatlamak", "example": "I was relieved to hear the news." },
+              { "word": "regret", "meaning_tr": "pişman olmak", "example": "I regret not taking the job." },
+              { "word": "frustrated", "meaning_tr": "hüsrana uğramış, bıkkın", "example": "She felt frustrated with the delays." },
+              { "word": "it's a shame", "meaning_tr": "yazık", "example": "It's a shame you couldn't come." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "B2.2-CD1", "skill": "speaking", "function": "evaluative", "text": "Can speculate about causes, consequences and past events." },
+            { "id": "B2.2-CD2", "skill": "speaking", "function": "interactional", "text": "Can switch between formal and informal register appropriately for the listener." },
+            { "id": "B2.2-CD3", "skill": "writing", "function": "transactional", "text": "Can write formal letters and emails, adapting tone to the reader." },
+            { "id": "B2.2-CD4", "skill": "writing", "function": "evaluative", "text": "Can write a review evaluating a film, book, product or service." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "B2.2-L1", "wrong": "If I had known, I would come.", "right": "If I had known, I would have come.", "note_tr": "Geçmişe dair koşulda sonuç tarafı 'would have + V3' olur." },
+            { "id": "B2.2-L2", "wrong": "I want you to send the file.", "right": "Could you possibly send the file?", "note_tr": "Türkçede doğal olan doğrudan istek İngilizce resmî ortamda kaba durabilir." },
+            { "id": "B2.2-L3", "wrong": "I wish I would study more.", "right": "I wish I had studied more.", "note_tr": "Geçmiş pişmanlığında wish + past perfect." }
+          ],
+          "speaking_scenarios": [
+            { "id": "B2.2-SC1", "type": "professional", "title": "Explaining a mistake", "setting": "A client order went wrong last week and your manager asks what happened.", "task": "Speculate about the causes with past modals, take responsibility and suggest prevention.", "target_can_do": "B2.2-CD1", "target_grammar": "B2.2-G2" },
+            { "id": "B2.2-SC2", "type": "role-play", "title": "Same news, two registers", "setting": "You got a new job. Tell your best friend, then inform your current manager.", "task": "Give the news twice: once informally, once formally. Change vocabulary and tone, not facts.", "target_can_do": "B2.2-CD2", "target_grammar": "B2.2-G3" },
+            { "id": "B2.2-SC3", "type": "interview", "title": "A turning point", "setting": "A podcast host asks about a turning point in your life.", "task": "Describe it and imagine how things would have been different, using the third conditional.", "target_can_do": "B2.2-CD1", "target_grammar": "B2.2-G1" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "C1",
+      "name": "Advanced",
+      "name_tr": "İleri",
+      "summary_tr": "Akıcı ve vurgulu anlatım, deyimler, soyut konular ve söylem denetimi.",
+      "sub_bands": [
+        {
+          "id": "C1.1",
+          "goal": "Can express ideas fluently with emphasis, nuance and well-chosen idioms.",
+          "goal_tr": "Fikirlerini akıcı, vurgulu, nüanslı ve yerinde deyimlerle ifade edebilir.",
+          "grammar_targets": [
+            { "id": "C1.1-G1", "title": "Inversion for emphasis", "explanation_tr": "Olumsuz/kısıtlayıcı zarfla başlayınca soru düzeni: Never have I..., Not only did..., Rarely do...", "example": "Not only did we finish early, but we also cut costs." },
+            { "id": "C1.1-G2", "title": "Cleft sentences", "explanation_tr": "Odaklamak için: What I need is..., It was Ali who..., The thing that worries me is...", "example": "What really matters is the long-term impact." },
+            { "id": "C1.1-G3", "title": "Mixed conditionals", "explanation_tr": "Geçmiş koşul → bugünkü sonuç (ya da tersi): If I had taken that job, I would be in London now.", "example": "If I were more patient, I wouldn't have argued with him." },
+            { "id": "C1.1-G4", "title": "Impersonal passive: It is said that / He is thought to...", "explanation_tr": "Kaynak belirtmeden aktarım: It is believed that..., She is said to have...", "example": "The company is thought to be planning a merger." }
+          ],
+          "lexical_domains": [
+            { "id": "C1.1-LX1", "title": "Idiomatic expressions", "title_tr": "Deyimsel ifadeler", "items": [
+              { "word": "get the ball rolling", "meaning_tr": "işi başlatmak", "example": "Let's get the ball rolling with a quick update." },
+              { "word": "a blessing in disguise", "meaning_tr": "her işte bir hayır var", "example": "Losing that job was a blessing in disguise." },
+              { "word": "be on the same page", "meaning_tr": "aynı fikirde/anlayışta olmak", "example": "We need to be on the same page before the launch." },
+              { "word": "cut corners", "meaning_tr": "işi yarım yamalak yapmak", "example": "We can't afford to cut corners on safety." },
+              { "word": "the tip of the iceberg", "meaning_tr": "buzdağının görünen kısmı", "example": "These complaints are just the tip of the iceberg." },
+              { "word": "a steep learning curve", "meaning_tr": "hızlı ve zorlu öğrenme süreci", "example": "The new role was a steep learning curve." }
+            ] },
+            { "id": "C1.1-LX2", "title": "Emphasis and hedging", "title_tr": "Vurgu ve temkinli dil", "items": [
+              { "word": "arguably", "meaning_tr": "tartışmaya açık olsa da", "example": "It is arguably the best solution we have." },
+              { "word": "to some extent", "meaning_tr": "bir dereceye kadar", "example": "I agree to some extent." },
+              { "word": "by no means", "meaning_tr": "hiç de değil", "example": "It is by no means a simple task." },
+              { "word": "it goes without saying", "meaning_tr": "söylemeye gerek yok", "example": "It goes without saying that quality comes first." },
+              { "word": "admittedly", "meaning_tr": "kabul etmek gerekir ki", "example": "Admittedly, the first version had problems." },
+              { "word": "first and foremost", "meaning_tr": "her şeyden önce", "example": "First and foremost, we need funding." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "C1.1-CD1", "skill": "speaking", "function": "evaluative", "text": "Can express ideas fluently and spontaneously, adding emphasis and nuance." },
+            { "id": "C1.1-CD2", "skill": "speaking", "function": "interactional", "text": "Can use idiomatic language appropriately in social and professional contexts." },
+            { "id": "C1.1-CD3", "skill": "writing", "function": "evaluative", "text": "Can write well-structured texts that use emphasis and hedging deliberately." },
+            { "id": "C1.1-CD4", "skill": "writing", "function": "transactional", "text": "Can write persuasive proposals for a professional audience." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "C1.1-L1", "wrong": "It doesn't come from my hand.", "right": "There's nothing I can do about it.", "note_tr": "'Elimden gelmiyor' gibi deyimler motamot çevrilmez." },
+            { "id": "C1.1-L2", "wrong": "I humbly request your kind consideration of my humble proposal.", "right": "I would be grateful if you could consider my proposal.", "note_tr": "Aşırı resmî, süslü kalıplar İngilizcede yapay durur; net ve kibar ol." },
+            { "id": "C1.1-L3", "wrong": "I'm in the opinion that...", "right": "I'm of the opinion that...", "note_tr": "Kalıp ifade 'of the opinion'dır." }
+          ],
+          "speaking_scenarios": [
+            { "id": "C1.1-SC1", "type": "professional", "title": "Project pitch", "setting": "You pitch a new product idea to senior management in five minutes.", "task": "Open with impact, use one inversion and one cleft sentence, handle a sceptical question.", "target_can_do": "C1.1-CD1", "target_grammar": "C1.1-G1" },
+            { "id": "C1.1-SC2", "type": "interview", "title": "Senior-level interview", "setting": "A behavioural interview for a team-lead role.", "task": "Describe a difficult decision you made, what you would do differently and what you learned.", "target_can_do": "C1.1-CD2", "target_grammar": "C1.1-G3" },
+            { "id": "C1.1-SC3", "type": "daily", "title": "A controversial story", "setting": "Friends discuss a controversial news story over dinner.", "task": "Give a nuanced view, hedge where you are unsure and use two idioms naturally.", "target_can_do": "C1.1-CD2", "target_grammar": "C1.1-G4" }
+          ]
+        },
+        {
+          "id": "C1.2",
+          "goal": "Can argue abstract and complex topics with precise discourse control.",
+          "goal_tr": "Soyut ve karmaşık konuları kesin bir söylem denetimiyle tartışabilir.",
+          "grammar_targets": [
+            { "id": "C1.2-G1", "title": "Subjunctive", "explanation_tr": "Resmî öneri ve zorunluluklarda yalın fiil: It is essential that he be informed. I suggest she apply.", "example": "The board recommended that the policy be reviewed." },
+            { "id": "C1.2-G2", "title": "Advanced discourse markers", "explanation_tr": "that said, by the same token, notwithstanding, in light of, be that as it may.", "example": "The data is limited. That said, the trend is clear." },
+            { "id": "C1.2-G3", "title": "Participle clauses", "explanation_tr": "Uzun 've...ve' zincirleri yerine: Having finished..., Given that..., Faced with...", "example": "Faced with rising costs, the company changed its strategy." },
+            { "id": "C1.2-G4", "title": "Nominalisation", "explanation_tr": "Akademik/resmî yazıda fiil yerine isim: 'prices rose quickly' → 'the rapid rise in prices'.", "example": "The rapid growth of remote work has transformed city centres." }
+          ],
+          "lexical_domains": [
+            { "id": "C1.2-LX1", "title": "Academic and abstract vocabulary", "title_tr": "Akademik ve soyut kelimeler", "items": [
+              { "word": "implication", "meaning_tr": "çıkarım, olası sonuç", "example": "The implications of this decision are serious." },
+              { "word": "underlying", "meaning_tr": "altta yatan", "example": "We need to address the underlying causes." },
+              { "word": "inherent", "meaning_tr": "doğasında olan", "example": "Every plan has inherent risks." },
+              { "word": "constitute", "meaning_tr": "oluşturmak, teşkil etmek", "example": "Women constitute half of the workforce." },
+              { "word": "mitigate", "meaning_tr": "hafifletmek", "example": "We took steps to mitigate the risk." },
+              { "word": "paradigm shift", "meaning_tr": "köklü bakış açısı değişimi", "example": "AI represents a paradigm shift in education." }
+            ] },
+            { "id": "C1.2-LX2", "title": "Collocations for argument", "title_tr": "Argüman eşdizimleri", "items": [
+              { "word": "pose a threat", "meaning_tr": "tehdit oluşturmak", "example": "Rising sea levels pose a threat to coastal cities." },
+              { "word": "draw a distinction", "meaning_tr": "ayrım yapmak", "example": "We should draw a distinction between data and opinion." },
+              { "word": "shed light on", "meaning_tr": "aydınlatmak", "example": "The study sheds light on sleep patterns." },
+              { "word": "bear in mind", "meaning_tr": "akılda tutmak", "example": "Bear in mind that budgets are tight." },
+              { "word": "a compelling case", "meaning_tr": "ikna edici bir gerekçe", "example": "She made a compelling case for reform." },
+              { "word": "widely acknowledged", "meaning_tr": "yaygın olarak kabul gören", "example": "It is widely acknowledged that sleep affects memory." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "C1.2-CD1", "skill": "speaking", "function": "evaluative", "text": "Can argue abstract and complex topics with precise discourse control." },
+            { "id": "C1.2-CD2", "skill": "speaking", "function": "interactional", "text": "Can lead a discussion, summarising and redirecting contributions." },
+            { "id": "C1.2-CD3", "skill": "writing", "function": "evaluative", "text": "Can write clear academic or professional texts using nominalisation and cohesion." },
+            { "id": "C1.2-CD4", "skill": "writing", "function": "transactional", "text": "Can summarise and synthesise information from several sources." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "C1.2-L1", "wrong": "We made a research and we found and we saw that...", "right": "Having conducted the research, we found that...", "note_tr": "Türkçedeki uzun 've' zincirleri yerine participle clause ve nominalisation kullan." },
+            { "id": "C1.2-L2", "wrong": "make research", "right": "do / conduct research", "note_tr": "research sayılamaz ve 'do/conduct/carry out' ile kullanılır." },
+            { "id": "C1.2-L3", "wrong": "This subject is very important for me.", "right": "This issue is of particular importance to me.", "note_tr": "Akademik/resmî üslupta 'very important for me' yerine daha kesin ifadeler." }
+          ],
+          "speaking_scenarios": [
+            { "id": "C1.2-SC1", "type": "professional", "title": "Chairing a tense meeting", "setting": "Two departments disagree about budget priorities and you chair the meeting.", "task": "Open the meeting, summarise both positions neutrally, redirect a digression and propose next steps.", "target_can_do": "C1.2-CD2", "target_grammar": "C1.2-G2" },
+            { "id": "C1.2-SC2", "type": "interview", "title": "Academic panel", "setting": "A panel questions you about a project or idea you know well.", "task": "Explain its rationale and limitations, using nominalisation and at least one subjunctive.", "target_can_do": "C1.2-CD1", "target_grammar": "C1.2-G1" },
+            { "id": "C1.2-SC3", "type": "daily", "title": "Is technology making us less human?", "setting": "A philosophical café debate.", "task": "Argue a position on this abstract question with examples, concessions and a clear conclusion.", "target_can_do": "C1.2-CD1", "target_grammar": "C1.2-G3" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "C2",
+      "name": "Mastery",
+      "name_tr": "Ustalık",
+      "summary_tr": "Belirsizliği çözme, ironi ve üslup, ana dil düzeyinde retorik ve sosyodilbilimsel incelik.",
+      "sub_bands": [
+        {
+          "id": "C2.1",
+          "goal": "Can resolve ambiguity and use irony and style deliberately.",
+          "goal_tr": "Belirsizliği giderebilir; ironiyi ve üslubu bilinçli kullanabilir.",
+          "grammar_targets": [
+            { "id": "C2.1-G1", "title": "Fronting and ellipsis for style", "explanation_tr": "Vurgu ve akış için öğeyi öne alma ve tekrarı atlama: 'Strange though it may seem, ...'", "example": "Strange though it may seem, the quieter option sold better." },
+            { "id": "C2.1-G2", "title": "Fine modal distinctions", "explanation_tr": "needn't have done (gereksiz yere yaptı) / didn't need to (gerekmedi), might well, would sooner.", "example": "You needn't have booked; the restaurant was empty." },
+            { "id": "C2.1-G3", "title": "Understatement and irony structures", "explanation_tr": "not exactly, hardly, not the most..., a bit of a: söyleneni yumuşatarak ironi kurma.", "example": "It wasn't exactly the smoothest launch in history." },
+            { "id": "C2.1-G4", "title": "Complex noun phrases and apposition", "explanation_tr": "Bilgiyi yoğun isim öbeklerinde toplama: 'Ayşe, a quietly brilliant engineer, ...'", "example": "The report, a meticulous two-year study, changed the debate." }
+          ],
+          "lexical_domains": [
+            { "id": "C2.1-LX1", "title": "Connotation and nuance", "title_tr": "Çağrışım ve nüans", "items": [
+              { "word": "frugal", "meaning_tr": "tutumlu (olumlu)", "example": "She's frugal, not stingy." },
+              { "word": "assertive", "meaning_tr": "kendinden emin, girişken (olumlu)", "example": "Be assertive without being pushy." },
+              { "word": "inquisitive", "meaning_tr": "meraklı (olumlu)", "example": "An inquisitive mind asks better questions." },
+              { "word": "slender", "meaning_tr": "ince, zarif (olumlu)", "example": "A slender majority voted yes." },
+              { "word": "candid", "meaning_tr": "açık sözlü", "example": "Thank you for your candid feedback." },
+              { "word": "meticulous", "meaning_tr": "titiz, kılı kırk yaran", "example": "Her research is meticulous." }
+            ] },
+            { "id": "C2.1-LX2", "title": "Figurative and ironic language", "title_tr": "Mecaz ve ironi", "items": [
+              { "word": "tongue-in-cheek", "meaning_tr": "şaka yollu, alaycı", "example": "His comment was tongue-in-cheek." },
+              { "word": "damn with faint praise", "meaning_tr": "zayıf övgüyle aslında eleştirmek", "example": "Calling it 'adequate' was damning with faint praise." },
+              { "word": "a far cry from", "meaning_tr": "-den çok farklı", "example": "The result was a far cry from what we promised." },
+              { "word": "of sorts", "meaning_tr": "bir tür, sözde", "example": "It was a holiday of sorts." },
+              { "word": "to put it mildly", "meaning_tr": "en hafif deyimiyle", "example": "The meeting was tense, to put it mildly." },
+              { "word": "read between the lines", "meaning_tr": "satır aralarını okumak", "example": "Read between the lines of the announcement." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "C2.1-CD1", "skill": "speaking", "function": "evaluative", "text": "Can resolve ambiguity and convey finer shades of meaning precisely." },
+            { "id": "C2.1-CD2", "skill": "speaking", "function": "interactional", "text": "Can use irony and understatement deliberately and recognise them in others." },
+            { "id": "C2.1-CD3", "skill": "writing", "function": "evaluative", "text": "Can write sophisticated texts with a deliberate and consistent style." },
+            { "id": "C2.1-CD4", "skill": "writing", "function": "interactional", "text": "Can write engaging narratives using stylistic devices." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "C2.1-L1", "wrong": "The hotel was cheap and good. (formal review)", "right": "The hotel was inexpensive and excellent value.", "note_tr": "'cheap' çoğu zaman 'kalitesiz' çağrışımı taşır; çağrışımı yönet." },
+            { "id": "C2.1-L2", "wrong": "I didn't need to bring an umbrella, but I brought it. (meant: unnecessary)", "right": "I needn't have brought an umbrella.", "note_tr": "needn't have = yaptım ama gereksizdi; didn't need to = gerekmedi (yapıp yapmadığın belirsiz)." },
+            { "id": "C2.1-L3", "wrong": "It was very very good.", "right": "It was outstanding / remarkable.", "note_tr": "'very' tekrarı yerine güçlü sıfatlar kullan." }
+          ],
+          "speaking_scenarios": [
+            { "id": "C2.1-SC1", "type": "professional", "title": "Diplomatic negative feedback", "setting": "You must tell a valued partner that their work was not good enough.", "task": "Deliver the message clearly but diplomatically, using understatement and precise word choice.", "target_can_do": "C2.1-CD1", "target_grammar": "C2.1-G3" },
+            { "id": "C2.1-SC2", "type": "daily", "title": "An anecdote with irony", "setting": "Friends swap stories about travel disasters.", "task": "Tell a story with humour, irony and a well-timed understatement.", "target_can_do": "C2.1-CD2", "target_grammar": "C2.1-G1" },
+            { "id": "C2.1-SC3", "type": "interview", "title": "Media interview", "setting": "A journalist asks you about a sensitive topic in your field.", "task": "Answer precisely, avoid being misquoted and resolve an ambiguous question.", "target_can_do": "C2.1-CD1", "target_grammar": "C2.1-G2" }
+          ]
+        },
+        {
+          "id": "C2.2",
+          "goal": "Can communicate with native-like rhetoric and sociolinguistic tact in any setting.",
+          "goal_tr": "Her ortamda ana dil düzeyinde retorik ve sosyodilbilimsel incelikle iletişim kurabilir.",
+          "grammar_targets": [
+            { "id": "C2.2-G1", "title": "Rhetorical devices: tricolon, parallelism, rhetorical questions", "explanation_tr": "Üçlü yapı, paralellik ve retorik sorularla ikna gücünü artır.", "example": "We came to listen, to learn and to lead. Why settle for less?" },
+            { "id": "C2.2-G2", "title": "Register shifting within discourse", "explanation_tr": "Aynı konuşmada dinleyiciye göre resmî ve samimi arasında bilinçli geçiş.", "example": "Formally, the results are 'encouraging'. Between us? We nailed it." },
+            { "id": "C2.2-G3", "title": "Advanced politeness and hedging strategies", "explanation_tr": "Yüz koruma (face-saving): I wonder whether..., It might be worth considering..., With all due respect...", "example": "It might be worth revisiting the timeline, if that's not too disruptive." },
+            { "id": "C2.2-G4", "title": "Discourse reference and substitution", "explanation_tr": "this/that/such, do so, the former/the latter ile tekrarsız ve bağlı metin.", "example": "Some argued for delay; others opposed doing so. The latter prevailed." }
+          ],
+          "lexical_domains": [
+            { "id": "C2.2-LX1", "title": "Rhetoric and persuasion", "title_tr": "Retorik ve ikna", "items": [
+              { "word": "galvanise", "meaning_tr": "harekete geçirmek, coşturmak", "example": "Her speech galvanised the team." },
+              { "word": "resonate with", "meaning_tr": "-de yankı bulmak", "example": "The message resonated with young voters." },
+              { "word": "underscore", "meaning_tr": "altını çizmek, vurgulamak", "example": "The results underscore the need for change." },
+              { "word": "at stake", "meaning_tr": "tehlikede, söz konusu", "example": "Our reputation is at stake." },
+              { "word": "a call to action", "meaning_tr": "harekete geçme çağrısı", "example": "End with a clear call to action." },
+              { "word": "compelling", "meaning_tr": "ikna edici, etkileyici", "example": "She told a compelling story." }
+            ] },
+            { "id": "C2.2-LX2", "title": "Diplomacy and tact", "title_tr": "Diplomasi ve incelik", "items": [
+              { "word": "with all due respect", "meaning_tr": "tüm saygımla", "example": "With all due respect, I see it differently." },
+              { "word": "I take your point", "meaning_tr": "söylediğini kabul ediyorum", "example": "I take your point, but timing matters." },
+              { "word": "if I may", "meaning_tr": "izninizle", "example": "If I may, I'd like to add one thing." },
+              { "word": "read the room", "meaning_tr": "ortamın havasını okumak", "example": "Good speakers read the room." },
+              { "word": "tread carefully", "meaning_tr": "dikkatli davranmak", "example": "We need to tread carefully here." },
+              { "word": "save face", "meaning_tr": "itibarını korumak", "example": "Let him save face in front of the team." }
+            ] }
+          ],
+          "can_do_statements": [
+            { "id": "C2.2-CD1", "skill": "speaking", "function": "evaluative", "text": "Can deliver persuasive talks with native-like rhetoric." },
+            { "id": "C2.2-CD2", "skill": "speaking", "function": "interactional", "text": "Can handle sensitive conversations with sociolinguistic tact." },
+            { "id": "C2.2-CD3", "skill": "writing", "function": "evaluative", "text": "Can write persuasive opinion pieces with a clear rhetorical structure." },
+            { "id": "C2.2-CD4", "skill": "writing", "function": "transactional", "text": "Can mediate complex texts for different audiences." }
+          ],
+          "l1_interference_alerts": [
+            { "id": "C2.2-L1", "wrong": "You must do this by Friday.", "right": "Would it be possible to have this by Friday?", "note_tr": "Türkçede nötr olan doğrudan zorunluluk İngilizcede baskıcı durabilir." },
+            { "id": "C2.2-L2", "wrong": "With all respect...", "right": "With all due respect...", "note_tr": "Kalıp ifade 'with all due respect'tir." },
+            { "id": "C2.2-L3", "wrong": "(Long ceremonial introduction before the main point)", "right": "State the point early, then support it.", "note_tr": "İngilizce retorikte ana fikir erken gelir; uzun girişler dikkati dağıtır." }
+          ],
+          "speaking_scenarios": [
+            { "id": "C2.2-SC1", "type": "professional", "title": "Keynote opening", "setting": "You open a conference with a three-minute keynote.", "task": "Hook the audience, use a tricolon and a rhetorical question, and end with a call to action.", "target_can_do": "C2.2-CD1", "target_grammar": "C2.2-G1" },
+            { "id": "C2.2-SC2", "type": "role-play", "title": "Mediating a conflict", "setting": "Two colleagues are in open conflict and you mediate.", "task": "Acknowledge both sides, protect each person's face and steer them to an agreement.", "target_can_do": "C2.2-CD2", "target_grammar": "C2.2-G3" },
+            { "id": "C2.2-SC3", "type": "interview", "title": "High-stakes negotiation", "setting": "You negotiate a partnership with a much larger company.", "task": "Hold your position, concede strategically and shift register when the tone changes.", "target_can_do": "C2.2-CD2", "target_grammar": "C2.2-G2" }
+          ]
+        }
+      ]
+    }
+  ]
+}
