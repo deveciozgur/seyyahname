@@ -3,7 +3,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { SESSION_COOKIE, verifySessionToken } from '@/lib/server/session';
 
-const APP_PATHS = new Set(['/', '/mufredat', '/kasa', '/arsiv', '/koc']);
+const APP_PATHS = new Set(['/', '/curriculum', '/vault', '/archive', '/coach']);
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;

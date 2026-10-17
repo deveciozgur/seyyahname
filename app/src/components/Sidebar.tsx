@@ -7,7 +7,7 @@ import { Check, Vault as VaultIcon } from '@phosphor-icons/react';
 import { api } from '@/api';
 import { BAND_GOALS, FUNCTIONS, LEVEL_INFO, LEVELS, SKILLS, bandLevel, levelIndex, nextBand } from '@/lib/cefr';
 import { vaultStats } from '@/lib/vault';
-import { fnTr, skillTr } from '@/lib/tr';
+import { fnLabel, skillLabel } from '@/lib/labels';
 import { SKILL_ICONS } from './ui';
 import { slotsFilled } from './momentum';
 
@@ -26,7 +26,7 @@ export function FunctionSlots({ profile, skill, size = 'sm' }) {
       {FUNCTIONS.map((f) => (
         <span
           key={f}
-          title={`${fnTr(f)}${prog[f] ? ': done' : ': needed'}`}
+          title={`${fnLabel(f)}${prog[f] ? ': done' : ': needed'}`}
           className={`grid place-items-center rounded-full font-mono font-semibold ${size === 'sm' ? 'size-[18px] text-[9.5px]' : 'size-6 text-[11px]'} ${prog[f] ? 'bg-amber text-paper' : 'border border-dashed border-line-strong text-ink-3'}`}
         >
           {FN_SHORT[f]}
@@ -144,7 +144,7 @@ function Skills({ profile }) {
           return (
             <li key={s} className="grid grid-cols-[1fr_auto_auto] items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-[13px] text-ink-2" title={st?.attempts ? `Average ${st.average_score}` : `T, I and E tasks for ${nextBand(band)}`}>
               <span className="inline-flex items-center gap-2">
-                <Icon size={15} aria-hidden /> {skillTr(s)}
+                <Icon size={15} aria-hidden /> {skillLabel(s)}
               </span>
               <span className="flex gap-[3px]" aria-label={`${FUNCTIONS.filter((f) => prog[f]).length}/3`}>
                 {FUNCTIONS.map((f) => (
@@ -176,7 +176,7 @@ function Diagnostic({ diagnostic }) {
           const ok = stageDone(diagnostic.stages?.[s]);
           const Icon = SKILL_ICONS[s];
           return (
-            <li key={s} title={`${skillTr(s)}: ${ok ? 'done' : 'pending'}`} className={`relative grid size-7 place-items-center rounded-full ${ok ? 'bg-emerald-soft text-emerald' : 'border border-dashed border-line-strong text-ink-3'}`}>
+            <li key={s} title={`${skillLabel(s)}: ${ok ? 'done' : 'pending'}`} className={`relative grid size-7 place-items-center rounded-full ${ok ? 'bg-emerald-soft text-emerald' : 'border border-dashed border-line-strong text-ink-3'}`}>
               <Icon size={13} weight={ok ? 'fill' : 'regular'} />
               {ok && (
                 <span className="absolute -right-0.5 -bottom-0.5 grid size-3 place-items-center rounded-full bg-emerald text-paper">

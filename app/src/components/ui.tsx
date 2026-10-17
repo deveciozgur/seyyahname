@@ -5,7 +5,7 @@ import { BookOpenText, PenNib, Headphones, Microphone, CheckCircle, TrendUp, Fil
 import { FUNCTIONS, FUNCTION_INFO, LEVELS, MASTERY, band, cap, canDoStatement, levelIndex } from '@/lib/cefr';
 import { WinsBurst } from './momentum';
 import { canDoById } from '@/lib/core/curriculum';
-import { FUNCTION_TR, fnTr, skillTr, themeTr } from '@/lib/tr';
+import { FUNCTION_LABELS, fnLabel, skillLabel } from '@/lib/labels';
 
 export const SKILL_ICONS = { reading: BookOpenText, writing: PenNib, listening: Headphones, speaking: Microphone };
 
@@ -140,7 +140,7 @@ export function SaveReceipt({ result, error }) {
         </span>
         {bandChange ? (
           <span className="inline-flex items-center gap-1.5 font-medium">
-            <TrendUp size={16} /> {skillTr(bandChange.skill)} {bandChange.from} → {bandChange.to}
+            <TrendUp size={16} /> {skillLabel(bandChange.skill)} {bandChange.from} → {bandChange.to}
           </span>
         ) : (
           functions && (
@@ -218,7 +218,7 @@ export function TaskPicker({ tasks, index, onChange, passedIds = [] }) {
 }
 
 /** A short tip for approaching the task. */
-export function TurkishHint({ children, className = '' }) {
+export function Hint({ children, className = '' }) {
   if (!children) return null;
   return (
     <span className={`inline-flex items-baseline gap-1.5 ${className}`}>
@@ -246,13 +246,13 @@ export function TaskTitle({ level, title, theme, hook, fn, skill, canDoId = null
       </div>
       {(theme || hook) && (
         <p className="flex flex-wrap items-baseline gap-x-2 text-[14px]">
-          {theme && <span className={`text-[12px] font-semibold ${THEME_TONE[theme] ?? 'text-ink-2'}`}>{themeTr(theme)}</span>}
+          {theme && <span className={`text-[12px] font-semibold ${THEME_TONE[theme] ?? 'text-ink-2'}`}>{theme}</span>}
           {hook && <span className="text-ink-2">{hook}</span>}
         </p>
       )}
       {fn && (
-        <p className="flex items-start gap-2 text-[12.5px] text-ink-3" title={FUNCTION_TR[fn]?.about}>
-          <span className="shrink-0 rounded-full border border-line bg-sunk px-2 py-0.5 font-medium text-ink-2">{fnTr(fn)}</span>
+        <p className="flex items-start gap-2 text-[12.5px] text-ink-3" title={FUNCTION_LABELS[fn]?.about}>
+          <span className="shrink-0 rounded-full border border-line bg-sunk px-2 py-0.5 font-medium text-ink-2">{fnLabel(fn)}</span>
           <span>{canDo}</span>
         </p>
       )}

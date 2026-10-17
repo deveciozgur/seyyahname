@@ -20,7 +20,7 @@ import {
   SealCheck,
 } from '@phosphor-icons/react';
 import { BANDS, FUNCTIONS, SKILLS, nextBand } from '@/lib/cefr';
-import { winLabelTr } from '@/lib/tr';
+
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -77,7 +77,7 @@ export function WinBadge({ win, index = 0, size = 'md' }) {
       className={`relative inline-flex items-center gap-1.5 overflow-hidden rounded-full ring-1 ring-inset ${TONE[tone]} ${shiny ? 'shine' : ''} ${size === 'sm' ? 'px-2.5 py-1 text-[12px]' : 'px-3 py-1.5 text-[13px]'} font-medium`}
     >
       <Icon size={size === 'sm' ? 13 : 15} weight="fill" aria-hidden />
-      <span className="text-ink">{winLabelTr(win.label)}</span>
+      <span className="text-ink">{win.label}</span>
       {win.points != null && <span className="font-mono text-[11px] opacity-80">+{win.points}</span>}
     </motion.li>
   );

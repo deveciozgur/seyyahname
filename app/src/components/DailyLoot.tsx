@@ -6,7 +6,7 @@ import { Gift, CaretDown, Flame, Medal, TrendUp, Trophy, BookmarkSimple, SealChe
 import { api } from '@/api';
 import { readStored, writeStored } from '@/lib/useActivity';
 import { Panel } from './ui';
-import { skillTr, winLabelTr } from '@/lib/tr';
+import { skillLabel } from '@/lib/labels';
 import { WinBadge } from './momentum';
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -32,7 +32,7 @@ export default function DailyLoot({ refreshKey }) {
   const milestoneTitles = new Set(loot.milestones.map((x) => x.title));
   const wins = [...new Set<string>(loot.wins)].filter((w) => !milestoneTitles.has(w));
   const obstacles = [
-    ...loot.bandUps.map((l) => ({ icon: TrendUp, text: `${skillTr(l.skill)} ${l.change}` })),
+    ...loot.bandUps.map((l) => ({ icon: TrendUp, text: `${skillLabel(l.skill)} ${l.change}` })),
     ...loot.canDos.map((c) => ({ icon: SealCheck, text: `Can-Do: ${c.statement}` })),
     ...loot.resolved.map((e) => ({ icon: Trophy, text: `Mastered: "${e.after}"` })),
   ];
@@ -92,7 +92,7 @@ export default function DailyLoot({ refreshKey }) {
                 <ul className="grid gap-2 sm:grid-cols-2">
                   {loot.milestones.map((x) => (
                     <li key={x.id} className="shine relative flex items-center gap-2.5 overflow-hidden rounded-[10px] border border-line bg-amber-soft px-3 py-2.5 text-sm font-medium">
-                      <Medal size={18} weight="fill" className="text-amber" /> {winLabelTr(x.title)}
+                      <Medal size={18} weight="fill" className="text-amber" /> {x.title}
                     </li>
                   ))}
                 </ul>

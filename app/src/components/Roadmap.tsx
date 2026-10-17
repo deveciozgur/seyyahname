@@ -11,8 +11,8 @@ import WritingModule from './WritingModule';
 import SpeakingModule from './SpeakingModule';
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const SCENARIO_TR = { 'role-play': 'Role-play', daily: 'Daily life', interview: 'Interview', professional: 'Work' };
-const SKILL_TR = { speaking: 'Speaking', writing: 'Writing' };
+const SCENARIO_LABELS = { 'role-play': 'Role-play', daily: 'Daily life', interview: 'Interview', professional: 'Work' };
+const PRACTICE_SKILLS = { speaking: 'Speaking', writing: 'Writing' };
 
 type Practice = { task: ReturnType<typeof practiceTask>; skill: 'writing' | 'speaking' };
 
@@ -98,7 +98,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
               <span className="min-w-0 flex-1">
                 <span className="text-ink">{c.text}</span>
                 <span className="mt-0.5 block font-mono text-[11.5px] text-ink-3">
-                  {c.id} · {SKILL_TR[c.skill]} · {c.mastered ? 'mastered' : c.status === 'in_progress' ? `${c.count}/3 successful uses` : state === 'locked' ? 'up next' : '0/3'}
+                  {c.id} · {PRACTICE_SKILLS[c.skill]} · {c.mastered ? 'mastered' : c.status === 'in_progress' ? `${c.count}/3 successful uses` : state === 'locked' ? 'up next' : '0/3'}
                 </span>
               </span>
             </li>
@@ -132,7 +132,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
         <ul className="grid gap-3 @xl:grid-cols-3">
           {band.speaking_scenarios.map((s) => (
             <li key={s.id} className="flex flex-col gap-2 rounded-[12px] border border-line bg-sunk/50 p-3.5">
-              <span className="text-[11px] font-semibold tracking-[0.06em] text-amber uppercase">{SCENARIO_TR[s.type] ?? s.type}</span>
+              <span className="text-[11px] font-semibold tracking-[0.06em] text-amber uppercase">{SCENARIO_LABELS[s.type] ?? s.type}</span>
               <p className="text-[14px] font-medium">{s.title}</p>
               <p className="flex-1 text-[12.5px] text-ink-2">{s.setting}</p>
               <div className="flex flex-wrap gap-1.5">
@@ -253,7 +253,7 @@ export default function Roadmap({ profile, onActivitySaved, onRehearse, refreshK
           <ArrowLeft size={15} /> Back to the roadmap
         </button>
         <p className="text-[13px] text-ink-3">
-          Focused practice · <span className="font-mono text-ink-2">{band.id}</span> · {SKILL_TR[practice.skill]}
+          Focused practice · <span className="font-mono text-ink-2">{band.id}</span> · {PRACTICE_SKILLS[practice.skill]}
           {practice.task.grammarFocus && <> · target structure: {practice.task.grammarFocus}</>}
         </p>
         <Module key={practice.task.id} level={bandLevel(band.id)} tasks={[practice.task]} onActivitySaved={onActivitySaved} passedIds={[]} shield={profile.gamification?.mode === 'low'} />

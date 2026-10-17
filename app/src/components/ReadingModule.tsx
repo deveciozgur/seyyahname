@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Check, ArrowBendDownRight, ArrowCounterClockwise, ArrowRight, Lightbulb } from '@phosphor-icons/react';
 import { MASTERY, normalize } from '@/lib/cefr';
 import { useActivity } from '@/lib/useActivity';
-import { Button, Panel, SaveReceipt, Score, TaskPicker, TaskTitle, TurkishHint } from './ui';
+import { Button, Panel, SaveReceipt, Score, TaskPicker, TaskTitle, Hint } from './ui';
 
 export function isCorrect(q, answer) {
   if (answer == null || answer === '') return false;

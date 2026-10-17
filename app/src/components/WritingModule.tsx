@@ -5,7 +5,7 @@ import { PaperPlaneRight, ArrowCounterClockwise, ArrowRight, Lightbulb } from '@
 import { api } from '@/api';
 import { readStored, useActivity, writeStored } from '@/lib/useActivity';
 import FeedbackCard, { feedbackToActivity } from './FeedbackCard';
-import { Button, Panel, SaveReceipt, TaskPicker, TaskTitle, TurkishHint } from './ui';
+import { Button, Panel, SaveReceipt, TaskPicker, TaskTitle, Hint } from './ui';
 
 /** A half-finished answer built from the sentence starters, for the frustration shield. */
 const starter = (task) => (task.hints ?? []).join(' ');
@@ -78,7 +78,7 @@ export default function WritingModule({ level, tasks, onActivitySaved, passedIds
             <TaskPicker tasks={tasks} index={index} onChange={go} passedIds={passedIds} />
           </TaskTitle>
           <p className="max-w-[60ch] text-[17px] leading-relaxed text-ink">{task.prompt}</p>
-          {task.hint && <TurkishHint>{task.hint}</TurkishHint>}
+          {task.hint && <Hint>{task.hint}</Hint>}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-ink-3">
             <span>
               {task.minWords}–{task.maxWords} words

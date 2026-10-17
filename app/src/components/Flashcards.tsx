@@ -6,19 +6,19 @@ import { Cards, Eye, CheckCircle } from '@phosphor-icons/react';
 import { api } from '@/api';
 import { CardFace } from './WarmUp';
 import { Button, Panel, Skeleton } from './ui';
-import { stageTr } from '@/lib/tr';
+import { stageLabel } from '@/lib/labels';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 // The full SM-2 quality scale. 0-2 send the card back to 1 day, 3 keeps the interval,
 // 4 climbs one step of the 1-3-7-14-30 ladder, 5 skips a step.
 const QUALITIES = [
-  { q: 0, label: 'Blank', tr: 'No idea at all', tone: 'lapse' },
-  { q: 1, label: 'Wrong', tr: 'Wrong, but I recognized the answer', tone: 'lapse' },
-  { q: 2, label: 'Almost', tr: 'Wrong, but very close', tone: 'lapse' },
-  { q: 3, label: 'Hard', tr: 'Right, but it took effort', tone: 'hard' },
-  { q: 4, label: 'Good', tr: 'Right, after a moment', tone: 'good' },
-  { q: 5, label: 'Perfect', tr: 'Instant and effortless', tone: 'good' },
+  { q: 0, label: 'Blank', description: 'No idea at all', tone: 'lapse' },
+  { q: 1, label: 'Wrong', description: 'Wrong, but I recognized the answer', tone: 'lapse' },
+  { q: 2, label: 'Almost', description: 'Wrong, but very close', tone: 'lapse' },
+  { q: 3, label: 'Hard', description: 'Right, but it took effort', tone: 'hard' },
+  { q: 4, label: 'Good', description: 'Right, after a moment', tone: 'good' },
+  { q: 5, label: 'Perfect', description: 'Instant and effortless', tone: 'good' },
 ] as const;
 
 const TONE = {
@@ -84,7 +84,7 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
         <ul className="flex flex-wrap gap-2">
           {results.map((r) => (
             <li key={r.word} className={`rounded-full px-3 py-1 text-[13px] ${r.q < 3 ? 'bg-amber-soft text-amber' : 'bg-emerald-soft text-emerald'}`}>
-              {r.word}: {r.q}/5 · {r.q < 3 ? 'back tomorrow' : `next in ${stageTr(r.stage)}`}
+              {r.word}: {r.q}/5 · {r.q < 3 ? 'back tomorrow' : `next in ${stageLabel(r.stage)}`}
             </li>
           ))}
         </ul>
@@ -117,17 +117,17 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
               <div className="space-y-2">
                 <p className="text-[13px] text-ink-3">How well did you remember it? (SM-2 quality score, 0-5)</p>
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-6" role="group" aria-label="Recall quality, 0-5">
-                  {QUALITIES.map(({ q, label, tr, tone }) => (
+                  {QUALITIES.map(({ q, label, description, tone }) => (
                     <button
                       key={q}
                       onClick={() => grade(q)}
                       disabled={busy}
-                      title={tr}
+                      title={description}
                       className={`flex flex-col items-center gap-0.5 rounded-xl border px-2 py-2.5 transition-colors active:scale-[0.98] disabled:opacity-50 ${TONE[tone]}`}
                     >
                       <span className="text-2xl leading-none font-semibold tabular-nums">{q}</span>
                       <span className="text-[12px] font-medium">{label}</span>
-                      <span className="font-mono text-[10.5px] text-ink-3">{stageTr(card.preview?.[q])}</span>
+                      <span className="font-mono text-[10.5px] text-ink-3">{stageLabel(card.preview?.[q])}</span>
                     </button>
                   ))}
                 </div>

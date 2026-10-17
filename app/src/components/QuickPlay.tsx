@@ -6,10 +6,10 @@ import { Coffee, ArrowRight, ArrowCounterClockwise, GameController, Airplane, Cp
 import { api } from '@/api';
 import { Button, Panel } from './ui';
 import { WinsBurst } from './momentum';
-import { themeTr } from '@/lib/tr';
+
 
 // mode_reason is stored in profile.json, e.g. "2 tough rounds in a row"; shown as part of a sentence.
-const REASON_TR = (r: string) => (/tough rounds/.test(r) ? `you had ${parseInt(r, 10) || 2} tough rounds in a row` : /shorter/.test(r) ? 'your answers were getting shorter' : r);
+const reasonText = (r: string) => (/tough rounds/.test(r) ? `you had ${parseInt(r, 10) || 2} tough rounds in a row` : /shorter/.test(r) ? 'your answers were getting shorter' : r);
 
 const ease = [0.16, 1, 0.3, 1] as const;
 export const THEME_ICONS = { Gaming: GameController, Travel: Airplane, Tech: Cpu, Culture: Palette, 'Daily life': House };
@@ -95,7 +95,7 @@ export default function QuickPlay({ profile, reason, onSaved, onExit }) {
         <Coffee size={20} className="text-indigo" />
         <div className="min-w-0 flex-1">
           <h2 className="text-sm font-semibold">Low-effort mode</h2>
-          <p className="text-[13px] text-ink-2">{reason ? `Switched on because ${REASON_TR(reason)}. ` : ''}Light, tap-only rounds. Every round still counts toward your streak and XP.</p>
+          <p className="text-[13px] text-ink-2">{reason ? `Switched on because ${reasonText(reason)}. ` : ''}Light, tap-only rounds. Every round still counts toward your streak and XP.</p>
         </div>
         <Button variant="secondary" size="sm" onClick={onExit}>
           Back to full practice <ArrowRight size={14} />
@@ -111,7 +111,7 @@ export default function QuickPlay({ profile, reason, onSaved, onExit }) {
                   const Icon = THEME_ICONS[round[i].theme];
                   return <Icon size={15} />;
                 })()}
-                {themeTr(round[i].theme)}
+                {round[i].theme}
                 <span className="ml-auto font-mono">
                   {i + 1} / {round.length}
                 </span>

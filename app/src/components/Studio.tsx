@@ -10,7 +10,7 @@ import { BANDS, FUNCTIONS, FUNCTION_INFO, LEVELS, MASTERY, SKILLS, bandLevel, ca
 import { tasksFor } from '@/data/tasks';
 import { readStored, writeStored } from '@/lib/useActivity';
 import { SKILL_ICONS, Segmented, LevelBadge, Button } from './ui';
-import { fnTr, skillTr, themeTr } from '@/lib/tr';
+import { fnLabel, skillLabel } from '@/lib/labels';
 import { FunctionSlots } from './Sidebar';
 import WarmUp, { CurriculumWords } from './WarmUp';
 import ReadingModule from './ReadingModule';
@@ -46,7 +46,7 @@ function DiagnosticStrip({ diagnostic, current, onPick }) {
               onClick={() => onPick(s)}
               className={`inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] font-medium transition-colors ${s === current ? 'bg-ink text-paper' : 'border border-line-strong text-ink-2 hover:border-ink hover:text-ink'}`}
             >
-              <Icon size={14} /> {skillTr(s)}
+              <Icon size={14} /> {skillLabel(s)}
             </button>
           );
         })}
@@ -140,24 +140,24 @@ export default function Studio({ profile, onActivitySaved, refreshKey }) {
                 aria-pressed={on}
                 className={`inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] font-medium transition-colors ${on ? 'bg-indigo-soft text-indigo ring-1 ring-indigo/30 ring-inset' : 'border border-line text-ink-3 hover:border-ink-3 hover:text-ink'}`}
               >
-                <Icon size={14} weight={on ? 'fill' : 'regular'} /> {themeTr(t)}
+                <Icon size={14} weight={on ? 'fill' : 'regular'} /> {t}
               </button>
             );
           })}
         </div>
 
-        <Segmented id="skill" items={SKILLS.map((s) => ({ id: s, label: skillTr(s), icon: SKILL_ICONS[s] }))} value={skill} onChange={setSkill} />
+        <Segmented id="skill" items={SKILLS.map((s) => ({ id: s, label: skillLabel(s), icon: SKILL_ICONS[s] }))} value={skill} onChange={setSkill} />
 
         <DiagnosticStrip diagnostic={profile.diagnostic} current={skill} onPick={setSkill} />
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-3">
           <span>
-            Your {skillTr(skill).toLowerCase()} band: <span className="font-mono font-medium text-ink">{band}</span> <LevelBadge level={userLevel} />
+            Your {skillLabel(skill).toLowerCase()} band: <span className="font-mono font-medium text-ink">{band}</span> <LevelBadge level={userLevel} />
           </span>
           {band !== BANDS[BANDS.length - 1] && (
             <span className="inline-flex items-center gap-2">
               {missing.length
-                ? `For ${nextBand(band)}: ${missing.map((f) => fnTr(f)).join(', ')} ${userLevel} ${missing.length === 1 ? 'task' : 'tasks'} at ${MASTERY}%+`
+                ? `For ${nextBand(band)}: ${missing.map((f) => fnLabel(f)).join(', ')} ${userLevel} ${missing.length === 1 ? 'task' : 'tasks'} at ${MASTERY}%+`
                 : `Ready for ${nextBand(band)}`}
               <FunctionSlots profile={profile} skill={skill} />
             </span>

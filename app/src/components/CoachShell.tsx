@@ -20,10 +20,10 @@ export const APP_NAME = 'Seyyahname';
 
 const NAV = [
   { href: '/', label: 'Studio', title: 'Studio', icon: Notebook },
-  { href: '/mufredat', label: 'Curriculum', title: 'Curriculum & Roadmap', icon: Path },
-  { href: '/koc', label: 'Coach', title: 'Coach', icon: ChatsCircle },
-  { href: '/kasa', label: 'Vault', title: 'Vault', icon: VaultIcon },
-  { href: '/arsiv', label: 'Archive', title: 'Archive', icon: Archive },
+  { href: '/curriculum', label: 'Curriculum', title: 'Curriculum & Roadmap', icon: Path },
+  { href: '/coach', label: 'Coach', title: 'Coach', icon: ChatsCircle },
+  { href: '/vault', label: 'Vault', title: 'Vault', icon: VaultIcon },
+  { href: '/archive', label: 'Archive', title: 'Archive', icon: Archive },
 ] as const;
 
 type ActivityResult = { profile?: any; curriculum?: { levelUp?: { from: string; to: string } | null } };
@@ -261,7 +261,7 @@ function Frame({ children }: { children: React.ReactNode }) {
 
   // The Coach page is the chat itself; on wide screens the chat column already shows it.
   useEffect(() => {
-    if (wide && pathname === '/koc') router.replace('/');
+    if (wide && pathname === '/coach') router.replace('/');
   }, [wide, pathname, router]);
 
   const logout = useCallback(async () => {
@@ -280,7 +280,7 @@ function Frame({ children }: { children: React.ReactNode }) {
   const rehearse = useCallback(
     (band: SubBand, s: Scenario) => {
       setDraft(`Let's role-play a ${band.id} scenario: "${s.title}". ${s.setting} ${s.task} You play the other person; keep your English at my level and start the conversation.`);
-      if (!wide) router.push('/koc');
+      if (!wide) router.push('/coach');
     },
     [setDraft, wide, router],
   );
@@ -339,7 +339,7 @@ function Frame({ children }: { children: React.ReactNode }) {
                     onRoadmap={() => {
                       setLevelUp(null);
                       setRoadmapKey((k) => k + 1); // leave a practice screen and show the new band
-                      router.push('/mufredat');
+                      router.push('/curriculum');
                     }}
                   />
                 )}

@@ -7,7 +7,7 @@ import { api } from '@/api';
 import { useActivity } from '@/lib/useActivity';
 import FeedbackCard, { feedbackToActivity } from './FeedbackCard';
 import Waveform from './Waveform';
-import { Button, Panel, SaveReceipt, TaskPicker, TaskTitle, TurkishHint } from './ui';
+import { Button, Panel, SaveReceipt, TaskPicker, TaskTitle, Hint } from './ui';
 
 const Recognition = typeof window !== 'undefined' ? ((window as any).SpeechRecognition ?? (window as any).webkitSpeechRecognition) : null;
 const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
@@ -198,7 +198,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
             <TaskPicker tasks={tasks} index={index} onChange={go} passedIds={passedIds} />
           </TaskTitle>
           <p className="max-w-[60ch] text-[17px] leading-relaxed text-ink">{task.prompt}</p>
-          {task.hint && <TurkishHint>{task.hint}</TurkishHint>}
+          {task.hint && <Hint>{task.hint}</Hint>}
           {task.hints?.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
               <Lightbulb size={16} className="text-amber" aria-hidden />

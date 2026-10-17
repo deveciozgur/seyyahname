@@ -6,7 +6,7 @@ import { ArrowsClockwise, Eye, ArrowRight, Timer, Plus, Check, Path } from '@pho
 import { api } from '@/api';
 import { readStored, writeStored } from '@/lib/useActivity';
 import { Button, LevelBadge, Panel } from './ui';
-import { stageTr } from '@/lib/tr';
+import { stageLabel } from '@/lib/labels';
 import { suggestedWords } from '@/lib/core/curriculum';
 import { bandLevel } from '@/lib/cefr-data';
 
@@ -16,10 +16,10 @@ const WARMUP_SECONDS = 180;
 
 // SM-2 grades (quality 1, 3, 4, 5); the Vault flashcards use the full 0-5 scale.
 const GRADES = [
-  { id: 'again', label: 'Again', tr: "Didn't remember (SM-2: 1)", variant: 'secondary' },
-  { id: 'hard', label: 'Hard', tr: 'Remembered with effort (SM-2: 3)', variant: 'secondary' },
-  { id: 'good', label: 'Good', tr: 'Remembered after a moment (SM-2: 4)', variant: 'primary' },
-  { id: 'easy', label: 'Easy', tr: 'Remembered instantly (SM-2: 5)', variant: 'secondary' },
+  { id: 'again', label: 'Again', description: "Didn't remember (SM-2: 1)", variant: 'secondary' },
+  { id: 'hard', label: 'Hard', description: 'Remembered with effort (SM-2: 3)', variant: 'secondary' },
+  { id: 'good', label: 'Good', description: 'Remembered after a moment (SM-2: 4)', variant: 'primary' },
+  { id: 'easy', label: 'Easy', description: 'Remembered instantly (SM-2: 5)', variant: 'secondary' },
 ];
 
 /** A meaning card for learned words; an upgrade card for the learner's own words that got a stronger alternative. */
@@ -31,7 +31,7 @@ export function CardFace({ card, revealed }) {
         {card.cefr && <LevelBadge level={card.cefr} />}
         <span>{isUpgrade ? 'Say a stronger alternative:' : 'What does it mean? Use it in a sentence.'}</span>
         <span className="ml-auto font-mono text-[11px]" title={`SM-2 ease factor ${card.ease}`}>
-          {stageTr(card.stage)} · ease {card.ease}
+          {stageLabel(card.stage)} · ease {card.ease}
         </span>
       </div>
       <p className="text-[36px] leading-tight font-semibold tracking-[-0.03em]">{card.original}</p>
@@ -208,7 +208,7 @@ export default function WarmUp({ refreshKey, onReviewed }) {
             <ul className="flex flex-wrap gap-2">
               {results.map((r) => (
                 <li key={r.word} className={`rounded-full px-3 py-1 text-[13px] ${r.grade === 'again' ? 'bg-amber-soft text-amber' : 'bg-emerald-soft text-emerald'}`}>
-                  {r.word}: {r.grade === 'again' ? 'back tomorrow' : `next in ${stageTr(r.stage)}`}
+                  {r.word}: {r.grade === 'again' ? 'back tomorrow' : `next in ${stageLabel(r.stage)}`}
                 </li>
               ))}
             </ul>
@@ -225,9 +225,9 @@ export default function WarmUp({ refreshKey, onReviewed }) {
               ) : (
                 <div className="flex flex-wrap gap-2" role="group" aria-label="How well did you remember it?">
                   {GRADES.map((g) => (
-                    <Button key={g.id} variant={g.variant} onClick={() => grade(g.id)} disabled={busy} title={g.tr}>
+                    <Button key={g.id} variant={g.variant} onClick={() => grade(g.id)} disabled={busy} title={g.description}>
                       {g.label}
-                      <span className="font-mono text-[11px] opacity-70">{stageTr(cards[i].preview?.[g.id])}</span>
+                      <span className="font-mono text-[11px] opacity-70">{stageLabel(cards[i].preview?.[g.id])}</span>
                     </Button>
                   ))}
                 </div>

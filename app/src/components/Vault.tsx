@@ -9,7 +9,7 @@ import { bandStatus, canDoById, curriculum } from '@/lib/core/curriculum';
 import { SKILL_ICONS } from './ui';
 import { Button, LevelBadge, Panel, Segmented, Skeleton } from './ui';
 import Flashcards from './Flashcards';
-import { dateTr, fnTr, skillTr, stageTr } from '@/lib/tr';
+import { formatDate, fnLabel, skillLabel, stageLabel } from '@/lib/labels';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -99,15 +99,15 @@ function SrsStatus({ r }) {
   if (r.due)
     return (
       <>
-        <span className="rounded-full bg-amber-soft px-2 py-0.5 text-amber">Due now · {stageTr(r.stage)}</span>
+        <span className="rounded-full bg-amber-soft px-2 py-0.5 text-amber">Due now · {stageLabel(r.stage)}</span>
         {meta}
       </>
     );
   return (
     <>
       {r.mastered === 'Yes' && <span className="rounded-full bg-emerald-soft px-2 py-0.5 text-emerald">Mastered</span>}
-      <span className="font-mono" title={`Interval ${stageTr(r.stage)}`}>
-        next {r.next} ({stageTr(r.stage)})
+      <span className="font-mono" title={`Interval ${stageLabel(r.stage)}`}>
+        next {r.next} ({stageLabel(r.stage)})
       </span>
       {meta}
     </>
@@ -147,8 +147,8 @@ function CanDoBoard({ profile }) {
                     <div className="min-w-0">
                       <p className={`text-[15px] leading-snug ${done ? 'text-ink' : 'text-ink-2'}`}>{c.text}</p>
                       <p className="flex items-center gap-1 text-[11.5px] text-ink-3">
-                        <Icon size={12} /> {skillTr(c.skill)} · {fnTr(c.function)}
-                        {done ? `, earned ${dateTr(done.date, { day: 'numeric', month: 'short', year: 'numeric' })}` : ''}
+                        <Icon size={12} /> {skillLabel(c.skill)} · {fnLabel(c.function)}
+                        {done ? `, earned ${formatDate(done.date, { day: 'numeric', month: 'short', year: 'numeric' })}` : ''}
                       </p>
                     </div>
                   </li>

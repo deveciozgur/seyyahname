@@ -87,7 +87,7 @@ Request and response shapes are shared types (`src/lib/api-contract.ts`). Mutati
 
 Concept C "Dark Elegance", defined as CSS variables in `src/app/globals.css`. Dark is the base palette; `<html data-theme="light">` switches to the light one. The default is **System**: the page follows `prefers-color-scheme` live. The System / Dark / Light switch in the top bar stores a manual choice in `localStorage['seyyahname.theme']` that overrides the system (choosing System removes it). An inline script in `layout.tsx` applies it before first paint (no flash of the wrong theme); `ThemeProvider` keeps both switches in sync.
 
-**Layout:** learner sheet and navigation on the left, the page in the centre and, from 1280px (`xl`), the coach chat as a persistent right-hand column. The frame lives in `app/(coach)/layout.tsx`, so it never unmounts while the learner moves between pages; the conversation (and a running stream) is held by `ChatProvider` above the pages. Below 1280px, Coach is its own page (`/koc`). Centre views use container queries (`@container` on `<main>`) so their grids follow the space left by the chat column.
+**Layout:** learner sheet and navigation on the left, the page in the centre and, from 1280px (`xl`), the coach chat as a persistent right-hand column. The frame lives in `app/(coach)/layout.tsx`, so it never unmounts while the learner moves between pages; the conversation (and a running stream) is held by `ChatProvider` above the pages. Below 1280px, Coach is its own page (`/coach`). Centre views use container queries (`@container` on `<main>`) so their grids follow the space left by the chat column.
 
 - **Type:** Geist for everything (headings tight at -0.03em), Geist Mono for CEFR codes, figures and meta. Self-hosted via `@fontsource`, no external font requests.
 - **Colour:** dark `#0A0A0B` / `#111113` surfaces with `#232327` hairlines and `#EDEDEF` ink; light `#F9FAFB` / `#FFFFFF` with `#18181B` ink. One accent, champagne `#E8C07D` (bronze `#946318` in light), for progress and the CEFR ladder. Meaning colours: emerald = strengths and correct answers, indigo = recasts and phonetics, brick = deletions.
@@ -98,7 +98,7 @@ Concept C "Dark Elegance", defined as CSS variables in `src/app/globals.css`. Da
 ## Structure
 
 ```
-src/app/(coach)/         Signed-in pages: / (Studio), /mufredat (Curriculum & Roadmap), /koc (Coach), /kasa (Vault), /arsiv (Archive), sharing layout.tsx (the frame)
+src/app/(coach)/         Signed-in pages: / (Studio), /curriculum, /coach, /vault, /archive, sharing layout.tsx (the frame)
 src/app/unlock/          Anonymous PIN screen
 src/app/api/             Route handlers: auth, state, feedback, chat
 src/app/layout.tsx       Metadata (title template, OpenGraph, Twitter), theme script, ThemeProvider
