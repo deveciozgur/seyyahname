@@ -87,10 +87,10 @@ export function WinBadge({ win, index = 0, size = 'md' }) {
 export function WinsBurst({ motivation }) {
   if (!motivation?.wins?.length) return null;
   return (
-    <div className="space-y-2.5" role="status" aria-label="Kazanımlar">
+    <div className="space-y-2.5" role="status" aria-label="Wins">
       <motion.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease }} className="flex items-baseline gap-2">
         <span className="text-3xl font-semibold tracking-[-0.02em] text-amber tabular-nums">+{motivation.points}</span>
-        <span className="text-sm text-ink-2">XP, {motivation.wins.length} kazanım</span>
+        <span className="text-sm text-ink-2">XP, {motivation.wins.length} {motivation.wins.length === 1 ? 'win' : 'wins'}</span>
       </motion.div>
       <ul className="flex flex-wrap gap-1.5">
         {motivation.wins.map((w, i) => (
@@ -125,10 +125,10 @@ export function MomentumBar({ profile, compact = false }) {
   const to = nextBand(from);
   const filled = slotsFilled(profile);
   const value = filled / 12;
-  const detail = `${filled}/12 fonksiyonel adım`;
+  const detail = `${filled}/12 functional steps`;
 
   return (
-    <div className="space-y-1.5" aria-label={`${from} → ${to} ilerlemesi: ${detail}`}>
+    <div className="space-y-1.5" aria-label={`Progress ${from} → ${to}: ${detail}`}>
       <div className="flex items-baseline justify-between text-xs">
         <span className="font-mono font-medium">
           {from} <span className="text-ink-3">→</span> {to}
@@ -158,9 +158,9 @@ export function MomentumBar({ profile, compact = false }) {
 export function MomentumStats({ profile }) {
   const g = profile.gamification ?? {};
   const items = [
-    { icon: Flame, label: 'Seri (gün)', value: g.streak_days ?? 0, tone: 'text-amber' },
-    { icon: Lightning, label: 'Toplam XP', value: g.xp_total ?? 0, tone: 'text-amber' },
-    { icon: Smiley, label: 'Güven', value: `${g.confidence_index ?? 80}`, tone: 'text-emerald' },
+    { icon: Flame, label: 'Streak (days)', value: g.streak_days ?? 0, tone: 'text-amber' },
+    { icon: Lightning, label: 'Total XP', value: g.xp_total ?? 0, tone: 'text-amber' },
+    { icon: Smiley, label: 'Confidence', value: `${g.confidence_index ?? 80}`, tone: 'text-emerald' },
   ];
   return (
     <dl className="grid grid-cols-3 gap-2">

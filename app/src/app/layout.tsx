@@ -21,7 +21,7 @@ export function generateMetadata(): Metadata {
     applicationName: 'Seyyahname',
     title: { default: `Özgür Deveci | ${NAME}`, template: '%s | Seyyahname' },
     description: DESCRIPTION,
-    openGraph: { type: 'website', siteName: 'Seyyahname', title: NAME, description: DESCRIPTION, locale: 'tr_TR', url: '/' },
+    openGraph: { type: 'website', siteName: 'Seyyahname', title: NAME, description: DESCRIPTION, locale: 'en_US', url: '/' },
     twitter: { card: 'summary_large_image', title: NAME, description: DESCRIPTION },
     // A private coaching app: shareable previews, but no search engine indexing.
     robots: { index: false, follow: false },
@@ -37,7 +37,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>

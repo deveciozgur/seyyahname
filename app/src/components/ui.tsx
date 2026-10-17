@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { BookOpenText, PenNib, Headphones, Microphone, CheckCircle, TrendUp, FileText, WarningCircle, Check, SealCheck } from '@phosphor-icons/react';
+import { BookOpenText, PenNib, Headphones, Microphone, CheckCircle, TrendUp, FileText, WarningCircle, Check, SealCheck, Lightbulb } from '@phosphor-icons/react';
 import { FUNCTIONS, FUNCTION_INFO, LEVELS, MASTERY, band, cap, canDoStatement, levelIndex } from '@/lib/cefr';
 import { WinsBurst } from './momentum';
 import { canDoById } from '@/lib/core/curriculum';
@@ -28,7 +28,7 @@ export function CefrLadder({ level, label }) {
   const idx = levelIndex(level);
   const b = bandClasses(level);
   return (
-    <div className="flex items-center gap-[3px]" role="meter" aria-label={label ?? `Seviye ${level}`} aria-valuemin={1} aria-valuemax={6} aria-valuenow={idx + 1} aria-valuetext={level}>
+    <div className="flex items-center gap-[3px]" role="meter" aria-label={label ?? `Level ${level}`} aria-valuemin={1} aria-valuemax={6} aria-valuenow={idx + 1} aria-valuetext={level}>
       {LEVELS.map((l, i) => (
         <span key={l} title={l} className={`h-[5px] flex-1 rounded-full transition-colors duration-500 ${i <= idx ? b.fill : 'bg-line'}`} />
       ))}
@@ -91,7 +91,7 @@ export function Segmented({ id, items, value, onChange, size = 'md', className =
 }
 
 /** Large score numeral with a hairline arc. */
-export function Score({ value, label = 'puan' }) {
+export function Score({ value, label = 'Score' }) {
   const r = 26;
   const c = 2 * Math.PI * r;
   const tone = value >= MASTERY ? 'text-emerald' : 'text-amber';
@@ -126,7 +126,7 @@ export function SaveReceipt({ result, error }) {
   if (error)
     return (
       <p className="flex items-start gap-2 text-sm text-brick" role="alert">
-        <WarningCircle size={18} className="mt-px shrink-0" /> İlerleme kaydedilemedi: {error}
+        <WarningCircle size={18} className="mt-px shrink-0" /> Couldn't save your progress: {error}
       </p>
     );
   if (!result) return null;
@@ -136,7 +136,7 @@ export function SaveReceipt({ result, error }) {
       <WinsBurst motivation={result.motivation} />
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <span className="inline-flex items-center gap-1.5 font-medium text-emerald">
-          <CheckCircle size={18} weight="fill" /> Kaydedildi
+          <CheckCircle size={18} weight="fill" /> Saved
         </span>
         {bandChange ? (
           <span className="inline-flex items-center gap-1.5 font-medium">
@@ -144,32 +144,32 @@ export function SaveReceipt({ result, error }) {
           </span>
         ) : (
           functions && (
-            <span className="inline-flex items-center gap-1.5 text-[13px] text-ink-3" title={`${functions.band} bandından sonraki alt banda doğru tamamlanan fonksiyonel görevler`}>
+            <span className="inline-flex items-center gap-1.5 text-[13px] text-ink-3" title={`Function tasks completed toward the sub-band after ${functions.band}`}>
               {FUNCTIONS.map((f) => (
                 <span key={f} className={`grid size-[18px] place-items-center rounded-full font-mono text-[9.5px] font-semibold ${functions.done.includes(f) ? 'bg-emerald text-paper' : 'border border-dashed border-line-strong'}`}>
                   {FUNCTION_INFO[f].short}
                 </span>
               ))}
-              {functions.band} bandında
+              in {functions.band}
             </span>
           )
         )}
-        {addedWords.length > 0 && <span className="text-ink-3">{addedWords.length} yeni kelime</span>}
-        {loggedErrors.length > 0 && <span className="text-ink-3">{loggedErrors.length} kalıp deftere yazıldı</span>}
+        {addedWords.length > 0 && <span className="text-ink-3">{addedWords.length} new {addedWords.length === 1 ? 'word' : 'words'}</span>}
+        {loggedErrors.length > 0 && <span className="text-ink-3">{loggedErrors.length} {loggedErrors.length === 1 ? 'pattern' : 'patterns'} logged</span>}
       </div>
       {canDo && (
         <p className="flex items-start gap-1.5 font-medium text-emerald">
-          <SealCheck size={17} weight="fill" className="mt-px shrink-0" /> Can-Do kazanıldı: <span className="font-normal text-ink">{canDo}</span>
+          <SealCheck size={17} weight="fill" className="mt-px shrink-0" /> Can-Do earned: <span className="font-normal text-ink">{canDo}</span>
         </p>
       )}
       {result.curriculum?.levelUp && (
         <p className="flex items-start gap-1.5 font-medium text-amber">
-          <TrendUp size={17} className="mt-px shrink-0" /> Müfredat: {result.curriculum.levelUp.from} → {result.curriculum.levelUp.to} bandı açıldı
+          <TrendUp size={17} className="mt-px shrink-0" /> Curriculum: {result.curriculum.levelUp.to} unlocked (from {result.curriculum.levelUp.from})
         </p>
       )}
       {result.curriculum?.credited?.length > 0 && (
         <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-3">
-          <span>Can-Do ilerlemesi:</span>
+          <span>Can-Do progress:</span>
           {result.curriculum.credited.map((c) => (
             <span key={c.id} title={c.text} className="font-mono text-ink-2">
               {c.id} {c.count}/3
@@ -179,8 +179,8 @@ export function SaveReceipt({ result, error }) {
       )}
       {(credited.length > 0 || resolvedErrors.length > 0) && (
         <p className="text-ink-2">
-          {resolvedErrors.length > 0 && <span className="font-medium text-emerald">Çözüldü: {resolvedErrors.map((e) => e.after).join(', ')}. </span>}
-          {credited.filter((e) => !resolvedErrors.some((r) => r.id === e.id)).map((e) => `"${e.after}" doğru kullanıldı (${e.streak}/3)`).join(', ')}
+          {resolvedErrors.length > 0 && <span className="font-medium text-emerald">Resolved: {resolvedErrors.map((e) => e.after).join(', ')}. </span>}
+          {credited.filter((e) => !resolvedErrors.some((r) => r.id === e.id)).map((e) => `"${e.after}" used correctly (${e.streak}/3)`).join(', ')}
         </p>
       )}
       <div className="flex flex-wrap gap-1.5">
@@ -197,16 +197,16 @@ export function SaveReceipt({ result, error }) {
 export function TaskPicker({ tasks, index, onChange, passedIds = [] }) {
   if (tasks.length < 2) return null;
   return (
-    <div className="flex flex-wrap justify-end gap-1" aria-label="Görev seç">
+    <div className="flex flex-wrap justify-end gap-1" aria-label="Choose a task">
       {tasks.map((t, i) => {
         const passed = passedIds.includes(t.id);
         return (
           <button
             key={t.id}
             onClick={() => onChange(i)}
-            title={`${t.title}${passed ? ' (%80+ ile geçildi)' : ''}`}
+            title={`${t.title}${passed ? ' (passed at 80%+)' : ''}`}
             aria-pressed={i === index}
-            aria-label={`Görev ${i + 1}${passed ? ', geçildi' : ''}`}
+            aria-label={`Task ${i + 1}${passed ? ', passed' : ''}`}
             className={`relative grid size-7 place-items-center rounded-full font-mono text-xs transition-colors ${i === index ? 'bg-ink text-paper' : passed ? 'bg-emerald-soft text-emerald' : 'text-ink-3 hover:bg-hover hover:text-ink'}`}
           >
             {passed && i !== index ? <Check size={13} weight="bold" /> : i + 1}
@@ -217,17 +217,15 @@ export function TaskPicker({ tasks, index, onChange, passedIds = [] }) {
   );
 }
 
-/** Turkish support line for A1–A2 learners. */
+/** A short tip for approaching the task. */
 export function TurkishHint({ children, className = '' }) {
   if (!children) return null;
   return (
     <span className={`inline-flex items-baseline gap-1.5 ${className}`}>
-      <span className="rounded-full bg-sunk px-1.5 py-px font-mono text-[10px] text-ink-3" aria-label="Türkçe">
-        TR
+      <span className="inline-flex translate-y-[2px] items-center gap-1 rounded-full bg-sunk px-1.5 py-px text-[10.5px] font-medium text-ink-3">
+        <Lightbulb size={11} weight="fill" className="text-amber" aria-hidden /> Hint
       </span>
-      <span lang="tr" className="text-[14px] text-ink-3">
-        {children}
-      </span>
+      <span className="text-[14px] text-ink-3">{children}</span>
     </span>
   );
 }

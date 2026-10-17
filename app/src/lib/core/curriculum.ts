@@ -13,22 +13,21 @@ import CURRICULUM from '../../data/curriculum.json' with { type: 'json' };
 import { BANDS, LEVELS, bandLevel, nextBand } from '../cefr-data.ts';
 
 export type CanDo = { id: string; skill: string; function: string; text: string };
-export type GrammarTarget = { id: string; title: string; explanation_tr: string; example: string };
-export type LexItem = { word: string; meaning_tr: string; example: string };
-export type LexDomain = { id: string; title: string; title_tr: string; items: LexItem[] };
-export type L1Alert = { id: string; wrong: string; right: string; note_tr: string };
+export type GrammarTarget = { id: string; title: string; explanation: string; example: string };
+export type LexItem = { word: string; meaning: string; example: string };
+export type LexDomain = { id: string; title: string; items: LexItem[] };
+export type L1Alert = { id: string; wrong: string; right: string; note: string };
 export type Scenario = { id: string; type: string; title: string; setting: string; task: string; target_can_do: string; target_grammar: string };
 export type SubBand = {
   id: string;
   goal: string;
-  goal_tr: string;
   grammar_targets: GrammarTarget[];
   lexical_domains: LexDomain[];
   can_do_statements: CanDo[];
   l1_interference_alerts: L1Alert[];
   speaking_scenarios: Scenario[];
 };
-export type Level = { level: string; name: string; name_tr: string; summary_tr: string; sub_bands: SubBand[] };
+export type Level = { level: string; name: string; summary: string; sub_bands: SubBand[] };
 
 export const curriculum = CURRICULUM as unknown as { version: number; title: string; rules: { mastery_evidence: number; pass_score: number; evidence_skills: string[] }; levels: Level[] };
 export const RULES = curriculum.rules;
@@ -131,7 +130,7 @@ export function suggestedWords(bandId: string, vaultWords: string[], limit = 3) 
   const upto = BANDS.indexOf(bandId);
   const out: (LexItem & { band: string; domain: string })[] = [];
   for (const b of SUB_BANDS.filter((x) => BANDS.indexOf(x.id) <= upto).reverse()) {
-    for (const d of b.lexical_domains) for (const it of d.items) if (!have.has(it.word.toLowerCase())) out.push({ ...it, band: b.id, domain: d.title_tr });
+    for (const d of b.lexical_domains) for (const it of d.items) if (!have.has(it.word.toLowerCase())) out.push({ ...it, band: b.id, domain: d.title });
     if (out.length >= limit * 3) break;
   }
   // Active band first, then earlier bands that were skipped.
@@ -157,7 +156,7 @@ export function practiceTask(bandId: string, kind: 'scenario' | 'grammar', id: s
       hook: s.setting,
       fn: cd?.function ?? 'interactional',
       prompt: skill === 'writing' ? `${s.setting} ${s.task} Write it as you would say it (or as a message).` : `${s.setting} ${s.task}`,
-      tr: `Hedef: ${g?.title ?? ''}`,
+      hint: g ? `Focus: ${g.title}` : undefined,
       hints: g ? [g.example] : [],
       minWords: words[0],
       maxWords: words[1],
@@ -174,10 +173,10 @@ export function practiceTask(bandId: string, kind: 'scenario' | 'grammar', id: s
     id: `cur-${g.id}-${skill}`,
     title: g.title,
     theme: 'Daily life',
-    hook: g.explanation_tr,
+    hook: g.explanation,
     fn: cd?.function ?? 'interactional',
     prompt: `${skill === 'writing' ? 'Write' : 'Say'} ${words[0] < 50 ? '4-6 sentences' : 'a short text'} about your own life that use "${g.title}" naturally. Example: ${g.example}`,
-    tr: g.explanation_tr,
+    hint: g.explanation,
     hints: [g.example],
     minWords: Math.round(words[0] * 0.8),
     maxWords: words[1],

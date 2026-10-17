@@ -102,7 +102,7 @@ export async function streamChat(messages: ChatMessage[], { onText, signal }: { 
   if (!res.ok || !res.body) {
     const data = await res.json().catch(() => ({}));
     if (res.status === 401 && data.locked) window.dispatchEvent(new Event(LOCKED_EVENT));
-    throw new ApiError(data.error ?? `İstek başarısız (${res.status})`, res.status, Boolean(data.locked));
+    throw new ApiError(data.error ?? `Request failed (${res.status})`, res.status, Boolean(data.locked));
   }
   const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
   let buffer = '';

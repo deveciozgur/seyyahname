@@ -59,7 +59,7 @@ export function createStorage(dir: string) {
       }
     })()
       .catch((err) => {
-        throw new StorageError(`Veri klasörü hazırlanamadı (${dir}): ${err.message}. Sunucuya bu klasör için yazma izni verin ya da DATA_DIR ayarlayın.`, 500);
+        throw new StorageError(`Could not prepare the data folder (${dir}): ${err.message}. Give the server write access to it or set DATA_DIR.`, 500);
       })
       .finally(() => {
         inFlight = null;
@@ -81,7 +81,7 @@ export function createStorage(dir: string) {
         if (err.code !== 'EEXIST') throw err;
         const age = await fs.stat(lock).then((s) => Date.now() - s.mtimeMs, () => 0);
         if (age > LOCK_STALE_MS) await fs.rm(lock, { force: true });
-        else if (Date.now() - start > LOCK_TIMEOUT_MS) throw new StorageError('Veriler şu an başka bir işlem tarafından yazılıyor. Biraz sonra tekrar deneyin.', 503);
+        else if (Date.now() - start > LOCK_TIMEOUT_MS) throw new StorageError('Another process is writing the data right now. Please try again shortly.', 503);
         else await new Promise((r) => setTimeout(r, 25));
       }
     }
@@ -122,10 +122,10 @@ export function createStorage(dir: string) {
   /** Checks names, sizes and profile.json before anything is written. */
   function validate(files: Record<string, unknown>): Record<string, string> {
     const entries = Object.entries(files ?? {});
-    if (!entries.length) throw new StorageError('files: dosya adı → içerik nesnesi olmalı.', 400);
+    if (!entries.length) throw new StorageError('files must be an object of file name → content.', 400);
     for (const [name, content] of entries) {
-      if (!(STATE_FILES as readonly string[]).includes(name) && !SESSION_FILE_RE.test(name)) throw new StorageError(`"${name}" dosyasına yazma izni yok.`, 400);
-      if (typeof content !== 'string' || Buffer.byteLength(content) > MAX_FILE_BYTES) throw new StorageError(`"${name}" 1 MB'tan küçük bir metin olmalı.`, 400);
+      if (!(STATE_FILES as readonly string[]).includes(name) && !SESSION_FILE_RE.test(name)) throw new StorageError(`Writing "${name}" is not allowed.`, 400);
+      if (typeof content !== 'string' || Buffer.byteLength(content) > MAX_FILE_BYTES) throw new StorageError(`"${name}" must be text under 1 MB.`, 400);
       if (name === 'profile.json') {
         let parsed: unknown;
         try {
@@ -133,7 +133,7 @@ export function createStorage(dir: string) {
         } catch {
           parsed = null;
         }
-        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new StorageError('profile.json bir JSON nesnesi olmalı.', 400);
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new StorageError('profile.json must be a JSON object.', 400);
       }
     }
     return files as Record<string, string>;
@@ -160,10 +160,10 @@ export function createStorage(dir: string) {
     },
 
     async readSession(date: string): Promise<string> {
-      if (!DATE_RE.test(date)) throw new StorageError('Geçersiz tarih.', 400);
+      if (!DATE_RE.test(date)) throw new StorageError('Invalid date.', 400);
       await bootstrap();
       const content = await fs.readFile(path.join(dir, 'sessions', `${date}.md`), 'utf8').catch(() => null);
-      if (content === null) throw new StorageError('Oturum kaydı bulunamadı.', 404);
+      if (content === null) throw new StorageError('Session log not found.', 404);
       return content;
     },
 
@@ -172,7 +172,7 @@ export function createStorage(dir: string) {
       await bootstrap();
       return exclusive(async () => {
         const current = await version();
-        if (expected !== current) throw new StorageError('Dosyalar başka bir cihazdan değiştirildi. Güncel hâli yükleniyor.', 409, { version: current });
+        if (expected !== current) throw new StorageError('The files were changed on another device. Loading the latest version.', 409, { version: current });
         await dailyBackup();
         for (const [name, content] of Object.entries(files)) await writeAtomic(path.join(dir, name), content);
         await writeAtomic(path.join(dir, '.version'), String(current + 1));

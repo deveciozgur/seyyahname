@@ -11,7 +11,7 @@ const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&l
 // Session logs contain the learner's own answers, so raw HTML is shown as text, never rendered.
 const marked = new Marked({ gfm: true, renderer: { html: ({ text }) => escapeHtml(text) } });
 
-const fmtDate = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('tr-TR', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+const fmtDate = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
 export default function SessionsView({ refreshKey }) {
   const [dates, setDates] = useState(null);
@@ -40,8 +40,8 @@ export default function SessionsView({ refreshKey }) {
   return (
     <div className="space-y-7">
       <header className="max-w-2xl space-y-2">
-        <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Arşiv</h1>
-        <p className="text-[15px] leading-relaxed text-ink-2">Her gün için bir sayfa. Bitirdiğin her etkinlik o günün oturum dosyasına yazılır.</p>
+        <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Archive</h1>
+        <p className="text-[15px] leading-relaxed text-ink-2">One page per day. Every activity you finish is written to that day's session file.</p>
       </header>
       {error && (
         <p className="text-sm text-brick" role="alert">
@@ -49,14 +49,14 @@ export default function SessionsView({ refreshKey }) {
         </p>
       )}
       <div className="grid gap-8 @2xl:grid-cols-[200px_minmax(0,1fr)] @2xl:gap-10">
-        <nav aria-label="Oturum günleri">
+        <nav aria-label="Session days">
           {dates === null ? (
             <div className="space-y-2">
               <Skeleton className="h-9 w-full" />
               <Skeleton className="h-9 w-full" />
             </div>
           ) : dates.length === 0 ? (
-            <p className="text-sm text-ink-3">Henüz oturum yok.</p>
+            <p className="text-sm text-ink-3">No sessions yet.</p>
           ) : (
             <ul className="flex gap-1 overflow-x-auto @2xl:flex-col">
               {dates.map((d) => (
@@ -88,7 +88,7 @@ export default function SessionsView({ refreshKey }) {
               <Skeleton className="h-4 w-5/6" />
             </div>
           ) : (
-            <p className="text-ink-3">Bir gün seç.</p>
+            <p className="text-ink-3">Pick a day.</p>
           )}
         </Panel>
       </div>

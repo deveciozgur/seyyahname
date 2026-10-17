@@ -11,8 +11,8 @@ import WritingModule from './WritingModule';
 import SpeakingModule from './SpeakingModule';
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const SCENARIO_TR = { 'role-play': 'Canlandırma', daily: 'Günlük', interview: 'Mülakat', professional: 'İş' };
-const SKILL_TR = { speaking: 'Konuşma', writing: 'Yazma' };
+const SCENARIO_TR = { 'role-play': 'Role-play', daily: 'Daily life', interview: 'Interview', professional: 'Work' };
+const SKILL_TR = { speaking: 'Speaking', writing: 'Writing' };
 
 type Practice = { task: ReturnType<typeof practiceTask>; skill: 'writing' | 'speaking' };
 
@@ -24,12 +24,12 @@ const bandState = (id: string, active: string) => {
 
 function Tree({ active, selected, onSelect, profile }) {
   return (
-    <ol className="space-y-4" aria-label="A1 → C2 yol haritası">
+    <ol className="space-y-4" aria-label="A1 → C2 roadmap">
       {curriculum.levels.map((lvl) => (
         <li key={lvl.level}>
           <div className="mb-1.5 flex items-center gap-2">
             <LevelBadge level={lvl.level} />
-            <span className="text-[13px] font-medium text-ink-2">{lvl.name_tr}</span>
+            <span className="text-[13px] font-medium text-ink-2">{lvl.name}</span>
           </div>
           <ul className="ml-[13px] space-y-1 border-l border-line pl-3">
             {lvl.sub_bands.map((b) => {
@@ -46,7 +46,7 @@ function Tree({ active, selected, onSelect, profile }) {
                   >
                     <Icon size={16} weight={st === 'locked' ? 'regular' : 'fill'} className={st === 'done' ? 'text-emerald' : st === 'active' ? 'text-amber' : 'text-ink-3'} />
                     <span className="font-mono font-medium">{b.id}</span>
-                    <span className="min-w-0 flex-1 truncate text-ink-3">{b.goal_tr}</span>
+                    <span className="min-w-0 flex-1 truncate text-ink-3">{b.goal}</span>
                     <span className="font-mono text-[11px] text-ink-3">{mastered}/4</span>
                   </button>
                 </li>
@@ -77,15 +77,14 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
         <div className="flex flex-wrap items-center gap-2.5">
           <h2 className="font-mono text-[22px] font-semibold tracking-[-0.02em]">{band.id}</h2>
           <span className={`rounded-full px-2 py-0.5 text-[11.5px] font-medium ${state === 'done' ? 'bg-emerald-soft text-emerald' : state === 'active' ? 'bg-amber-soft text-amber' : 'border border-line-strong text-ink-3'}`}>
-            {state === 'done' ? 'Tamamlandı' : state === 'active' ? 'Aktif bant' : 'Sırada'}
+            {state === 'done' ? 'Completed' : state === 'active' ? 'Active band' : 'Up next'}
           </span>
         </div>
-        <p className="max-w-[60ch] text-[16px] leading-relaxed text-ink">{band.goal_tr}</p>
-        <p className="text-[13px] text-ink-3">{band.goal}</p>
-        {state === 'locked' && <p className="text-[12.5px] text-ink-3">Bu bandın pratikleri açık; ancak Can-Do kanıtı yalnızca aktif bantta sayılır.</p>}
+        <p className="max-w-[60ch] text-[16px] leading-relaxed text-ink">{band.goal}</p>
+        {state === 'locked' && <p className="text-[12.5px] text-ink-3">You can practice this band now, but Can-Do evidence only counts in your active band.</p>}
       </div>
 
-      <Section title="Can-Do hedefleri">
+      <Section title="Can-Do goals">
         <ul className="space-y-2">
           {status.map((c) => (
             <li key={c.id} className="flex items-start gap-2.5 text-[14px]">
@@ -99,7 +98,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
               <span className="min-w-0 flex-1">
                 <span className="text-ink">{c.text}</span>
                 <span className="mt-0.5 block font-mono text-[11.5px] text-ink-3">
-                  {c.id} · {SKILL_TR[c.skill]} · {c.mastered ? 'tamamlandı' : c.status === 'in_progress' ? `${c.count}/3 başarılı kullanım` : state === 'locked' ? 'sırada' : '0/3'}
+                  {c.id} · {SKILL_TR[c.skill]} · {c.mastered ? 'mastered' : c.status === 'in_progress' ? `${c.count}/3 successful uses` : state === 'locked' ? 'up next' : '0/3'}
                 </span>
               </span>
             </li>
@@ -107,21 +106,21 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
         </ul>
       </Section>
 
-      <Section title="Dilbilgisi hedefleri">
+      <Section title="Grammar targets">
         <ul className="divide-y divide-line">
           {band.grammar_targets.map((g) => (
             <li key={g.id} className="flex flex-wrap items-start gap-3 py-3 first:pt-0">
               <div className="min-w-0 flex-1 basis-[260px]">
                 <p className="text-[14.5px] font-medium">{g.title}</p>
-                <p className="text-[13px] text-ink-2">{g.explanation_tr}</p>
+                <p className="text-[13px] text-ink-2">{g.explanation}</p>
                 <p className="mt-1 font-mono text-[12.5px] text-ink-3">{g.example}</p>
               </div>
               <div className="flex gap-1.5">
                 <Button size="sm" variant="secondary" onClick={() => onPractice('grammar', g.id, 'writing')}>
-                  <PenNib size={14} /> Yazma
+                  <PenNib size={14} /> Writing
                 </Button>
                 <Button size="sm" variant="secondary" onClick={() => onPractice('grammar', g.id, 'speaking')}>
-                  <Microphone size={14} /> Konuşma
+                  <Microphone size={14} /> Speaking
                 </Button>
               </div>
             </li>
@@ -129,7 +128,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
         </ul>
       </Section>
 
-      <Section title="Konuşma senaryoları">
+      <Section title="Speaking scenarios">
         <ul className="grid gap-3 @xl:grid-cols-3">
           {band.speaking_scenarios.map((s) => (
             <li key={s.id} className="flex flex-col gap-2 rounded-[12px] border border-line bg-sunk/50 p-3.5">
@@ -138,12 +137,12 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
               <p className="flex-1 text-[12.5px] text-ink-2">{s.setting}</p>
               <div className="flex flex-wrap gap-1.5">
                 <Button size="sm" onClick={() => onPractice('scenario', s.id, 'speaking')}>
-                  <Microphone size={14} /> Başlat
+                  <Microphone size={14} /> Start
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => onPractice('scenario', s.id, 'writing')} title="Yazılı olarak dene">
+                <Button size="sm" variant="ghost" onClick={() => onPractice('scenario', s.id, 'writing')} title="Try it in writing">
                   <PenNib size={14} />
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => onRehearse(band, s)} title="Koçla canlandır">
+                <Button size="sm" variant="ghost" onClick={() => onRehearse(band, s)} title="Role-play with the coach">
                   <ChatsCircle size={14} />
                 </Button>
               </div>
@@ -152,7 +151,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
         </ul>
       </Section>
 
-      <Section title="Kelime alanları">
+      <Section title="Vocabulary">
         <div className="grid gap-3 @xl:grid-cols-2">
           {band.lexical_domains.map((d) => {
             const add = missing(d.items);
@@ -160,15 +159,15 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
               <div key={d.id} className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-[13.5px] font-medium">
-                    {d.title_tr} <span className="text-ink-3">· {d.title}</span>
+                    {d.title}
                   </p>
                   {add.length > 0 ? (
                     <Button size="sm" variant="ghost" onClick={() => onAddWords(add)}>
-                      <Plus size={13} /> Kasaya ekle ({add.length})
+                      <Plus size={13} /> Add to vault ({add.length})
                     </Button>
                   ) : (
                     <span className="inline-flex items-center gap-1 text-[12px] text-emerald">
-                      <Check size={13} /> Kasada
+                      <Check size={13} /> In your vault
                     </span>
                   )}
                 </div>
@@ -176,7 +175,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
                   {d.items.map((it) => {
                     const has = vault.has(it.word.toLowerCase());
                     return (
-                      <li key={it.word} title={`${it.meaning_tr} · ${it.example}`} className={`rounded-full px-2.5 py-1 text-[12.5px] ${has ? 'bg-emerald-soft text-emerald' : 'border border-line-strong text-ink-2'}`}>
+                      <li key={it.word} title={`${it.meaning} · ${it.example}`} className={`rounded-full px-2.5 py-1 text-[12.5px] ${has ? 'bg-emerald-soft text-emerald' : 'border border-line-strong text-ink-2'}`}>
                         {it.word}
                       </li>
                     );
@@ -188,14 +187,14 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
         </div>
       </Section>
 
-      <Section title="Türkçe kaynaklı tuzaklar">
+      <Section title="Common pitfalls for Turkish speakers">
         <ul className="space-y-2.5">
           {band.l1_interference_alerts.map((a) => (
             <li key={a.id} className="flex items-start gap-2.5 text-[13.5px]">
               <Warning size={16} className="mt-0.5 shrink-0 text-amber" />
               <span>
                 <span className="text-ink-3 line-through decoration-brick/60">{a.wrong}</span> <span className="text-ink-3">→</span> <span className="font-medium text-ink">{a.right}</span>
-                <span className="block text-[12.5px] text-ink-2">{a.note_tr}</span>
+                <span className="block text-[12.5px] text-ink-2">{a.note}</span>
               </span>
             </li>
           ))}
@@ -205,7 +204,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
   );
 }
 
-/** Müfredat & Yol Haritası: the A1.1-C2.2 curriculum tree, Can-Do status and focused practice. */
+/** Curriculum & Roadmap: the A1.1-C2.2 curriculum tree, Can-Do status and focused practice. */
 export default function Roadmap({ profile, onActivitySaved, onRehearse, refreshKey }) {
   const active = profile.curriculum?.band ?? profile.sub_band ?? 'A1.1';
   const [selected, setSelected] = useState(active);
@@ -238,11 +237,11 @@ export default function Roadmap({ profile, onActivitySaved, onRehearse, refreshK
   async function addWords(items) {
     const level = bandLevel(band.id);
     try {
-      await api.addVocabulary(items.map((it) => ({ word: it.word, meaning: it.meaning_tr, cefr: level, example: it.example })));
+      await api.addVocabulary(items.map((it) => ({ word: it.word, meaning: it.meaning, cefr: level, example: it.example })));
       setVault((v) => new Set([...v, ...items.map((it) => it.word.toLowerCase())]));
-      setNote(`${items.length} kelime kasaya eklendi; yarın ısınmada karşına çıkacak.`);
+      setNote(`${items.length} ${items.length === 1 ? 'word' : 'words'} added to your vault. You’ll see them in tomorrow’s warm-up.`);
     } catch (e) {
-      setNote(`Eklenemedi: ${e.message}`);
+      setNote(`Couldn’t add: ${e.message}`);
     }
   }
 
@@ -251,11 +250,11 @@ export default function Roadmap({ profile, onActivitySaved, onRehearse, refreshK
     return (
       <div className="space-y-4">
         <button onClick={() => setPractice(null)} className="inline-flex items-center gap-1.5 text-[13px] text-ink-3 hover:text-ink">
-          <ArrowLeft size={15} /> Yol haritasına dön
+          <ArrowLeft size={15} /> Back to the roadmap
         </button>
         <p className="text-[13px] text-ink-3">
-          Odaklı pratik · <span className="font-mono text-ink-2">{band.id}</span> · {SKILL_TR[practice.skill]}
-          {practice.task.grammarFocus && <> · hedef yapı: {practice.task.grammarFocus}</>}
+          Focused practice · <span className="font-mono text-ink-2">{band.id}</span> · {SKILL_TR[practice.skill]}
+          {practice.task.grammarFocus && <> · target structure: {practice.task.grammarFocus}</>}
         </p>
         <Module key={practice.task.id} level={bandLevel(band.id)} tasks={[practice.task]} onActivitySaved={onActivitySaved} passedIds={[]} shield={profile.gamification?.mode === 'low'} />
       </div>
@@ -267,10 +266,10 @@ export default function Roadmap({ profile, onActivitySaved, onRehearse, refreshK
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div className="space-y-1">
           <h1 className="flex items-center gap-2 text-[26px] font-semibold tracking-[-0.02em]">
-            <Path size={22} className="text-amber" /> Müfredat & Yol Haritası
+            <Path size={22} className="text-amber" /> Curriculum & Roadmap
           </h1>
           <p className="text-[14px] text-ink-2">
-            Aktif bant <span className="font-mono font-medium text-ink">{active}</span>. Her Can-Do, geri bildirimle onaylanan 3 başarılı kullanımla tamamlanır; bandın 4 hedefi bitince sıradaki bant açılır.
+            Active band <span className="font-mono font-medium text-ink">{active}</span>. Each Can-Do is mastered after 3 successful uses confirmed by feedback; finish all 4 in a band to unlock the next one.
           </p>
         </div>
         <span className="font-mono text-[13px] text-ink-3">

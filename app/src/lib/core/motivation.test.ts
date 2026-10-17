@@ -110,7 +110,7 @@ before(async () => {
 after(async () => fs.rm(tmp, { recursive: true, force: true }));
 
 test('activity returns wins; daily loot collects wins, words, Can-Dos and XP', async () => {
-  const r = await store.completeActivity({ skill: 'writing', level: 'A1', fn: 'evaluative', score: 85, taskId: 'w', taskTitle: 'About Me', response: 'I like games because they are fun.', vocabulary: [{ word: 'level up', meaning: 'seviye atlamak' }] });
+  const r = await store.completeActivity({ skill: 'writing', level: 'A1', fn: 'evaluative', score: 85, taskId: 'w', taskTitle: 'About Me', response: 'I like games because they are fun.', vocabulary: [{ word: 'level up', meaning: 'move up to the next level' }] });
   assert.ok(r.motivation.wins.length >= 3);
   assert.ok(r.profile.gamification.unlocked_milestones.some((m) => m.id === 'first_connector'));
   await store.completeQuickPlay({ correct: 4, total: 5, theme: 'Gaming' });

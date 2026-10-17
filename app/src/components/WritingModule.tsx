@@ -78,23 +78,23 @@ export default function WritingModule({ level, tasks, onActivitySaved, passedIds
             <TaskPicker tasks={tasks} index={index} onChange={go} passedIds={passedIds} />
           </TaskTitle>
           <p className="max-w-[60ch] text-[17px] leading-relaxed text-ink">{task.prompt}</p>
-          {task.tr && <TurkishHint>{task.tr}</TurkishHint>}
+          {task.hint && <TurkishHint>{task.hint}</TurkishHint>}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-ink-3">
             <span>
-              {task.minWords}–{task.maxWords} kelime
+              {task.minWords}–{task.maxWords} words
             </span>
-            <span>Üslup: {({ informal: 'gündelik', neutral: 'nötr', formal: 'resmî' })[task.register] ?? task.register}</span>
+            <span>Register: {({ informal: 'informal', neutral: 'neutral', formal: 'formal' })[task.register] ?? task.register}</span>
           </div>
           {task.hints?.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
               <Lightbulb size={16} className="text-amber" aria-hidden />
-              <span className="sr-only">Cümle başlangıçları:</span>
+              <span className="sr-only">Sentence starters:</span>
               {task.hints.map((h) => (
                 <button
                   key={h}
                   onClick={() => setText((t) => (t ? `${t.trimEnd()} ${h}` : h))}
                   className="rounded-full border border-dashed border-line-strong px-2.5 py-1 text-[13.5px] text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
-                  title="Metnine ekle"
+                  title="Add to your text"
                 >
                   {h}
                 </button>
@@ -107,14 +107,14 @@ export default function WritingModule({ level, tasks, onActivitySaved, passedIds
           <div className="flex flex-wrap items-center gap-3 rounded-[14px] border border-line bg-emerald-soft px-4 py-3">
             <p className="min-w-0 flex-1 text-[15px] text-ink-2">{starter(task)}</p>
             <Button size="sm" onClick={() => setText(starter(task))}>
-              Beni başlat
+              Get me started
             </Button>
           </div>
         )}
 
         <Panel className="overflow-hidden">
           <label htmlFor="writing-input" className="sr-only">
-            Metnin
+            Your text
           </label>
           <textarea
             id="writing-input"
@@ -122,16 +122,16 @@ export default function WritingModule({ level, tasks, onActivitySaved, passedIds
             onChange={(e) => setText(e.target.value)}
             rows={11}
             spellCheck={false}
-            placeholder="Buraya İngilizce yaz. Yazım denetimi kapalı; böylece doğal İngilizceni görebiliriz."
+            placeholder="Write in English here. Spellcheck is off so we can see your natural English."
             style={RULED}
             className="block w-full resize-y bg-transparent px-6 pt-5 pb-6 text-[16.5px] leading-[32px] text-ink placeholder:text-ink-3 focus:outline-none"
           />
           <div className="flex items-center justify-between gap-3 border-t border-line px-4 py-3">
             <span className={`font-mono text-xs ${enough ? 'text-emerald' : 'text-ink-3'}`} aria-live="polite">
-              {words} / {task.minWords}+ kelime
+              {words} / {task.minWords}+ words
             </span>
             <Button onClick={submit} disabled={!words || loading}>
-              <PaperPlaneRight size={16} weight="fill" /> {feedback ? 'Yeniden gönder' : 'Geri bildirim al'}
+              <PaperPlaneRight size={16} weight="fill" /> {feedback ? 'Resubmit' : 'Get feedback'}
             </Button>
           </div>
         </Panel>
@@ -145,11 +145,11 @@ export default function WritingModule({ level, tasks, onActivitySaved, passedIds
         {feedback && (
           <div className="flex flex-wrap gap-2">
             <Button variant="secondary" onClick={() => setFeedback(null)}>
-              <ArrowCounterClockwise size={16} /> Düzelt
+              <ArrowCounterClockwise size={16} /> Revise
             </Button>
             {tasks.length > 1 && (
               <Button variant="ghost" onClick={() => go((index + 1) % tasks.length)}>
-                Sonraki görev <ArrowRight size={16} />
+                Next task <ArrowRight size={16} />
               </Button>
             )}
           </div>

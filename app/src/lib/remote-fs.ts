@@ -32,9 +32,9 @@ export async function request<T>(path: string, init: { method?: 'GET' | 'POST' |
   const data = (await res.json().catch(() => null)) as (T & Partial<ApiErrorBody>) | null;
   if (!res.ok) {
     if (res.status === 401 && data?.locked) window.dispatchEvent(new Event(LOCKED_EVENT));
-    throw new ApiError(data?.error ?? `İstek başarısız (${res.status})`, res.status, Boolean(data?.locked));
+    throw new ApiError(data?.error ?? `Request failed (${res.status})`, res.status, Boolean(data?.locked));
   }
-  if (data === null) throw new ApiError('Sunucu JSON yanıtı vermedi.', res.status);
+  if (data === null) throw new ApiError('The server did not answer with JSON.', res.status);
   return data as T;
 }
 

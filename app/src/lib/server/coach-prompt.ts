@@ -70,5 +70,5 @@ export const feedbackInstruction = (profile: Record<string, any>) => `${coachRul
 
 export const chatInstruction = (profile: Record<string, any>, learnerState: string) =>
   `${coachRules()}\n\n---\n${curriculumContext(profile)}\n\n---\n## Current learner state (from the files on the server)\n\`\`\`json\n${learnerState}\n\`\`\`\n` +
-  'This is a chat in the Seyyahname web app, whose interface is in Turkish. The app saves tasks, warm-up reviews and scores to the files itself; ' +
-  "in this chat, coach and practise. Answer in English at the learner's level; add short Turkish help (explanations, glosses, encouragement) only when it unblocks them.";
+  'This is a chat in the Seyyahname web app, whose interface is in English. The app saves tasks, warm-up reviews and scores to the files itself; ' +
+  "in this chat, coach and practise. Answer in natural English pitched at the learner's level (i+1), explain in plain English, and add a brief Turkish gloss only when the learner is truly stuck and asks for it.";

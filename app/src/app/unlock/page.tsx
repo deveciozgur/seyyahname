@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Gatekeeper from '@/components/Gatekeeper';
 
 // Anonymous on purpose: a neutral tab title and nothing on screen that names the site.
-export const metadata: Metadata = { title: { absolute: 'Giriş' } };
+export const metadata: Metadata = { title: { absolute: 'Sign in' } };
 
 const APP_PATHS = ['/', '/mufredat', '/kasa', '/arsiv', '/koc'];
 

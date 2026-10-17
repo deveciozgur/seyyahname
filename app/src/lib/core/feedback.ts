@@ -145,8 +145,8 @@ export async function generateFeedback(input, ask: AskJson | null) {
     if (mode === 'speaking') result.speaking = { ...speakingMetrics(text, durationSec), ipa: data.pronunciation };
     return result;
   } catch (err) {
-    const reason = err instanceof SyntaxError ? 'Yapay zekâ yanıtı okunamadı' : err.message;
+    const reason = err instanceof SyntaxError ? 'The AI response could not be read' : err.message;
     console.warn(`[feedback] falling back to heuristic engine: ${reason}`);
-    return { ...heuristicFeedback(input), warning: `${reason}. Bunun yerine çevrimdışı geri bildirim gösteriliyor.` };
+    return { ...heuristicFeedback(input), warning: `${reason}. Showing offline feedback instead.` };
   }
 }

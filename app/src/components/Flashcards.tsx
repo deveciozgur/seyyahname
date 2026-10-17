@@ -13,12 +13,12 @@ const ease = [0.16, 1, 0.3, 1] as const;
 // The full SM-2 quality scale. 0-2 send the card back to 1 day, 3 keeps the interval,
 // 4 climbs one step of the 1-3-7-14-30 ladder, 5 skips a step.
 const QUALITIES = [
-  { q: 0, label: 'Boşluk', tr: 'Hiç hatırlamadım', tone: 'lapse' },
-  { q: 1, label: 'Yanlış', tr: 'Yanlış; cevabı görünce tanıdım', tone: 'lapse' },
-  { q: 2, label: 'Neredeyse', tr: 'Yanlış ama çok yakındım', tone: 'lapse' },
-  { q: 3, label: 'Zor', tr: 'Doğru ama zorlandım', tone: 'hard' },
-  { q: 4, label: 'İyi', tr: 'Doğru, biraz düşündüm', tone: 'good' },
-  { q: 5, label: 'Kusursuz', tr: 'Anında ve kolayca', tone: 'good' },
+  { q: 0, label: 'Blank', tr: 'No idea at all', tone: 'lapse' },
+  { q: 1, label: 'Wrong', tr: 'Wrong, but I recognized the answer', tone: 'lapse' },
+  { q: 2, label: 'Almost', tr: 'Wrong, but very close', tone: 'lapse' },
+  { q: 3, label: 'Hard', tr: 'Right, but it took effort', tone: 'hard' },
+  { q: 4, label: 'Good', tr: 'Right, after a moment', tone: 'good' },
+  { q: 5, label: 'Perfect', tr: 'Instant and effortless', tone: 'good' },
 ] as const;
 
 const TONE = {
@@ -68,8 +68,8 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
     return (
       <Panel className="flex flex-col items-start gap-3 px-6 py-10">
         <CheckCircle size={28} className="text-emerald" />
-        <p className="text-2xl font-semibold tracking-[-0.02em]">Kasada tekrar zamanı gelen kart yok.</p>
-        <p className="max-w-md text-ink-2">Her kelime bir sonraki tekrarına kadar dinleniyor. Bugünkü görevlerden gelen yeni kelimeler yarın karşına çıkacak.</p>
+        <p className="text-2xl font-semibold tracking-[-0.02em]">No cards are due in your vault.</p>
+        <p className="max-w-md text-ink-2">Every word is resting until its next review. New words from today’s tasks will show up tomorrow.</p>
       </Panel>
     );
   }
@@ -79,12 +79,12 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
     return (
       <Panel className="space-y-4 px-6 py-8">
         <p className="text-2xl font-semibold tracking-[-0.02em]">
-          Tur bitti: {results.length} karttan {recalled} tanesi hatırlandı.
+          Round complete: you recalled {recalled} of {results.length} cards.
         </p>
         <ul className="flex flex-wrap gap-2">
           {results.map((r) => (
             <li key={r.word} className={`rounded-full px-3 py-1 text-[13px] ${r.q < 3 ? 'bg-amber-soft text-amber' : 'bg-emerald-soft text-emerald'}`}>
-              {r.word}: {r.q}/5 · {r.q < 3 ? 'yarın yeniden' : `sonraki: ${stageTr(r.stage)}`}
+              {r.word}: {r.q}/5 · {r.q < 3 ? 'back tomorrow' : `next in ${stageTr(r.stage)}`}
             </li>
           ))}
         </ul>
@@ -94,12 +94,12 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
 
   const card = cards[i];
   return (
-    <Panel as="section" aria-label="Kasa kartları" className="overflow-hidden">
+    <Panel as="section" aria-label="Vault cards" className="overflow-hidden">
       <div className="flex flex-wrap items-center gap-3 border-b border-line px-6 py-3.5">
         <Cards size={18} className="text-amber" />
-        <h2 className="text-sm font-semibold">Kart tekrarı</h2>
+        <h2 className="text-sm font-semibold">Card review</h2>
         <span className="text-[13px] text-ink-3">
-          Kart {i + 1} / {cards.length}
+          Card {i + 1} of {cards.length}
         </span>
         <div className="ml-auto h-1.5 w-28 overflow-hidden rounded-full bg-sunk" aria-hidden>
           <div className="h-full rounded-full bg-ink transition-[width] duration-500" style={{ width: `${(i / cards.length) * 100}%` }} />
@@ -111,12 +111,12 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
             <CardFace card={card} revealed={revealed} />
             {!revealed ? (
               <Button variant="secondary" onClick={() => setRevealed(true)}>
-                <Eye size={16} /> Cevabı göster
+                <Eye size={16} /> Show answer
               </Button>
             ) : (
               <div className="space-y-2">
-                <p className="text-[13px] text-ink-3">Ne kadar iyi hatırladın? (SM-2 kalite puanı 0-5)</p>
-                <div className="grid grid-cols-3 gap-2 sm:grid-cols-6" role="group" aria-label="Hatırlama kalitesi, 0-5">
+                <p className="text-[13px] text-ink-3">How well did you remember it? (SM-2 quality score, 0-5)</p>
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-6" role="group" aria-label="Recall quality, 0-5">
                   {QUALITIES.map(({ q, label, tr, tone }) => (
                     <button
                       key={q}

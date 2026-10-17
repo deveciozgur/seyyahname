@@ -70,7 +70,7 @@ export default function Gatekeeper({ next = '/' }: { next?: string }) {
           <button
             type="button"
             onClick={() => setShow((s) => !s)}
-            aria-label={show ? 'PIN’i gizle' : 'PIN’i göster'}
+            aria-label={show ? 'Hide PIN' : 'Show PIN'}
             className="absolute top-1/2 right-2 grid size-8 -translate-y-1/2 place-items-center rounded-md text-ink-3 hover:text-ink"
           >
             {show ? <EyeSlash size={17} /> : <Eye size={17} />}
@@ -86,7 +86,7 @@ export default function Gatekeeper({ next = '/' }: { next?: string }) {
           disabled={!pin || busy}
           className="h-11 w-full rounded-[10px] bg-ink text-[14px] font-medium text-paper transition-[transform,background-color] active:scale-[0.98] disabled:bg-line-strong disabled:text-ink-3"
         >
-          {busy ? '…' : 'Giriş'}
+          {busy ? '…' : 'Sign in'}
         </button>
       </motion.form>
     </main>

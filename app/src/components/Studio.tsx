@@ -20,10 +20,10 @@ import SpeakingModule from './SpeakingModule';
 
 const MODULES = { reading: ReadingModule, writing: WritingModule, listening: ListeningModule, speaking: SpeakingModule };
 const BLURBS = {
-  reading: 'Yavaşça oku, sonra cevapla. Sorular yalnızca hatırlamayı değil, çıkarım ve bağlamdaki kelime bilgisini de ölçer.',
-  writing: 'Yazım denetimi olmadan yaz. Geri bildirim üç katmanda gelir: Strength Recognition, Natural Recast ve Polish.',
-  listening: 'Dinlerken metin bulanık kalır. Boşlukları doldur, sonra metni aç.',
-  speaking: 'Hedef süre boyunca serbestçe konuş. Döküm ve sesin birlikte değerlendirilir.',
+  reading: 'Read slowly, then answer. The questions test inference and vocabulary in context, not just recall.',
+  writing: 'Write without spellcheck. Feedback comes in three layers: Strength Recognition, Natural Recast and Polish.',
+  listening: 'The transcript stays blurred while you listen. Fill the gaps, then reveal it.',
+  speaking: 'Speak freely for the target time. Your transcript and your voice are assessed together.',
 };
 
 function DiagnosticStrip({ diagnostic, current, onPick }) {
@@ -34,7 +34,7 @@ function DiagnosticStrip({ diagnostic, current, onPick }) {
       <p className="flex flex-1 items-start gap-2 text-sm text-ink-2">
         <ClipboardText size={18} className="mt-px shrink-0 text-amber" />
         <span>
-          <span className="font-medium text-ink">Seviye tespiti {diagnostic.status === 'paused' ? 'duraklatıldı' : 'sürüyor'}.</span> Her beceride bitirdiğin ilk görev başlangıç seviyeni belirler. {pending.length} beceri kaldı.
+          <span className="font-medium text-ink">Placement {diagnostic.status === 'paused' ? 'paused' : 'in progress'}.</span> The first task you finish in each skill sets your starting level. {pending.length} {pending.length === 1 ? 'skill' : 'skills'} to go.
         </span>
       </p>
       <div className="flex flex-wrap gap-1.5">
@@ -93,17 +93,17 @@ export default function Studio({ profile, onActivitySaved, refreshKey }) {
       <header className="space-y-5">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Bugünün çalışması</h1>
+            <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Today's practice</h1>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{BLURBS[skill]}</p>
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-3">
           {mode !== 'low' && (
-            <Button variant="ghost" size="sm" onClick={() => changeMode('low')} title="Hafif, sadece dokunmalı turlara geç">
-              <Coffee size={15} /> Hafif mod
+            <Button variant="ghost" size="sm" onClick={() => changeMode('low')} title="Switch to light, tap-only rounds">
+              <Coffee size={15} /> Low-effort mode
             </Button>
           )}
           <label className="flex shrink-0 items-center gap-2 text-sm text-ink-3">
-            Görev seviyesi
+            Task level
             <span className="relative">
               <select
                 value={level}
@@ -113,7 +113,7 @@ export default function Studio({ profile, onActivitySaved, refreshKey }) {
                 {LEVELS.map((l) => (
                   <option key={l} value={l}>
                     {l}
-                    {l === userLevel ? ' (sen)' : ''}
+                    {l === userLevel ? ' (you)' : ''}
                   </option>
                 ))}
               </select>
@@ -128,8 +128,8 @@ export default function Studio({ profile, onActivitySaved, refreshKey }) {
 
         <DailyLoot refreshKey={refreshKey} />
 
-        <div className="flex flex-wrap items-center gap-1.5" aria-label="İlgi alanların">
-          <span className="mr-1 text-[13px] text-ink-3">İlgi alanlarım</span>
+        <div className="flex flex-wrap items-center gap-1.5" aria-label="Your interests">
+          <span className="mr-1 text-[13px] text-ink-3">My interests</span>
           {THEMES.map((t) => {
             const Icon = THEME_ICONS[t];
             const on = interests.includes(t);
@@ -152,18 +152,18 @@ export default function Studio({ profile, onActivitySaved, refreshKey }) {
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-3">
           <span>
-            {skillTr(skill)} bandın: <span className="font-mono font-medium text-ink">{band}</span> <LevelBadge level={userLevel} />
+            Your {skillTr(skill).toLowerCase()} band: <span className="font-mono font-medium text-ink">{band}</span> <LevelBadge level={userLevel} />
           </span>
           {band !== BANDS[BANDS.length - 1] && (
             <span className="inline-flex items-center gap-2">
               {missing.length
-                ? `${nextBand(band)} için: %${MASTERY}+ ile ${missing.map((f) => fnTr(f)).join(', ')} ${userLevel} görevi`
-                : `${nextBand(band)} için hazır`}
+                ? `For ${nextBand(band)}: ${missing.map((f) => fnTr(f)).join(', ')} ${userLevel} ${missing.length === 1 ? 'task' : 'tasks'} at ${MASTERY}%+`
+                : `Ready for ${nextBand(band)}`}
               <FunctionSlots profile={profile} skill={skill} />
             </span>
           )}
-          {taskLevel !== userLevel && <span className="text-amber">Yalnızca alıştırma: alt bant adımları {userLevel} görevleriyle sayılır. {taskLevel} Can-Do kazanımları yine sayılır.</span>}
-          {taskLevel !== level && <span>Henüz {level} görevi yok, bu yüzden {taskLevel} gösteriliyor.</span>}
+          {taskLevel !== userLevel && <span className="text-amber">Practice only: sub-band steps count with {userLevel} tasks. {taskLevel} Can-Do progress still counts.</span>}
+          {taskLevel !== level && <span>No {level} tasks yet, so {taskLevel} tasks are shown.</span>}
         </div>
       </header>
 
@@ -171,7 +171,7 @@ export default function Studio({ profile, onActivitySaved, refreshKey }) {
         <p className="flex items-start gap-2 rounded-[14px] border border-line bg-emerald-soft px-4 py-3 text-[14px] text-ink-2" role="status">
           <Lifebuoy size={18} className="mt-px shrink-0 text-emerald" />
           <span>
-            <span className="font-medium text-ink">Moral kalkanı açık.</span> Son turlar zorlayıcıydı; ipuçları açık, seçenekler sunuluyor ve cümleler yarım veriliyor. Yeniden akışa girene kadar hiçbir şey zorlaşmayacak.
+            <span className="font-medium text-ink">Frustration Shield is on.</span> The last rounds were tough, so hints are open, choices are offered and sentences come half-finished. Nothing gets harder until you're back in the flow.
           </span>
         </p>
       )}

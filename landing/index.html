@@ -1,0 +1,1003 @@
+<!doctype html>
+<!--
+  Seyyahname · landing page (seyyahname.com) · single file, no build step.
+  Review before going live:
+  - STATS (hero trust badges) and PRICING live in the CONFIG object inside the <script> at the bottom. Replace them with real numbers.
+  - The yearly badge text is CONFIG.yearlyBadge. "2 months free" is roughly 17% off; match it to your actual offer.
+  - The /privacy, /terms and /cookies pages and the social links (href="#") are placeholders.
+  - The share image is the app's https://app.seyyahname.com/opengraph-image.
+-->
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Seyyahname · Your Personal AI English Coach, 24/7</title>
+  <meta name="description" content="Seyyahname is a personal AI English coach that assesses your speaking against CEFR Can-Do standards, makes vocabulary stick with SM-2 spaced repetition, and teaches at your i+1 level. Try it free for 14 days." />
+  <meta name="theme-color" content="#0A0A0B" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://seyyahname.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Seyyahname" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://seyyahname.com/" />
+  <meta property="og:title" content="Seyyahname · Your Personal AI English Coach, 24/7" />
+  <meta property="og:description" content="Personal English coaching from A1 to C2, with CEFR Can-Do tracking, an SM-2 vocabulary vault and three-layer feedback on every answer." />
+  <meta property="og:image" content="https://app.seyyahname.com/opengraph-image" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Seyyahname AI Coach: CEFR A1–C2 English coaching" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Seyyahname · Your Personal AI English Coach, 24/7" />
+  <meta name="twitter:description" content="Personal English coaching from A1 to C2, with CEFR Can-Do tracking, an SM-2 vocabulary vault and three-layer feedback on every answer." />
+  <meta name="twitter:image" content="https://app.seyyahname.com/opengraph-image" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='30%25' r='80%25'%3E%3Cstop offset='0' stop-color='%23fff3d6'/%3E%3Cstop offset='.45' stop-color='%23e8c07d'/%3E%3Cstop offset='1' stop-color='%238a6a35'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3C/svg%3E" />
+
+  <!-- Fonts: Geist + Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind (Play CDN, JIT in the browser) -->
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    window.tailwind && (tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+            mono: ['"Geist Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          },
+          colors: {
+            obsidian: '#0A0A0B',
+            panel: '#111113',
+            raised: '#161618',
+            sunk: '#1C1C1F',
+            line: 'rgba(255,255,255,0.08)',
+            ink: { DEFAULT: '#EDEDEF', 2: '#A1A1AA', 3: '#71717A' },
+            champagne: { DEFAULT: '#E8C07D', hover: '#D8AD68', soft: 'rgba(232,192,125,0.12)' },
+            jade: { DEFAULT: '#4ADE80', soft: 'rgba(74,222,128,0.12)' },
+            sky: { DEFAULT: '#7DD3FC', soft: 'rgba(125,211,252,0.12)' },
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(232,192,125,0.35), 0 10px 40px -10px rgba(232,192,125,0.55)',
+            panel: '0 30px 80px -30px rgba(0,0,0,0.8)',
+          },
+          maxWidth: { page: '1200px' },
+        },
+      },
+    });
+  </script>
+
+  <!-- Icons: Phosphor (web font) -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
+
+  <style>
+    :root { color-scheme: dark; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { background: #0A0A0B; color: #EDEDEF; font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+    section[id] { scroll-margin-top: 84px; }
+    ::selection { background: rgba(232,192,125,0.3); color: #fff; }
+
+    /* Background light */
+    .aurora { position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(60rem 40rem at 85% -10%, rgba(232,192,125,0.10), transparent 60%),
+        radial-gradient(50rem 35rem at -10% 20%, rgba(125,211,252,0.05), transparent 60%),
+        radial-gradient(40rem 30rem at 50% 110%, rgba(232,192,125,0.06), transparent 60%),
+        #0A0A0B; }
+    .grain::after { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+    .glass { background: rgba(17,17,19,0.72); border: 1px solid rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%); }
+    .edge { position: relative; }
+    .edge::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02) 40%, transparent);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+    .gold-edge::before { background: linear-gradient(180deg, rgba(232,192,125,0.8), rgba(232,192,125,0.15) 50%, rgba(232,192,125,0.35)); }
+
+    .text-sheen { background: linear-gradient(180deg, #FFFFFF 0%, #EDEDEF 40%, #A1A1AA 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .text-gold { background: linear-gradient(100deg, #F6DFAF 0%, #E8C07D 45%, #B98B45 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .btn-gold { background: linear-gradient(180deg, #F0CF94 0%, #E8C07D 55%, #D8AD68 100%); color: #17120A; box-shadow: 0 0 0 1px rgba(232,192,125,0.5) inset, 0 8px 30px -8px rgba(232,192,125,0.6); transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s, background .2s; }
+    .btn-gold:hover { background: linear-gradient(180deg, #E8C07D 0%, #D8AD68 100%); box-shadow: 0 0 0 1px rgba(232,192,125,0.6) inset, 0 12px 40px -8px rgba(232,192,125,0.75); }
+    .btn-gold:active { transform: scale(.98); }
+    .btn-ghost { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); transition: background .2s, border-color .2s, transform .2s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.2); }
+    .btn-ghost:active { transform: scale(.98); }
+    :focus-visible { outline: 2px solid #E8C07D; outline-offset: 3px; border-radius: 10px; }
+
+    /* Header state */
+    #site-header { transition: background .3s, border-color .3s, box-shadow .3s; }
+    #site-header.scrolled { background: rgba(10,10,11,0.72); border-color: rgba(255,255,255,0.08); -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%); box-shadow: 0 10px 30px -20px rgba(0,0,0,0.9); }
+
+    /* Mobile menu */
+    #mobile-menu { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s cubic-bezier(.16,1,.3,1), opacity .25s; opacity: 0; }
+    #mobile-menu.open { grid-template-rows: 1fr; opacity: 1; }
+    #mobile-menu > div { overflow: hidden; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* FAQ */
+    .faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.16,1,.3,1); }
+    .faq-item.open .faq-panel { grid-template-rows: 1fr; }
+    .faq-panel > div { overflow: hidden; }
+    .faq-item .faq-icon { transition: transform .35s cubic-bezier(.16,1,.3,1); }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Pricing toggle */
+    .switch-track { transition: background .25s; }
+    .switch-thumb { transition: transform .3s cubic-bezier(.16,1,.3,1); }
+    [aria-checked="true"] .switch-thumb { transform: translateX(22px); }
+    [aria-checked="true"] .switch-track { background: #E8C07D; }
+    .price-num { transition: opacity .2s, transform .2s; }
+    .price-num.swap { opacity: 0; transform: translateY(-6px); }
+
+    /* Simulator */
+    .msg { animation: msgIn .45s cubic-bezier(.16,1,.3,1) both; }
+    @keyframes msgIn { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+    .caret::after { content: ''; display: inline-block; width: 7px; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; background: #E8C07D; animation: blink 1s steps(2) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .dots span { display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: #71717A; animation: dot 1.2s infinite ease-in-out; }
+    .dots span:nth-child(2) { animation-delay: .15s; } .dots span:nth-child(3) { animation-delay: .3s; }
+    @keyframes dot { 0%, 80%, 100% { transform: translateY(0); opacity: .5; } 40% { transform: translateY(-4px); opacity: 1; } }
+    .layer { opacity: 0; transform: translateY(8px); transition: opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1); }
+    .layer.on { opacity: 1; transform: none; }
+    .radar-shape { transition: all .9s cubic-bezier(.16,1,.3,1); }
+    .bar-fill { transition: width 1s cubic-bezier(.16,1,.3,1); }
+    .pulse-ring { animation: pulseRing 2.4s cubic-bezier(.16,1,.3,1) infinite; }
+    @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(74,222,128,.5); } 70%, 100% { box-shadow: 0 0 0 8px rgba(74,222,128,0); } }
+    .chat-scroll { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.12) transparent; }
+
+    .marquee { mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+    .marquee-track { animation: marquee 38s linear infinite; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://seyyahname.com/#org",
+        "name": "Seyyahname",
+        "url": "https://seyyahname.com/",
+        "logo": "https://app.seyyahname.com/icon.svg"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://seyyahname.com/#website",
+        "url": "https://seyyahname.com/",
+        "name": "Seyyahname",
+        "inLanguage": "en-US",
+        "publisher": { "@id": "https://seyyahname.com/#org" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Seyyahname AI Coach",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "url": "https://app.seyyahname.com/",
+        "inLanguage": "en-US",
+        "description": "A personal AI English coach with CEFR Can-Do tracking, an SM-2 spaced-repetition vocabulary vault, Krashen's i+1 pedagogy and three-layer feedback.",
+        "publisher": { "@id": "https://seyyahname.com/#org" },
+        "offers": [
+          { "@type": "Offer", "name": "Explorer", "price": "0", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Seyyah (Pro)", "price": "15", "priceCurrency": "USD" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "How is Seyyahname different from apps like Duolingo?", "acceptedAnswer": { "@type": "Answer", "text": "Seyyahname is built around real communication, not gamified word matching. Every sentence you write or say is assessed against CEFR Can-Do descriptors, refined with three-layer feedback, and the words you learn move into long-term memory with the SM-2 algorithm. You practise to actually speak, not to collect points." } },
+          { "@type": "Question", "name": "What are Krashen's i+1 hypothesis and Triple-Layer Feedback?", "acceptedAnswer": { "@type": "Answer", "text": "i+1 says you acquire a language fastest from input one step above your current level: too easy and you stop growing, too hard and you stall. Seyyahname tunes every reply to that sweet spot. Triple-Layer Feedback then handles each answer in three passes: what you did well (Strength), a natural corrected version of your sentence (Recast), and the phrasing that takes you to the next level (Polish)." } },
+          { "@type": "Question", "name": "How is my CEFR level measured and tracked?", "acceptedAnswer": { "@type": "Answer", "text": "Your first tasks set your starting level. From there, concrete Can-Do goals are tracked across 12 sub-bands from A1 to C2. You earn a goal after succeeding at 80% or higher on three different tasks, confirmed by the feedback; once every goal in a band is done, the next band unlocks. Speaking, writing, reading and listening are tracked separately." } },
+          { "@type": "Question", "name": "Can I cancel my subscription anytime?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Cancel whenever you like in one click; every feature stays on until the end of your billing period. Your progress, vocabulary vault and session history are never deleted, so you can pick up right where you left off." } },
+          { "@type": "Question", "name": "How do I sign in to the web app (app.seyyahname.com)?", "acceptedAnswer": { "@type": "Answer", "text": "Open app.seyyahname.com in your browser and sign in on the welcome screen with the access details you were given. Nothing to install: the app works on desktop, tablet and phone, and your session stays securely signed in on your device." } }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body class="grain min-h-[100dvh] overflow-x-hidden antialiased">
+  <div class="aurora" aria-hidden="true"></div>
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-champagne focus:px-4 focus:py-2 focus:text-obsidian">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header id="site-header" class="fixed inset-x-0 top-0 z-50 border-b border-transparent">
+    <div class="mx-auto flex h-[68px] max-w-page items-center gap-6 px-4 sm:px-6">
+      <a href="#" class="group flex items-center gap-2.5" aria-label="Seyyahname home">
+        <span class="relative size-8 rounded-[10px] bg-[radial-gradient(circle_at_30%_30%,#fff3d6,#e8c07d_45%,#8a6a35)] shadow-[0_0_22px_rgba(232,192,125,0.45)] transition-transform duration-300 group-hover:rotate-6" aria-hidden="true">
+          <span class="absolute inset-[9px] rounded-full border border-black/25"></span>
+        </span>
+        <span class="text-[17px] font-semibold tracking-[-0.02em]">Seyyahname</span>
+      </a>
+
+      <nav aria-label="Main navigation" class="mx-auto hidden items-center gap-1 lg:flex">
+        <a href="#features" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Features</a>
+        <a href="#method" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Method</a>
+        <a href="#demo" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Live Demo</a>
+        <a href="#pricing" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Pricing</a>
+        <a href="#faq" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">FAQ</a>
+      </nav>
+
+      <div class="ml-auto flex items-center gap-2 lg:ml-0">
+        <a href="https://app.seyyahname.com/unlock" class="hidden rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink sm:inline-flex">Sign in</a>
+        <a href="https://app.seyyahname.com" class="btn-gold hidden h-10 items-center gap-2 whitespace-nowrap rounded-full px-5 text-[14px] font-semibold sm:inline-flex">
+          Open the app <i class="ph-bold ph-arrow-up-right text-[13px]" aria-hidden="true"></i>
+        </a>
+        <button id="menu-toggle" type="button" class="grid size-10 place-items-center rounded-full border border-line bg-white/[0.03] text-ink lg:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+          <i class="ph ph-list text-[20px]" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="lg:hidden" aria-hidden="true">
+      <div>
+        <nav aria-label="Mobile navigation" class="mx-4 mb-4 flex flex-col gap-1 rounded-2xl border border-line bg-panel/95 p-3 backdrop-blur-xl">
+          <a href="#features" class="m-link rounded-xl px-4 py-3 text-[15px] text-ink-2 hover:bg-white/[0.04] hover:text-ink">Features</a>
+          <a href="#method" class="m-link rounded-xl px-4 py-3 text-[15px] text-ink-2 hover:bg-white/[0.04] hover:text-ink">Method</a>
+          <a href="#demo" class="m-link rounded-xl px-4 py-3 text-[15px] text-ink-2 hover:bg-white/[0.04] hover:text-ink">Live Demo</a>
+          <a href="#pricing" class="m-link rounded-xl px-4 py-3 text-[15px] text-ink-2 hover:bg-white/[0.04] hover:text-ink">Pricing</a>
+          <a href="#faq" class="m-link rounded-xl px-4 py-3 text-[15px] text-ink-2 hover:bg-white/[0.04] hover:text-ink">FAQ</a>
+          <div class="mt-2 grid grid-cols-2 gap-2 border-t border-line pt-3">
+            <a href="https://app.seyyahname.com/unlock" class="btn-ghost inline-flex h-11 items-center justify-center rounded-full text-[14px]">Sign in</a>
+            <a href="https://app.seyyahname.com" class="btn-gold inline-flex h-11 items-center justify-center rounded-full text-[14px] font-semibold">Open the app</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ============ HERO ============ -->
+    <section class="relative px-4 pb-16 pt-32 sm:px-6 sm:pt-36 lg:pb-24 lg:pt-44">
+      <div class="mx-auto grid max-w-page items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+        <div>
+          <p class="reveal inline-flex items-center gap-2 rounded-full border border-champagne/25 bg-champagne-soft px-3.5 py-1.5 text-[12.5px] font-medium text-champagne">
+            <span aria-hidden="true">🚀</span> Krashen i+1 pedagogy · Live AI streaming
+          </p>
+          <h1 class="reveal mt-6 text-[40px] font-semibold leading-[1.04] tracking-[-0.035em] sm:text-[54px] lg:text-[64px]" style="transition-delay:.05s">
+            <span class="text-sheen">Forget traditional courses.</span><br />
+            <span class="text-sheen">Meet the English coach</span>
+            <span class="text-gold"> who's with you 24/7.</span>
+          </h1>
+          <p class="reveal mt-6 max-w-[58ch] text-[17px] leading-relaxed text-ink-2 sm:text-[18px]" style="transition-delay:.1s">
+            Seyyahname isn't another AI chatbot. It's a complete language-acquisition system that assesses your speaking against CEFR Can-Do standards and makes new vocabulary stick with SM-2 spaced repetition.
+          </p>
+          <div class="reveal mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style="transition-delay:.15s">
+            <a href="https://app.seyyahname.com" class="btn-gold inline-flex h-[52px] items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 text-[15.5px] font-semibold">
+              Start your 14-day free trial <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+            </a>
+            <a href="#demo" class="btn-ghost inline-flex h-[52px] items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-6 text-[15px] text-ink">
+              <span class="grid size-7 place-items-center rounded-full bg-white/10"><i class="ph-fill ph-play text-[12px]" aria-hidden="true"></i></span>
+              See how it works
+            </a>
+          </div>
+          <p class="reveal mt-4 flex items-center gap-2 text-[13px] text-ink-3" style="transition-delay:.18s">
+            <i class="ph ph-shield-check text-jade" aria-hidden="true"></i> No credit card required · Cancel anytime
+          </p>
+
+          <ul class="reveal mt-12 grid max-w-xl grid-cols-3 divide-x divide-white/[0.08] rounded-2xl border border-line bg-white/[0.02]" style="transition-delay:.22s" aria-label="Trust indicators">
+            <li class="px-4 py-4 sm:px-5">
+              <p class="font-mono text-[22px] font-semibold tracking-tight text-ink sm:text-[26px]"><span data-count="sessions">0</span><span class="text-champagne">+</span></p>
+              <p class="mt-1 text-[12px] leading-snug text-ink-3 sm:text-[12.5px]">Interactive sessions</p>
+            </li>
+            <li class="px-4 py-4 sm:px-5">
+              <p class="font-mono text-[22px] font-semibold tracking-tight text-ink sm:text-[26px]"><span data-count="levelUp">0</span><span class="text-champagne">%</span></p>
+              <p class="mt-1 text-[12px] leading-snug text-ink-3 sm:text-[12.5px]">Level-up rate</p>
+            </li>
+            <li class="px-4 py-4 sm:px-5">
+              <p class="font-mono text-[22px] font-semibold tracking-tight text-ink sm:text-[26px]">Zero<span class="text-champagne">.</span></p>
+              <p class="mt-1 text-[12px] leading-snug text-ink-3 sm:text-[12.5px]">Judgment-free zone</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Hero side: live feedback preview -->
+        <div class="reveal relative hidden lg:block" style="transition-delay:.2s" aria-hidden="true">
+          <div class="absolute -inset-10 rounded-full bg-[radial-gradient(closest-side,rgba(232,192,125,0.16),transparent)] blur-2xl"></div>
+          <div class="edge glass relative rounded-[22px] p-5 shadow-panel">
+            <div class="flex items-center justify-between">
+              <span class="inline-flex items-center gap-2 text-[12px] font-medium text-ink-2"><span class="pulse-ring size-2 rounded-full bg-jade"></span> Live coach · B1.2</span>
+              <span class="font-mono text-[11px] text-ink-3">streaming</span>
+            </div>
+            <div class="mt-4 ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md border border-line bg-sunk px-4 py-3 text-[14px] text-ink">I am working here since 2021.</div>
+            <div class="mt-4 space-y-2.5">
+              <div class="rounded-xl border border-jade/20 bg-jade-soft px-3.5 py-2.5 text-[13px]"><b class="text-jade">💪 Strength</b> <span class="text-ink-2">Clear timeline: "since 2021" is exactly the right time marker.</span></div>
+              <div class="rounded-xl border border-sky/20 bg-sky-soft px-3.5 py-2.5 text-[13px]"><b class="text-sky">🔁 Recast</b> <span class="text-ink-2">I <s class="text-ink-3">am working</s> <b class="text-ink">have been working</b> here since 2021.</span></div>
+              <div class="rounded-xl border border-champagne/25 bg-champagne-soft px-3.5 py-2.5 text-[13px]"><b class="text-champagne">✨ Polish</b> <span class="text-ink-2">I've been with the company since 2021.</span></div>
+            </div>
+            <div class="mt-5 flex items-center gap-3 rounded-xl border border-line bg-black/20 px-3.5 py-3">
+              <span class="font-mono text-[12px] text-ink-3">B1.2</span>
+              <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]"><div class="h-full w-[72%] rounded-full bg-gradient-to-r from-champagne-hover to-champagne"></div></div>
+              <span class="font-mono text-[12px] text-champagne">B2.1</span>
+            </div>
+          </div>
+          <div class="glass absolute -bottom-6 -left-8 flex items-center gap-3 rounded-2xl px-4 py-3 shadow-panel">
+            <span class="grid size-9 place-items-center rounded-xl bg-champagne-soft text-champagne"><i class="ph-fill ph-cards text-[18px]"></i></span>
+            <div><p class="text-[13px] font-medium">+3 words to your vault</p><p class="font-mono text-[11px] text-ink-3">SM-2 · next review in 1d</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CEFR band marquee -->
+      <div class="marquee mx-auto mt-20 max-w-page overflow-hidden" aria-hidden="true">
+        <div class="marquee-track flex w-max gap-3 font-mono text-[12.5px] text-ink-3">
+          <span class="rounded-full border border-line px-3.5 py-1.5">A1.1 · Introduce yourself</span><span class="rounded-full border border-line px-3.5 py-1.5">A1.2 · Daily routines</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.1 · Past events</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.2 · Plans &amp; comparisons</span><span class="rounded-full border border-champagne/30 px-3.5 py-1.5 text-champagne">B1.1 · Defend an opinion</span><span class="rounded-full border border-line px-3.5 py-1.5">B1.2 · Professional email</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.1 · Build an argument</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.2 · Switch register</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.1 · Nuance with idioms</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.2 · Abstract debate</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.1 · Irony &amp; style</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.2 · Native-like rhetoric</span>
+          <span class="rounded-full border border-line px-3.5 py-1.5">A1.1 · Introduce yourself</span><span class="rounded-full border border-line px-3.5 py-1.5">A1.2 · Daily routines</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.1 · Past events</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.2 · Plans &amp; comparisons</span><span class="rounded-full border border-champagne/30 px-3.5 py-1.5 text-champagne">B1.1 · Defend an opinion</span><span class="rounded-full border border-line px-3.5 py-1.5">B1.2 · Professional email</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.1 · Build an argument</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.2 · Switch register</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.1 · Nuance with idioms</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.2 · Abstract debate</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.1 · Irony &amp; style</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.2 · Native-like rhetoric</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIVE SIMULATOR ============ -->
+    <section id="demo" class="px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="sim-title">
+      <div class="mx-auto max-w-page">
+        <div class="reveal flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div class="max-w-2xl">
+            <p class="font-mono text-[12px] uppercase tracking-[0.18em] text-champagne">Live Demo</p>
+            <h2 id="sim-title" class="mt-3 text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[44px]"><span class="text-sheen">Write one sentence.</span> <span class="text-ink-2">Your coach handles the rest.</span></h2>
+          </div>
+          <p class="max-w-md text-[15.5px] leading-relaxed text-ink-2">A faithful replay of the real Seyyahname interface: your Can-Do progress on the left, an always-on chat on the right, and three-layer feedback under every answer.</p>
+        </div>
+
+        <div class="reveal mt-12">
+          <div class="edge relative overflow-hidden rounded-[22px] border border-line bg-panel shadow-panel">
+            <!-- window chrome -->
+            <div class="flex h-11 items-center gap-2 border-b border-line bg-raised/80 px-4">
+              <span class="size-3 rounded-full bg-[#FF5F57]/80"></span><span class="size-3 rounded-full bg-[#FEBC2E]/80"></span><span class="size-3 rounded-full bg-[#28C840]/80"></span>
+              <div class="mx-auto flex h-7 w-full max-w-sm items-center justify-center gap-2 rounded-lg border border-line bg-black/30 font-mono text-[12px] text-ink-3">
+                <i class="ph ph-lock-simple text-[12px]" aria-hidden="true"></i> app.seyyahname.com
+              </div>
+              <button id="sim-replay" type="button" class="hidden items-center gap-1.5 rounded-full border border-line px-3 py-1 text-[12px] text-ink-2 transition-colors hover:text-ink sm:inline-flex"><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Replay</button>
+            </div>
+
+            <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
+              <!-- LEFT: progress -->
+              <div class="border-b border-line p-5 sm:p-7 lg:border-b-0 lg:border-r">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-[12px] font-medium uppercase tracking-[0.14em] text-ink-3">CEFR Can-Do radar</p>
+                    <p class="mt-1.5 text-[26px] font-semibold tracking-[-0.03em]">B1.2 <span class="text-ink-3">→</span> <span class="text-champagne">B2.1</span></p>
+                  </div>
+                  <span class="rounded-full border border-jade/25 bg-jade-soft px-2.5 py-1 font-mono text-[11.5px] text-jade">live</span>
+                </div>
+
+                <figure class="mx-auto mt-4 max-w-[340px]">
+                  <svg viewBox="-34 0 308 240" class="w-full" role="img" aria-labelledby="radar-title">
+                    <title id="radar-title">The four skills measured against B1 and B2 targets</title>
+                    <g fill="none" stroke="rgba(255,255,255,0.08)">
+                      <polygon points="120,30 210,120 120,210 30,120" />
+                      <polygon points="120,52.5 187.5,120 120,187.5 52.5,120" />
+                      <polygon points="120,75 165,120 120,165 75,120" />
+                      <polygon points="120,97.5 142.5,120 120,142.5 97.5,120" />
+                      <line x1="120" y1="30" x2="120" y2="210" /><line x1="30" y1="120" x2="210" y2="120" />
+                    </g>
+                    <polygon points="120,39 201,120 120,201 39,120" fill="none" stroke="rgba(232,192,125,0.55)" stroke-dasharray="4 4" />
+                    <polygon id="radar-now" class="radar-shape" points="120,66 174,120 120,163 84,120" fill="rgba(232,192,125,0.16)" stroke="#E8C07D" stroke-width="1.5" />
+                    <g font-family="Geist, sans-serif" font-size="11" fill="#A1A1AA" text-anchor="middle">
+                      <text x="120" y="20">Speaking</text><text x="216" y="124" text-anchor="start">Writing</text><text x="120" y="230">Reading</text><text x="24" y="124" text-anchor="end">Listening</text>
+                    </g>
+                  </svg>
+                  <figcaption class="mt-1 flex justify-center gap-4 text-[11.5px] text-ink-3">
+                    <span class="inline-flex items-center gap-1.5"><i class="inline-block h-2 w-3 rounded-sm bg-champagne/40 ring-1 ring-champagne"></i> Now</span>
+                    <span class="inline-flex items-center gap-1.5"><i class="inline-block h-0 w-3 border-t border-dashed border-champagne/70"></i> B2 target</span>
+                  </figcaption>
+                </figure>
+
+                <div class="mt-5 space-y-3">
+                  <div class="rounded-xl border border-line bg-black/20 p-3.5">
+                    <div class="flex items-center justify-between text-[12.5px]"><span class="text-ink-2">Band goals</span><span class="font-mono text-ink"><span id="cando-count">2</span>/4 Can-Do</span></div>
+                    <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06]"><div id="cando-bar" class="bar-fill h-full rounded-full bg-gradient-to-r from-champagne-hover to-champagne" style="width:50%"></div></div>
+                  </div>
+                  <ul class="space-y-2 text-[13px]" id="cando-list">
+                    <li class="flex items-start gap-2.5"><i class="ph-fill ph-check-circle mt-0.5 text-jade" aria-hidden="true"></i><span class="text-ink-2">Can defend an opinion with reasons</span></li>
+                    <li class="flex items-start gap-2.5"><i class="ph-fill ph-check-circle mt-0.5 text-jade" aria-hidden="true"></i><span class="text-ink-2">Can write an everyday work email</span></li>
+                    <li class="flex items-start gap-2.5" id="cando-target"><i class="ph ph-circle-half mt-0.5 text-champagne" aria-hidden="true"></i><span class="text-ink-2">Can describe experiences and feelings <span class="font-mono text-[11.5px] text-ink-3" id="cando-evidence">2/3</span></span></li>
+                    <li class="flex items-start gap-2.5"><i class="ph ph-circle mt-0.5 text-ink-3" aria-hidden="true"></i><span class="text-ink-3">Can discuss hypothetical situations</span></li>
+                  </ul>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="rounded-xl border border-line bg-black/20 p-3.5">
+                      <p class="text-[11.5px] text-ink-3">Active vocabulary vault</p>
+                      <p class="mt-1 font-mono text-[22px] font-semibold"><span id="vault-count">342</span><span id="vault-delta" class="ml-1.5 text-[12px] text-jade opacity-0 transition-opacity duration-500">+3</span></p>
+                    </div>
+                    <div class="rounded-xl border border-line bg-black/20 p-3.5">
+                      <p class="text-[11.5px] text-ink-3">Due today</p>
+                      <p class="mt-1 font-mono text-[22px] font-semibold">6 <span class="text-[12px] font-normal text-ink-3">/ 3 min</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT: persistent chat -->
+              <div class="flex min-h-[560px] flex-col">
+                <div class="flex h-12 items-center justify-between border-b border-line px-5">
+                  <span class="inline-flex items-center gap-2 text-[13.5px] font-semibold"><i class="ph-fill ph-chats-circle text-champagne" aria-hidden="true"></i> Coach <span class="pulse-ring size-1.5 rounded-full bg-jade"></span></span>
+                  <span class="font-mono text-[11px] text-ink-3">i+1 · B1.2</span>
+                </div>
+                <div id="chat-feed" class="chat-scroll flex-1 space-y-4 overflow-y-auto px-5 py-5" aria-live="polite" aria-label="Simulated coach chat"></div>
+                <div class="border-t border-line p-3">
+                  <div class="flex items-center gap-2 rounded-xl bg-sunk px-3.5 py-2.5">
+                    <span id="chat-input" class="min-h-[22px] flex-1 truncate text-[14px] text-ink-3">Type in English, press Enter to send</span>
+                    <span class="grid size-8 place-items-center rounded-lg bg-champagne text-obsidian"><i class="ph-bold ph-paper-plane-right text-[14px]" aria-hidden="true"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p class="text-[13px] text-ink-3"><i class="ph ph-info align-[-2px]" aria-hidden="true"></i> Replayed from the real product flow. In the app, replies stream from Gemini in real time.</p>
+            <a href="https://app.seyyahname.com" class="btn-gold inline-flex h-11 items-center gap-2 rounded-full px-5 text-[14px] font-semibold">Try it yourself <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURES (BENTO) ============ -->
+    <section id="features" class="px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="features-title">
+      <div class="mx-auto max-w-page">
+        <div class="reveal max-w-2xl">
+          <p class="font-mono text-[12px] uppercase tracking-[0.18em] text-champagne">Features</p>
+          <h2 id="features-title" class="mt-3 text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[44px]"><span class="text-sheen">Not just an app.</span> <span class="text-ink-2">A complete language-acquisition system.</span></h2>
+        </div>
+
+        <div class="mt-12 grid gap-4 md:grid-cols-6">
+          <!-- Streaming -->
+          <article class="reveal edge group relative overflow-hidden rounded-[22px] border border-line bg-panel p-7 md:col-span-4">
+            <div class="flex items-center gap-3">
+              <span class="grid size-11 place-items-center rounded-xl bg-champagne-soft text-champagne"><i class="ph-fill ph-lightning text-[20px]" aria-hidden="true"></i></span>
+              <h3 class="text-[20px] font-semibold tracking-[-0.02em]">Real-time streaming AI</h3>
+            </div>
+            <p class="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-ink-2">Fluid, natural conversation practice with zero wait. Replies stream in word by word, so your coach is ready the moment you finish typing.</p>
+            <div class="mt-7 rounded-2xl border border-line bg-black/25 p-4 font-mono text-[13px] leading-relaxed" aria-hidden="true">
+              <p class="text-ink-3">coach ▸</p>
+              <p class="text-ink"><span id="stream-demo"></span><span class="caret"></span></p>
+            </div>
+          </article>
+
+          <!-- Psychological safety -->
+          <article class="reveal edge relative overflow-hidden rounded-[22px] border border-line bg-panel p-7 md:col-span-2" style="transition-delay:.05s">
+            <span class="grid size-11 place-items-center rounded-xl bg-jade-soft text-jade"><i class="ph-fill ph-hand-heart text-[20px]" aria-hidden="true"></i></span>
+            <h3 class="mt-4 text-[20px] font-semibold tracking-[-0.02em]">A psychologically safe space</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-ink-2">Patient, judgment-free guidance that takes the fear out of mistakes. Every piece of feedback starts with what you did well, and you never hear the word "wrong".</p>
+            <div class="mt-6 rounded-xl border border-jade/20 bg-jade-soft px-4 py-3 text-[13px] text-ink-2"><b class="text-jade">Frustration Shield:</b> two tough rounds in a row and the pace eases off automatically.</div>
+          </article>
+
+          <!-- SM-2 -->
+          <article class="reveal edge relative overflow-hidden rounded-[22px] border border-line bg-panel p-7 md:col-span-3" style="transition-delay:.05s">
+            <div class="flex items-center gap-3">
+              <span class="grid size-11 place-items-center rounded-xl bg-sky-soft text-sky"><i class="ph-fill ph-brain text-[20px]" aria-hidden="true"></i></span>
+              <h3 class="text-[20px] font-semibold tracking-[-0.02em]">SM-2 spaced repetition</h3>
+            </div>
+            <p class="mt-4 text-[15px] leading-relaxed text-ink-2">A science-backed vocabulary vault that beats the forgetting curve instead of cramming. Every word comes back right before you would forget it.</p>
+            <div class="mt-6" aria-hidden="true">
+              <svg viewBox="0 0 320 110" class="w-full">
+                <path d="M10 15 C 40 80, 60 95, 80 98" fill="none" stroke="rgba(255,255,255,0.18)" stroke-dasharray="3 4" />
+                <path d="M10 15 C 25 50, 35 60, 50 62 L 50 18 C 75 45, 95 55, 120 56 L 120 20 C 160 38, 190 44, 215 45 L 215 22 C 255 30, 285 33, 310 34" fill="none" stroke="#7DD3FC" stroke-width="2" />
+                <g fill="#E8C07D"><circle cx="50" cy="18" r="3.5" /><circle cx="120" cy="20" r="3.5" /><circle cx="215" cy="22" r="3.5" /></g>
+                <g font-family="Geist Mono, monospace" font-size="10" fill="#71717A"><text x="44" y="106">1d</text><text x="113" y="106">3d</text><text x="207" y="106">7d</text><text x="285" y="106">14d → 30d</text></g>
+              </svg>
+            </div>
+          </article>
+
+          <!-- CEFR map -->
+          <article class="reveal edge relative overflow-hidden rounded-[22px] border border-line bg-panel p-7 md:col-span-3" style="transition-delay:.1s">
+            <div class="flex items-center gap-3">
+              <span class="grid size-11 place-items-center rounded-xl bg-champagne-soft text-champagne"><i class="ph-fill ph-path text-[20px]" aria-hidden="true"></i></span>
+              <h3 class="text-[20px] font-semibold tracking-[-0.02em]">CEFR Can-Do map</h3>
+            </div>
+            <p class="mt-4 text-[15px] leading-relaxed text-ink-2">Verifiable progress from A1 to C2 across 12 sub-bands and 48 concrete goals. You see what you can do, not just what you know.</p>
+            <div class="mt-6 grid grid-cols-6 gap-1.5" aria-hidden="true">
+              <div class="rounded-lg bg-champagne/90 py-2 text-center font-mono text-[11px] font-semibold text-obsidian">A1</div>
+              <div class="rounded-lg bg-champagne/90 py-2 text-center font-mono text-[11px] font-semibold text-obsidian">A2</div>
+              <div class="rounded-lg bg-champagne/60 py-2 text-center font-mono text-[11px] font-semibold text-obsidian">B1</div>
+              <div class="rounded-lg border border-champagne/40 py-2 text-center font-mono text-[11px] text-champagne">B2</div>
+              <div class="rounded-lg border border-line py-2 text-center font-mono text-[11px] text-ink-3">C1</div>
+              <div class="rounded-lg border border-line py-2 text-center font-mono text-[11px] text-ink-3">C2</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PEDAGOGY ============ -->
+    <section id="method" class="px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="pedagogy-title">
+      <div class="mx-auto grid max-w-page gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+        <div class="reveal lg:sticky lg:top-28">
+          <p class="font-mono text-[12px] uppercase tracking-[0.18em] text-champagne">Method</p>
+          <h2 id="pedagogy-title" class="mt-3 text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[44px]"><span class="text-sheen">Designed with research.</span> <span class="text-ink-2">Delivered through conversation.</span></h2>
+          <p class="mt-5 max-w-[50ch] text-[16px] leading-relaxed text-ink-2">Seyyahname builds on three international frameworks: the Council of Europe's CEFR Companion Volume (2020), the ACTFL Proficiency Guidelines and SuperMemo's SM-2. At the center of it all is Krashen's principle of comprehensible input.</p>
+          <div class="mt-8 flex flex-wrap gap-2 font-mono text-[12px]">
+            <span class="rounded-full border border-line px-3 py-1.5 text-ink-2">CEFR CV 2020</span>
+            <span class="rounded-full border border-line px-3 py-1.5 text-ink-2">ACTFL 2024</span>
+            <span class="rounded-full border border-line px-3 py-1.5 text-ink-2">SM-2</span>
+            <span class="rounded-full border border-champagne/30 px-3 py-1.5 text-champagne">Krashen i+1</span>
+          </div>
+        </div>
+
+        <ol class="space-y-4">
+          <li class="reveal edge relative rounded-[22px] border border-line bg-panel p-6 sm:p-7">
+            <div class="flex items-start gap-5">
+              <span class="font-mono text-[13px] text-champagne">01</span>
+              <div>
+                <h3 class="text-[19px] font-semibold tracking-[-0.02em]">i+1: one step above your level</h3>
+                <p class="mt-2 text-[15px] leading-relaxed text-ink-2">Your coach tunes its own English to your level: short, clear sentences at A1, nuanced and idiomatic language at C1. Every reply slips in a structure from the next band, in natural context.</p>
+              </div>
+            </div>
+          </li>
+          <li class="reveal edge relative rounded-[22px] border border-line bg-panel p-6 sm:p-7" style="transition-delay:.05s">
+            <div class="flex items-start gap-5">
+              <span class="font-mono text-[13px] text-champagne">02</span>
+              <div>
+                <h3 class="text-[19px] font-semibold tracking-[-0.02em]">Triple-Layer Feedback</h3>
+                <p class="mt-2 text-[15px] leading-relaxed text-ink-2">Every answer gets three passes:</p>
+                <ul class="mt-4 grid gap-2.5 sm:grid-cols-3">
+                  <li class="rounded-xl border border-jade/20 bg-jade-soft p-3.5"><p class="text-[13px] font-semibold text-jade">💪 Strength</p><p class="mt-1 text-[12.5px] text-ink-2">What you did right or bravely, quoted back.</p></li>
+                  <li class="rounded-xl border border-sky/20 bg-sky-soft p-3.5"><p class="text-[13px] font-semibold text-sky">🔁 Recast</p><p class="mt-1 text-[12.5px] text-ink-2">Your sentence, corrected and natural.</p></li>
+                  <li class="rounded-xl border border-champagne/25 bg-champagne-soft p-3.5"><p class="text-[13px] font-semibold text-champagne">✨ Polish</p><p class="mt-1 text-[12.5px] text-ink-2">How a native speaker would put it.</p></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="reveal edge relative rounded-[22px] border border-line bg-panel p-6 sm:p-7" style="transition-delay:.1s">
+            <div class="flex items-start gap-5">
+              <span class="font-mono text-[13px] text-champagne">03</span>
+              <div>
+                <h3 class="text-[19px] font-semibold tracking-[-0.02em]">Evidence-based level-ups</h3>
+                <p class="mt-2 text-[15px] leading-relaxed text-ink-2">You earn a Can-Do goal by scoring 80% or higher on three different tasks, confirmed by the feedback. Complete a band's four goals and the next band unlocks. No level is ever skipped on a guess.</p>
+              </div>
+            </div>
+          </li>
+          <li class="reveal edge relative rounded-[22px] border border-line bg-panel p-6 sm:p-7" style="transition-delay:.15s">
+            <div class="flex items-start gap-5">
+              <span class="font-mono text-[13px] text-champagne">04</span>
+              <div>
+                <h3 class="text-[19px] font-semibold tracking-[-0.02em]">A radar for Turkish-speaker pitfalls</h3>
+                <p class="mt-2 text-[15px] leading-relaxed text-ink-2">It spots patterns carried over from Turkish, like "I have 30 years", "listen music" or "since 3 years", logs them, and gently follows up until you use the right form three sessions in a row.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ PRICING ============ -->
+    <section id="pricing" class="px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="pricing-title">
+      <div class="mx-auto max-w-page">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <p class="font-mono text-[12px] uppercase tracking-[0.18em] text-champagne">Pricing</p>
+          <h2 id="pricing-title" class="mt-3 text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[44px]"><span class="text-sheen">A year of coaching</span> <span class="text-ink-2">for the price of one course.</span></h2>
+          <div class="mt-8 inline-flex items-center gap-3.5 rounded-full border border-line bg-white/[0.02] px-4 py-2">
+            <span id="lbl-monthly" class="text-[14px] font-medium text-ink">Monthly</span>
+            <button id="billing-toggle" type="button" role="switch" aria-checked="false" aria-label="Bill yearly" class="relative h-7 w-[50px] rounded-full">
+              <span class="switch-track absolute inset-0 rounded-full bg-white/[0.12]"></span>
+              <span class="switch-thumb absolute left-[3px] top-[3px] size-[22px] rounded-full bg-white shadow"></span>
+            </button>
+            <span id="lbl-yearly" class="text-[14px] font-medium text-ink-3">Yearly</span>
+            <span id="yearly-badge" class="rounded-full border border-jade/25 bg-jade-soft px-2.5 py-1 text-[12px] font-medium text-jade opacity-40 transition-opacity duration-300"></span>
+          </div>
+        </div>
+
+        <div class="mt-12 grid gap-5 lg:grid-cols-3 lg:items-stretch">
+          <!-- Explorer -->
+          <article class="reveal edge relative flex flex-col rounded-[22px] border border-line bg-panel p-7">
+            <h3 class="text-[18px] font-semibold">Explorer</h3>
+            <p class="mt-1 text-[14px] text-ink-3">Starter · Free to try</p>
+            <p class="mt-6 flex items-end gap-1"><span class="mb-[9px] font-mono text-[24px] font-semibold text-ink-2">$</span><span class="price-num font-mono text-[44px] font-semibold tracking-tight" data-plan="explorer">0</span><span class="mb-2 ml-0.5 text-[15px] text-ink-3"><span class="price-period">/ mo</span></span></p>
+            <p class="price-note min-h-[20px] text-[12.5px] text-ink-3" data-plan="explorer"></p>
+            <ul class="mt-6 flex-1 space-y-3 text-[14.5px] text-ink-2">
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> Core coaching sessions</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> A1–B1 Can-Do tracking</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> Limited vocabulary vault</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> Three-layer feedback</li>
+            </ul>
+            <a href="https://app.seyyahname.com" class="btn-ghost mt-8 inline-flex h-12 items-center justify-center rounded-full text-[15px] font-medium">Get started</a>
+          </article>
+
+          <!-- Seyyah (Pro) -->
+          <article class="reveal edge gold-edge relative flex flex-col rounded-[22px] bg-gradient-to-b from-[#1A1712] to-panel p-7 shadow-glow lg:-my-4 lg:py-11" style="transition-delay:.05s">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-champagne px-3.5 py-1 text-[12px] font-semibold text-obsidian">Most popular</span>
+            <h3 class="text-[18px] font-semibold text-champagne">Seyyah</h3>
+            <p class="mt-1 text-[14px] text-ink-3">Pro · For serious progress</p>
+            <p class="mt-6 flex items-end gap-1"><span class="mb-[9px] font-mono text-[24px] font-semibold text-ink-2">$</span><span class="price-num font-mono text-[44px] font-semibold tracking-tight" data-plan="seyyah">15</span><span class="mb-2 ml-0.5 text-[15px] text-ink-3"><span class="price-period">/ mo</span></span></p>
+            <p class="price-note min-h-[20px] text-[12.5px] text-champagne/80" data-plan="seyyah"></p>
+            <ul class="mt-6 flex-1 space-y-3 text-[14.5px] text-ink-2">
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-champagne" aria-hidden="true"></i> Unlimited sessions and live chat</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-champagne" aria-hidden="true"></i> Full SM-2 vocabulary vault</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-champagne" aria-hidden="true"></i> Full A1–C2 Can-Do map with C1/C2 guidance</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-champagne" aria-hidden="true"></i> Error-ledger insights and Polish reports</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-champagne" aria-hidden="true"></i> Priority response times</li>
+            </ul>
+            <a href="https://app.seyyahname.com" class="btn-gold mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full text-[15px] font-semibold">Get started <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+          </article>
+
+          <!-- Master -->
+          <article class="reveal edge relative flex flex-col rounded-[22px] border border-line bg-panel p-7" style="transition-delay:.1s">
+            <h3 class="text-[18px] font-semibold">Master</h3>
+            <p class="mt-1 text-[14px] text-ink-3">Enterprise · Teams and schools</p>
+            <p class="mt-6 flex items-end gap-1.5"><span class="text-[44px] font-semibold tracking-[-0.03em]">Custom</span></p>
+            <p class="min-h-[20px] text-[12.5px] text-ink-3">Priced by number of seats</p>
+            <ul class="mt-6 flex-1 space-y-3 text-[14.5px] text-ink-2">
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> Everything in Seyyah</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> Multi-seat license management</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> API access</li>
+              <li class="flex gap-2.5"><i class="ph-bold ph-check mt-0.5 text-jade" aria-hidden="true"></i> Team progress reporting</li>
+            </ul>
+            <a href="https://app.seyyahname.com" class="btn-ghost mt-8 inline-flex h-12 items-center justify-center rounded-full text-[15px] font-medium">Get started</a>
+          </article>
+        </div>
+        <p class="reveal mt-10 text-center text-[13px] text-ink-3">Prices in USD. Taxes may apply at checkout. Cancel anytime.</p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="faq" class="px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="faq-title">
+      <div class="mx-auto grid max-w-page gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+        <div class="reveal">
+          <p class="font-mono text-[12px] uppercase tracking-[0.18em] text-champagne">FAQ</p>
+          <h2 id="faq-title" class="mt-3 text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[44px]"><span class="text-sheen">Questions, answered.</span></h2>
+          <p class="mt-5 max-w-[40ch] text-[16px] leading-relaxed text-ink-2">Can't find what you're looking for? Ask your coach inside the app. It's happy to help.</p>
+        </div>
+
+        <div class="reveal divide-y divide-white/[0.08] rounded-[22px] border border-line bg-panel" id="faq">
+          <div class="faq-item">
+            <h3><button type="button" class="faq-btn flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[16px] font-medium" aria-expanded="false">How is Seyyahname different from apps like Duolingo?<i class="faq-icon ph ph-plus shrink-0 text-[18px] text-champagne" aria-hidden="true"></i></button></h3>
+            <div class="faq-panel" role="region"><div><p class="px-6 pb-6 text-[15px] leading-relaxed text-ink-2">Seyyahname is built around real communication, not gamified word matching. Every sentence you write or say is assessed against CEFR Can-Do descriptors, refined with three-layer feedback, and the words you learn move into long-term memory with the SM-2 algorithm. You practise to actually speak, not to collect points.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-btn flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[16px] font-medium" aria-expanded="false">What are Krashen's i+1 hypothesis and Triple-Layer Feedback?<i class="faq-icon ph ph-plus shrink-0 text-[18px] text-champagne" aria-hidden="true"></i></button></h3>
+            <div class="faq-panel" role="region"><div><p class="px-6 pb-6 text-[15px] leading-relaxed text-ink-2">i+1 says you acquire a language fastest from input one step above your current level: too easy and you stop growing, too hard and you stall. Seyyahname tunes every reply to that sweet spot. Triple-Layer Feedback then handles each answer in three passes: what you did well (Strength), a natural corrected version of your sentence (Recast), and the phrasing that takes you to the next level (Polish).</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-btn flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[16px] font-medium" aria-expanded="false">How is my CEFR level measured and tracked?<i class="faq-icon ph ph-plus shrink-0 text-[18px] text-champagne" aria-hidden="true"></i></button></h3>
+            <div class="faq-panel" role="region"><div><p class="px-6 pb-6 text-[15px] leading-relaxed text-ink-2">Your first tasks set your starting level. From there, concrete Can-Do goals are tracked across 12 sub-bands from A1 to C2. You earn a goal after succeeding at 80% or higher on three different tasks, confirmed by the feedback; once every goal in a band is done, the next band unlocks. Speaking, writing, reading and listening are tracked separately.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-btn flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[16px] font-medium" aria-expanded="false">Can I cancel my subscription anytime?<i class="faq-icon ph ph-plus shrink-0 text-[18px] text-champagne" aria-hidden="true"></i></button></h3>
+            <div class="faq-panel" role="region"><div><p class="px-6 pb-6 text-[15px] leading-relaxed text-ink-2">Yes. Cancel whenever you like in one click; every feature stays on until the end of your billing period. Your progress, vocabulary vault and session history are never deleted, so you can pick up right where you left off.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-btn flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[16px] font-medium" aria-expanded="false">How do I sign in to the web app (app.seyyahname.com)?<i class="faq-icon ph ph-plus shrink-0 text-[18px] text-champagne" aria-hidden="true"></i></button></h3>
+            <div class="faq-panel" role="region"><div><p class="px-6 pb-6 text-[15px] leading-relaxed text-ink-2">Open <a href="https://app.seyyahname.com" class="text-champagne underline-offset-4 hover:underline">app.seyyahname.com</a> in your browser and sign in on the welcome screen with the access details you were given. Nothing to install: the app works on desktop, tablet and phone, and your session stays securely signed in on your device.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-btn flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[16px] font-medium" aria-expanded="false">Is my data safe?<i class="faq-icon ph ph-plus shrink-0 text-[18px] text-champagne" aria-hidden="true"></i></button></h3>
+            <div class="faq-panel" role="region"><div><p class="px-6 pb-6 text-[15px] leading-relaxed text-ink-2">Sessions are protected with signed, expiring keys; your progress files are written atomically on every save and backed up daily. We never use your data for advertising. See our Privacy Policy for the details.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLOSING CTA ============ -->
+    <section class="px-4 pb-24 pt-8 sm:px-6" aria-labelledby="cta-title">
+      <div class="reveal edge gold-edge relative mx-auto max-w-page overflow-hidden rounded-[28px] bg-[#13110D] px-6 py-16 text-center sm:px-12 sm:py-20">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_20rem_at_50%_0%,rgba(232,192,125,0.22),transparent_70%)]" aria-hidden="true"></div>
+        <div class="relative">
+          <h2 id="cta-title" class="mx-auto max-w-3xl text-[32px] font-semibold leading-[1.08] tracking-[-0.035em] sm:text-[52px]"><span class="text-sheen">Move your English</span> <span class="text-gold">up a band, starting today.</span></h2>
+          <p class="mx-auto mt-5 max-w-xl text-[16.5px] leading-relaxed text-ink-2">Your first session takes five minutes. Your coach finds your level, unlocks your first Can-Do goal and sets up your vocabulary vault.</p>
+          <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a href="https://app.seyyahname.com" class="btn-gold inline-flex h-[54px] items-center gap-2 rounded-full px-8 text-[16px] font-semibold">Start your 14-day free trial <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+            <a href="#pricing" class="btn-ghost inline-flex h-[54px] items-center rounded-full px-7 text-[15px]">Compare plans</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-line px-4 py-12 sm:px-6">
+    <div class="mx-auto flex max-w-page flex-col gap-10 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-xs">
+        <a href="#" class="flex items-center gap-2.5" aria-label="Seyyahname home">
+          <span class="size-7 rounded-[9px] bg-[radial-gradient(circle_at_30%_30%,#fff3d6,#e8c07d_45%,#8a6a35)]" aria-hidden="true"></span>
+          <span class="text-[16px] font-semibold tracking-[-0.02em]">Seyyahname</span>
+        </a>
+        <p class="mt-4 text-[14px] leading-relaxed text-ink-3">Your personal AI English coach, from A1 to C2, available 24/7.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-10 sm:grid-cols-3">
+        <div>
+          <p class="text-[13px] font-semibold">Product</p>
+          <ul class="mt-3 space-y-2 text-[14px] text-ink-3">
+            <li><a href="#features" class="hover:text-ink">Features</a></li>
+            <li><a href="#demo" class="hover:text-ink">Live Demo</a></li>
+            <li><a href="#pricing" class="hover:text-ink">Pricing</a></li>
+            <li><a href="https://app.seyyahname.com" class="hover:text-ink">Open the app</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-[13px] font-semibold">Legal</p>
+          <ul class="mt-3 space-y-2 text-[14px] text-ink-3">
+            <li><a href="/privacy" class="hover:text-ink">Privacy Policy</a></li>
+            <li><a href="/terms" class="hover:text-ink">Terms of Service</a></li>
+            <li><a href="/cookies" class="hover:text-ink">Cookie Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-[13px] font-semibold">Follow us</p>
+          <div class="mt-3 flex gap-2">
+            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="X (Twitter)"><i class="ph ph-x-logo" aria-hidden="true"></i></a>
+            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="Instagram"><i class="ph ph-instagram-logo" aria-hidden="true"></i></a>
+            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="LinkedIn"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></a>
+            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="YouTube"><i class="ph ph-youtube-logo" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mx-auto mt-10 flex max-w-page flex-col gap-2 border-t border-line pt-6 text-[13px] text-ink-3 sm:flex-row sm:justify-between">
+      <p>© <span id="year">2026</span> Seyyahname. All rights reserved.</p>
+      <p class="font-mono text-[12px]">CEFR · ACTFL · SM-2 · Krashen i+1</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ---------- Editable content ---------- */
+      var CONFIG = {
+        stats: { sessions: 10000, levelUp: 94 },
+        currency: '$',
+        prices: {
+          explorer: { monthly: 0, yearly: 0 },
+          seyyah: { monthly: 15, yearly: 12 } // yearly = per month, billed annually
+        },
+        yearlyBadge: 'Save 20% + 2 months free'
+      };
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var fmt = new Intl.NumberFormat('en-US');
+      var $ = function (s, r) { return (r || document).querySelector(s); };
+      var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      /* ---------- Header state ---------- */
+      var header = document.getElementById('site-header');
+      var onScroll = function () { header.classList.toggle('scrolled', window.scrollY > 12); };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      /* ---------- Mobile menu ---------- */
+      var menuBtn = document.getElementById('menu-toggle');
+      var menu = document.getElementById('mobile-menu');
+      function setMenu(open) {
+        menu.classList.toggle('open', open);
+        menu.setAttribute('aria-hidden', String(!open));
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        menuBtn.querySelector('i').className = 'ph ' + (open ? 'ph-x' : 'ph-list') + ' text-[20px]';
+        if (open) header.classList.add('scrolled'); else onScroll();
+      }
+      menuBtn.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
+      $$('.m-link, #mobile-menu a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); menuBtn.focus(); } });
+      window.addEventListener('resize', function () { if (window.innerWidth >= 1024) setMenu(false); });
+
+      /* ---------- Active nav link ---------- */
+      var navLinks = $$('.nav-link');
+      if ('IntersectionObserver' in window) {
+        var spy = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            navLinks.forEach(function (l) {
+              var on = l.getAttribute('href') === '#' + en.target.id;
+              l.classList.toggle('text-ink', on);
+              l.classList.toggle('bg-white/[0.05]', on);
+              if (on) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+            });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        ['features', 'method', 'demo', 'pricing', 'faq'].forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
+      }
+
+      /* ---------- Reveal on scroll ---------- */
+      var reveals = $$('.reveal');
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('in'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        reveals.forEach(function (el) { io.observe(el); });
+      }
+
+      /* ---------- Hero counters ---------- */
+      function countUp(el, to) {
+        if (reduceMotion) { el.textContent = fmt.format(to); return; }
+        var start = performance.now(), dur = 1600;
+        (function tick(now) {
+          var t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
+          el.textContent = fmt.format(Math.round(to * e));
+          if (t < 1) requestAnimationFrame(tick);
+        })(start);
+      }
+      $$('[data-count]').forEach(function (el) {
+        var to = CONFIG.stats[el.getAttribute('data-count')] || 0;
+        el.textContent = fmt.format(to);
+        if (!('IntersectionObserver' in window)) return;
+        el.textContent = '0';
+        var o = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { countUp(el, to); o.disconnect(); } });
+        o.observe(el);
+      });
+
+      /* ---------- Streaming demo (bento) ---------- */
+      var streamEl = document.getElementById('stream-demo');
+      var streamLines = [
+        "Great question! Let's practise ordering coffee like a local.",
+        "Nice! \"Could I get a flat white to go?\" sounds very natural.",
+        "You're getting faster. Ready for a quick role-play at the airport?"
+      ];
+      (function streamLoop(i) {
+        var text = streamLines[i % streamLines.length], n = 0;
+        if (reduceMotion) { streamEl.textContent = text; return; }
+        streamEl.textContent = '';
+        var timer = setInterval(function () {
+          n += 1 + Math.round(Math.random());
+          streamEl.textContent = text.slice(0, n);
+          if (n >= text.length) { clearInterval(timer); setTimeout(function () { streamLoop(i + 1); }, 2200); }
+        }, 38);
+      })(0);
+
+      /* ---------- Pricing toggle ---------- */
+      var toggle = document.getElementById('billing-toggle');
+      var badge = document.getElementById('yearly-badge');
+      badge.textContent = CONFIG.yearlyBadge;
+      function renderPrices(yearly) {
+        toggle.setAttribute('aria-checked', String(yearly));
+        document.getElementById('lbl-monthly').className = 'text-[14px] font-medium ' + (yearly ? 'text-ink-3' : 'text-ink');
+        document.getElementById('lbl-yearly').className = 'text-[14px] font-medium ' + (yearly ? 'text-ink' : 'text-ink-3');
+        badge.style.opacity = yearly ? '1' : '0.4';
+        $$('.price-num').forEach(function (el) {
+          var p = CONFIG.prices[el.getAttribute('data-plan')];
+          if (!p) return;
+          el.classList.add('swap');
+          setTimeout(function () { el.textContent = fmt.format(yearly ? p.yearly : p.monthly); el.classList.remove('swap'); }, reduceMotion ? 0 : 160);
+        });
+        $$('.price-note').forEach(function (el) {
+          var p = CONFIG.prices[el.getAttribute('data-plan')];
+          if (!p) return;
+          if (p.monthly === 0) el.textContent = 'Free forever';
+          else el.textContent = yearly ? 'Billed ' + CONFIG.currency + fmt.format(p.yearly * 12) + ' yearly' : 'Billed monthly';
+        });
+      }
+      toggle.addEventListener('click', function () { renderPrices(toggle.getAttribute('aria-checked') !== 'true'); });
+      renderPrices(false);
+
+      /* ---------- FAQ accordion ---------- */
+      $$('.faq-item').forEach(function (item, i) {
+        var btn = $('.faq-btn', item), panel = $('.faq-panel', item);
+        var bid = 'faq-q-' + i, pid = 'faq-a-' + i;
+        btn.id = bid; panel.id = pid;
+        btn.setAttribute('aria-controls', pid); panel.setAttribute('aria-labelledby', bid);
+        btn.addEventListener('click', function () {
+          var open = !item.classList.contains('open');
+          $$('.faq-item.open').forEach(function (o) { if (o !== item) { o.classList.remove('open'); $('.faq-btn', o).setAttribute('aria-expanded', 'false'); } });
+          item.classList.toggle('open', open);
+          btn.setAttribute('aria-expanded', String(open));
+        });
+      });
+
+      /* ---------- Live product simulator ---------- */
+      var feed = document.getElementById('chat-feed');
+      var input = document.getElementById('chat-input');
+      var replay = document.getElementById('sim-replay');
+      var radar = document.getElementById('radar-now');
+      var RADAR_START = '120,66 174,120 120,163 84,120';
+      var RADAR_END = '120,52 181,120 120,163 80,120';
+      var USER_TEXT = 'Yesterday I had a job interview. I was very nervous for it, but I think it went good.';
+      var COACH_TEXT = "That sounds like a big day! Feeling nervous before an interview is completely normal, and it's great that you still think it went well. Which question surprised you the most?";
+      var run = 0, started = false;
+
+      function wait(ms) { return new Promise(function (r) { setTimeout(r, reduceMotion ? 0 : ms); }); }
+      function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+      function scrollFeed() { feed.scrollTop = feed.scrollHeight; }
+
+      function resetSim() {
+        feed.innerHTML = '';
+        input.textContent = 'Type in English, press Enter to send';
+        input.className = 'min-h-[22px] flex-1 truncate text-[14px] text-ink-3';
+        radar.setAttribute('points', RADAR_START);
+        document.getElementById('cando-count').textContent = '2';
+        document.getElementById('cando-bar').style.width = '50%';
+        document.getElementById('cando-evidence').textContent = '2/3';
+        document.getElementById('vault-count').textContent = '342';
+        document.getElementById('vault-delta').style.opacity = '0';
+        var t = document.getElementById('cando-target');
+        t.querySelector('i').className = 'ph ph-circle-half mt-0.5 text-champagne';
+      }
+
+      async function playSim() {
+        var my = ++run;
+        var alive = function () { return my === run; };
+        resetSim();
+        await wait(600); if (!alive()) return;
+
+        // learner types
+        input.className = 'min-h-[22px] flex-1 truncate text-[14px] text-ink';
+        for (var i = 1; i <= USER_TEXT.length; i += reduceMotion ? USER_TEXT.length : 2) {
+          input.textContent = USER_TEXT.slice(0, i);
+          await wait(28); if (!alive()) return;
+        }
+        await wait(350); if (!alive()) return;
+        input.textContent = 'Type in English, press Enter to send';
+        input.className = 'min-h-[22px] flex-1 truncate text-[14px] text-ink-3';
+        feed.appendChild(el('div', 'msg ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md border border-line bg-sunk px-4 py-3 text-[14px] leading-relaxed text-ink', USER_TEXT));
+        scrollFeed();
+
+        // typing indicator
+        var typing = el('div', 'msg dots inline-flex items-center gap-1 rounded-2xl bg-white/[0.04] px-4 py-3', '<span></span><span></span><span></span>');
+        feed.appendChild(typing); scrollFeed();
+        await wait(900); if (!alive()) return;
+        typing.remove();
+
+        // streamed reply
+        var reply = el('div', 'msg max-w-[92%] text-[14.5px] leading-relaxed text-ink');
+        var span = el('span', 'caret');
+        reply.appendChild(span); feed.appendChild(reply);
+        var words = COACH_TEXT.split(' ');
+        for (var w = 1; w <= words.length; w++) {
+          span.textContent = words.slice(0, w).join(' ');
+          scrollFeed();
+          await wait(55 + Math.random() * 45); if (!alive()) return;
+        }
+        span.className = '';
+        await wait(400); if (!alive()) return;
+
+        // triple-layer feedback card
+        var card = el('div', 'msg rounded-2xl border border-line bg-raised p-4');
+        card.innerHTML =
+          '<div class="mb-3 flex items-center justify-between"><p class="text-[12px] font-semibold uppercase tracking-[0.12em] text-ink-3">Three-layer feedback</p><span class="font-mono text-[12px] text-jade">86/100</span></div>' +
+          '<div class="layer rounded-xl border border-jade/20 bg-jade-soft px-3.5 py-3"><p class="text-[13px] font-semibold text-jade">💪 Strength</p><p class="mt-1 text-[13.5px] text-ink-2">"<i>I was very nervous …, but I think …</i>" You linked a feeling and an outcome in one sentence with <b class="text-ink">but</b>. That\'s a clear sign you\'re moving toward B2.</p></div>' +
+          '<div class="layer mt-2.5 rounded-xl border border-sky/20 bg-sky-soft px-3.5 py-3"><p class="text-[13px] font-semibold text-sky">🔁 Recast</p><p class="mt-1 text-[13.5px] text-ink-2">I was very nervous <s class="text-ink-3">for</s> <b class="text-ink">about</b> it, but I think it went <s class="text-ink-3">good</s> <b class="text-ink">well</b>.</p><p class="mt-1.5 text-[12px] text-ink-3"><b>nervous about</b> is the fixed pattern · <b>go</b> takes an adverb: <b>well</b></p></div>' +
+          '<div class="layer mt-2.5 rounded-xl border border-champagne/25 bg-champagne-soft px-3.5 py-3"><p class="text-[13px] font-semibold text-champagne">✨ Polish · C1/C2 touch</p><p class="mt-1 text-[13.5px] text-ink">"I had butterflies in my stomach, but I think I nailed it."</p><p class="mt-1.5 font-mono text-[11.5px] text-ink-3">/ˈbʌtəflaɪz/ · nail it = do something really well</p></div>';
+        feed.appendChild(card); scrollFeed();
+        var layers = $$('.layer', card);
+        for (var l = 0; l < layers.length; l++) {
+          await wait(l === 0 ? 150 : 900); if (!alive()) return;
+          layers[l].classList.add('on'); scrollFeed();
+        }
+
+        // progress updates on the left
+        await wait(700); if (!alive()) return;
+        radar.setAttribute('points', RADAR_END);
+        document.getElementById('cando-evidence').textContent = '3/3';
+        document.getElementById('cando-target').querySelector('i').className = 'ph-fill ph-check-circle mt-0.5 text-jade';
+        document.getElementById('cando-count').textContent = '3';
+        document.getElementById('cando-bar').style.width = '75%';
+        document.getElementById('vault-count').textContent = '345';
+        document.getElementById('vault-delta').style.opacity = '1';
+        var win = el('div', 'msg inline-flex items-center gap-2 rounded-full border border-jade/25 bg-jade-soft px-3.5 py-1.5 text-[12.5px] text-jade', '<i class="ph-fill ph-seal-check" aria-hidden="true"></i> Can-Do earned · 3 words added to your vault');
+        feed.appendChild(win); scrollFeed();
+        replay.classList.remove('hidden');
+        replay.classList.add('inline-flex');
+      }
+
+      replay.addEventListener('click', function () { playSim(); });
+      var sim = document.getElementById('demo');
+      if ('IntersectionObserver' in window) {
+        var so = new IntersectionObserver(function (en) {
+          if (en[0].isIntersecting && !started) { started = true; playSim(); so.disconnect(); }
+        }, { threshold: 0.25 });
+        so.observe(sim);
+      } else { playSim(); }
+    })();
+  </script>
+</body>
+</html>

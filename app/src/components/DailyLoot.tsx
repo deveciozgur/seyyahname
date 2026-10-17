@@ -11,7 +11,7 @@ import { WinBadge } from './momentum';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-/** "Bugün neler kazandın?": today's wins, words and obstacles cleared, like an end-of-level screen. */
+/** "What did you earn today?": today's wins, words and obstacles cleared, like an end-of-level screen. */
 export default function DailyLoot({ refreshKey }) {
   const [loot, setLoot] = useState(null);
   // Collapsed by default so practice stays in view; the choice is remembered on this device.
@@ -34,25 +34,25 @@ export default function DailyLoot({ refreshKey }) {
   const obstacles = [
     ...loot.bandUps.map((l) => ({ icon: TrendUp, text: `${skillTr(l.skill)} ${l.change}` })),
     ...loot.canDos.map((c) => ({ icon: SealCheck, text: `Can-Do: ${c.statement}` })),
-    ...loot.resolved.map((e) => ({ icon: Trophy, text: `Ustalaştın: "${e.after}"` })),
+    ...loot.resolved.map((e) => ({ icon: Trophy, text: `Mastered: "${e.after}"` })),
   ];
 
   return (
-    <Panel as="section" aria-label="Günlük ganimet" className="relative overflow-hidden">
+    <Panel as="section" aria-label="Daily Loot" className="relative overflow-hidden">
       <div className="pointer-events-none absolute -top-20 -right-12 size-56 rounded-full bg-amber-soft blur-3xl" aria-hidden />
       <button onClick={toggle} aria-expanded={open} className="relative flex w-full items-center gap-4 px-6 py-4 text-left">
         <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line bg-amber-soft text-amber">
           <Gift size={22} weight="fill" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-lg leading-tight font-semibold tracking-[-0.02em]">Günlük Ganimet</span>
+          <span className="block text-lg leading-tight font-semibold tracking-[-0.02em]">Daily Loot</span>
           <span className="block text-[13.5px] text-ink-3">
-            Bugün neler kazandın?{!open && <span className="ml-2 text-xs">{wins.length} kazanım, {loot.milestones.length} rozet, {loot.words.length} kelime</span>}
+            What did you earn today?{!open && <span className="ml-2 text-xs">{wins.length} {wins.length === 1 ? 'win' : 'wins'}, {loot.milestones.length} {loot.milestones.length === 1 ? 'badge' : 'badges'}, {loot.words.length} {loot.words.length === 1 ? 'word' : 'words'}</span>}
           </span>
         </span>
         <span className="text-right">
           <span className="block text-[28px] leading-none font-semibold tracking-[-0.02em] text-amber tabular-nums">+{loot.points}</span>
-          <span className="text-xs text-ink-3">bugünkü XP</span>
+          <span className="text-xs text-ink-3">XP today</span>
         </span>
         <CaretDown size={16} className={`shrink-0 text-ink-3 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
@@ -62,10 +62,10 @@ export default function DailyLoot({ refreshKey }) {
           <div className="space-y-5 border-t border-line px-6 pt-5 pb-6">
             <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
-                ['Seri', `${loot.streak} gün`, Flame],
-                ['Görev', loot.activities, null],
-                ['Tekrar', loot.reviews, null],
-                ['Alt bant', loot.subBand, null],
+                ['Streak', `${loot.streak} ${loot.streak === 1 ? 'day' : 'days'}`, Flame],
+                ['Tasks', loot.activities, null],
+                ['Reviews', loot.reviews, null],
+                ['Sub-band', loot.subBand, null],
               ].map(([label, value, Icon]) => (
                 <div key={label}>
                   <dt className="flex items-center gap-1 text-xs text-ink-3">
@@ -78,7 +78,7 @@ export default function DailyLoot({ refreshKey }) {
             </dl>
 
             <div>
-              <h3 className="mb-2 text-sm font-semibold">Kazanımlar</h3>
+              <h3 className="mb-2 text-sm font-semibold">Wins</h3>
               <ul className="flex flex-wrap gap-1.5">
                 {wins.map((w, i) => (
                   <WinBadge key={w} win={{ label: w }} index={i} size="sm" />
@@ -88,7 +88,7 @@ export default function DailyLoot({ refreshKey }) {
 
             {loot.milestones.length > 0 && (
               <div>
-                <h3 className="mb-2 text-sm font-semibold">Açılan rozetler</h3>
+                <h3 className="mb-2 text-sm font-semibold">Badges unlocked</h3>
                 <ul className="grid gap-2 sm:grid-cols-2">
                   {loot.milestones.map((x) => (
                     <li key={x.id} className="shine relative flex items-center gap-2.5 overflow-hidden rounded-[10px] border border-line bg-amber-soft px-3 py-2.5 text-sm font-medium">
@@ -101,7 +101,7 @@ export default function DailyLoot({ refreshKey }) {
 
             {obstacles.length > 0 && (
               <div>
-                <h3 className="mb-2 text-sm font-semibold">Aşılan engeller</h3>
+                <h3 className="mb-2 text-sm font-semibold">Obstacles cleared</h3>
                 <ul className="grid gap-2 sm:grid-cols-2">
                   {obstacles.map(({ icon: Icon, text }) => (
                     <li key={text} className="shine relative flex items-center gap-2.5 overflow-hidden rounded-[10px] border border-line bg-emerald-soft px-3 py-2.5 text-sm font-medium">
@@ -115,7 +115,7 @@ export default function DailyLoot({ refreshKey }) {
             {loot.words.length > 0 && (
               <div>
                 <h3 className="mb-2 flex items-center gap-1.5 text-sm font-semibold">
-                  <BookmarkSimple size={15} className="text-indigo" /> Yeni kelimeler ({loot.words.length})
+                  <BookmarkSimple size={15} className="text-indigo" /> New words ({loot.words.length})
                 </h3>
                 <ul className="flex flex-wrap gap-x-4 gap-y-1">
                   {loot.words.map((w) => (

@@ -26,7 +26,7 @@ const Chip = ({ tone = 'neutral', children, title = undefined }: { tone?: string
 
 const IpaChip = ({ ipa, word = undefined }: { ipa: string; word?: string }) =>
   ipa ? (
-    <Chip tone="indigo" title={word ? `"${word}" telaffuzu` : 'Telaffuz'}>
+    <Chip tone="indigo" title={word ? `Pronunciation of "${word}"` : 'Pronunciation'}>
       <SpeakerSimpleHigh size={12} weight="fill" />
       <span className="font-mono tracking-tight">{ipa}</span>
     </Chip>
@@ -113,7 +113,7 @@ function Manuscript({ text, items, active, onPick }) {
       </p>
       {items.length > 0 && (
         <figcaption className="mt-2 text-xs text-ink-3">
-          {items.length} Polish noktasından {located} tanesi metninde işaretli. Açmak için birine dokun.
+          {located} of {items.length} Polish points are marked in your text. Tap one to open it.
         </figcaption>
       )}
     </figure>
@@ -152,10 +152,10 @@ function PolishItem({ g, i, open, onToggle }) {
             <Chip tone="amber">{g.category}</Chip>
             {g.severity === 'global' ? (
               <Chip tone="indigo">
-                <Key size={11} weight="fill" /> Sonraki seviyenin anahtarı
+                <Key size={11} weight="fill" /> Key to the next level
               </Chip>
             ) : (
-              <Chip tone="neutral">Anlam zaten netti</Chip>
+              <Chip tone="neutral">Meaning was already clear</Chip>
             )}
             <IpaChip ipa={g.ipa} />
           </span>
@@ -181,12 +181,12 @@ function PolishItem({ g, i, open, onToggle }) {
  * (already modelled in the recast); meaning-blocking items come first.
  */
 function GrammarLayer({ items, openIdx, setOpenIdx, tolerant }) {
-  if (!items.length) return <Empty title="Cilalanacak bir şey yok">Temiz bir iş. Bir dahaki sefere daha zor bir görev ya da daha uzun bir cevap dene.</Empty>;
+  if (!items.length) return <Empty title="Nothing to polish">Clean work. Next time, try a harder task or a longer answer.</Empty>;
   const indexed = items.map((g, i) => ({ g, i }));
   const groups = tolerant
     ? [
         { title: null, list: indexed.filter(({ g }) => g.severity === 'global') },
-        { title: 'İsteğe bağlı Polish: anlamın zaten netti', list: indexed.filter(({ g }) => g.severity !== 'global') },
+        { title: 'Optional Polish: your meaning was already clear', list: indexed.filter(({ g }) => g.severity !== 'global') },
       ]
     : [{ title: null, list: indexed }];
   return (
@@ -219,7 +219,7 @@ function RecastBlock({ text, recast, early }) {
           </span>
           Natural Recast
         </span>
-        <span className="ml-auto font-mono text-[11px] text-ink-3">{early ? 'doğal hâli' : 'cilalanmış metnin'}</span>
+        <span className="ml-auto font-mono text-[11px] text-ink-3">{early ? 'said naturally' : 'your polished text'}</span>
       </div>
       <p className="text-[15.5px] leading-8">
         {parts
@@ -234,13 +234,13 @@ function RecastBlock({ text, recast, early }) {
             ),
           )}
       </p>
-      {early && <p className="mt-1 text-[12px] text-ink-3">Bir kez sesli oku. Vurgulu kelimeler Polish’tir; fikirlerin aynı kalır.</p>}
+      {early && <p className="mt-1 text-[12px] text-ink-3">Read it aloud once. The highlighted words are the Polish; your ideas stay the same.</p>}
     </section>
   );
 }
 
 function VocabLayer({ items, openIdx, setOpenIdx }) {
-  if (!items.length) return <Empty title="Bu sefer kelime önerisi yok">Birkaç betimleyici kelime daha kullan (good, big, important); koç daha güçlülerini önerecek.</Empty>;
+  if (!items.length) return <Empty title="No word upgrades this time">Use a few more descriptive words (good, big, important) and the coach will suggest stronger ones.</Empty>;
   return (
     <ol>
       {items.map((v, i) => (
@@ -259,13 +259,13 @@ function VocabLayer({ items, openIdx, setOpenIdx }) {
               <span className="flex flex-wrap items-center gap-1.5">
                 <LevelBadge level={v.level} />
                 <IpaChip ipa={v.ipa} word={v.upgrade} />
-                {v.stretch && <Chip tone="emerald">İleride: {v.stretch}</Chip>}
+                {v.stretch && <Chip tone="emerald">Later: {v.stretch}</Chip>}
               </span>
             </span>
           }
         >
           <p className="text-[15px] text-ink-2">&ldquo;{v.example}&rdquo;</p>
-          {v.stretch && <p className="text-[13.5px] text-ink-3">İleri seçenek C1/C2 içindir. Şimdi tanı; {v.upgrade} doğal gelmeye başlayınca kullan.</p>}
+          {v.stretch && <p className="text-[13.5px] text-ink-3">The stretch option is C1/C2. Get to know it now, and start using it once {v.upgrade} feels natural.</p>}
         </AccordionItem>
       ))}
     </ol>
@@ -277,9 +277,9 @@ function RegisterLayer({ tone }) {
   return (
     <div className="space-y-4 pt-2">
       <div className="flex items-center gap-2">
-        <span className="text-sm text-ink-3">Üslup</span>
+        <span className="text-sm text-ink-3">Register</span>
         <Chip tone={tones[tone.register] ?? 'neutral'}>
-          <span>{({ informal: 'gündelik', neutral: 'nötr', formal: 'resmî' })[tone.register] ?? tone.register}</span>
+          <span>{({ informal: 'informal', neutral: 'neutral', formal: 'formal' })[tone.register] ?? tone.register}</span>
         </Chip>
       </div>
       <p className="text-[16px] leading-relaxed">{tone.summary}</p>
@@ -304,10 +304,10 @@ function SoundLayer({ speaking, pronunciation }) {
       {speaking && (
         <dl className="grid grid-cols-2 gap-y-4 sm:grid-cols-4 sm:divide-x sm:divide-line">
           {[
-            ['Kelime', speaking.wordCount, null],
-            ['Dakikada', speaking.wpm ?? '-', 'doğal hız 110–150'],
-            ['Dolgu sözcük', speaking.fillerTotal, Object.entries(speaking.fillers).map(([k, v]) => `${k} ×${v}`).join(', ') || 'yok'],
-            ['Çeşitlilik', `%${speaking.sentenceVariety}`, 'farklı cümle başları'],
+            ['Words', speaking.wordCount, null],
+            ['Per minute', speaking.wpm ?? '-', 'natural pace 110–150'],
+            ['Fillers', speaking.fillerTotal, Object.entries(speaking.fillers).map(([k, v]) => `${k} ×${v}`).join(', ') || 'none'],
+            ['Variety', `${speaking.sentenceVariety}%`, 'different sentence openers'],
           ].map(([label, value, hint]) => (
             <div key={label} className="sm:px-4 sm:first:pl-0">
               <dt className="text-xs text-ink-3">{label}</dt>
@@ -318,7 +318,7 @@ function SoundLayer({ speaking, pronunciation }) {
         </dl>
       )}
       <div>
-        <h4 className="mb-3 text-sm font-semibold">Dikkat edilecek kelimeler</h4>
+        <h4 className="mb-3 text-sm font-semibold">Words to watch</h4>
         {ipa.length ? (
           <ul className="grid gap-3 sm:grid-cols-2">
             {ipa.map((p) => (
@@ -332,7 +332,7 @@ function SoundLayer({ speaking, pronunciation }) {
             ))}
           </ul>
         ) : (
-          <p className="text-sm text-ink-3">Bu metinde zorlayıcı kelime yok.</p>
+          <p className="text-sm text-ink-3">No tricky words in this text.</p>
         )}
       </div>
     </div>
@@ -358,7 +358,7 @@ function StrengthBlock({ strengths }) {
         <span className="grid size-[18px] place-items-center rounded-[5px] bg-emerald-soft text-emerald">
           <Star size={11} weight="fill" />
         </span>
-        Strength Recognition <span className="font-normal text-ink-3">· güçlü yön</span>
+        Strength Recognition
       </div>
       <p className="text-[15.5px] leading-snug text-ink">{first}</p>
       {rest.length > 0 && (
@@ -382,7 +382,7 @@ export default function FeedbackCard({ feedback, loading, text, level = 'A1' }) 
 
   if (loading)
     return (
-      <Panel className="space-y-5 p-6" aria-busy="true" aria-label="Analiz ediliyor">
+      <Panel className="space-y-5 p-6" aria-busy="true" aria-label="Analyzing">
         <div className="flex items-center gap-4">
           <Skeleton className="size-[68px] rounded-full" />
           <div className="flex-1 space-y-2">
@@ -402,15 +402,15 @@ export default function FeedbackCard({ feedback, loading, text, level = 'A1' }) 
     return (
       <Panel className="flex flex-col justify-between p-7 @4xl:min-h-[420px]">
         <div>
-          <p className="text-2xl font-semibold tracking-[-0.03em]">Üç katmanlı geri bildirim</p>
-          <p className="mt-2 max-w-sm text-[15px] leading-relaxed text-ink-2">Cevabını gönder; her bölüm burada işaretlenip açıklanacak.</p>
+          <p className="text-2xl font-semibold tracking-[-0.03em]">Three-layer feedback</p>
+          <p className="mt-2 max-w-sm text-[15px] leading-relaxed text-ink-2">Submit your answer and each layer will be marked up and explained here.</p>
         </div>
         <ol className="mt-8 space-y-4">
           {[
-            [Star, 'Strength Recognition', 'Önce iyi yaptığın şey, kendi cümlelerinden alıntıyla.'],
-            [ArrowsClockwise, 'Natural Recast', 'Cümlenin doğal hâli; A1-A2’de akışın hiç bölünmez.'],
-            [MagicWand, 'Polish', 'Öncesi ve sonrasıyla küçük düzeltmeler, sonraki seviyenin anahtarı olarak.'],
-            [Diamond, 'Kelime ve üslup', 'Seviyenin bir adım üstünde güçlü kelimeler, ton ve bağlaçlar.'],
+            [Star, 'Strength Recognition', 'What you did well first, quoted from your own words.'],
+            [ArrowsClockwise, 'Natural Recast', 'Your message said naturally; at A1-A2 your flow is never interrupted.'],
+            [MagicWand, 'Polish', 'Small before-and-after fixes, framed as the key to the next level.'],
+            [Diamond, 'Words and register', 'Stronger words one step above your level, plus tone and linking words.'],
           ].map(([Icon, title, body]: [typeof Star, string, string]) => (
             <li key={title} className="flex gap-3">
               <Icon size={20} className="mt-0.5 shrink-0 text-ink-3" />
@@ -427,9 +427,9 @@ export default function FeedbackCard({ feedback, loading, text, level = 'A1' }) 
   const hasSound = Boolean(feedback.speaking) || feedback.pronunciation?.length > 0;
   const layers = [
     { id: 'grammar', label: 'Polish', icon: MagicWand, count: feedback.grammar.length },
-    { id: 'vocab', label: 'Kelime', icon: Diamond, count: feedback.vocabulary.length },
-    { id: 'tone', label: 'Üslup', icon: ChatsCircle },
-    ...(hasSound ? [{ id: 'sound', label: feedback.speaking ? 'Akıcılık' : 'Telaffuz', icon: Waveform }] : []),
+    { id: 'vocab', label: 'Words', icon: Diamond, count: feedback.vocabulary.length },
+    { id: 'tone', label: 'Register', icon: ChatsCircle },
+    ...(hasSound ? [{ id: 'sound', label: feedback.speaking ? 'Fluency' : 'Pronunciation', icon: Waveform }] : []),
   ];
 
   function pickMark(i) {
@@ -446,10 +446,10 @@ export default function FeedbackCard({ feedback, loading, text, level = 'A1' }) 
           <Score value={feedback.score} />
           <div className="min-w-0 flex-1 space-y-1.5">
             <div className="flex flex-wrap items-center gap-2 text-[13px] text-ink-3">
-              Tahmini seviye <LevelBadge level={feedback.estimatedLevel} />
+              Estimated level <LevelBadge level={feedback.estimatedLevel} />
               <span className="ml-auto inline-flex items-center gap-1">
                 {feedback.source === 'gemini' ? <Sparkle size={13} /> : <Cpu size={13} />}
-                {feedback.source === 'gemini' ? 'Gemini' : 'Çevrimdışı kurallar'}
+                {feedback.source === 'gemini' ? 'Gemini' : 'Offline rules'}
               </span>
             </div>
             <p className="text-[15.5px] leading-snug">{feedback.summary}</p>

@@ -15,10 +15,10 @@ export function POST(req: NextRequest) {
   return handle(async () => {
     await assertAuthenticated(req);
     assertSameApp(req);
-    if (!env.geminiKey) throw new HttpError('Yapay zekâ koçu çevrimdışı: sunucuya GEMINI_API_KEY ekleyin.', 503);
+    if (!env.geminiKey) throw new HttpError('The AI coach is offline: add GEMINI_API_KEY on the server.', 503);
     const body = await readJson<ChatRequest>(req, 512 * 1024);
     const contents = chatContents(body.messages);
-    if (!contents.length || contents[contents.length - 1].role !== 'user') throw new HttpError('Sohbet bir öğrenci mesajıyla bitmeli.', 400);
+    if (!contents.length || contents[contents.length - 1].role !== 'user') throw new HttpError('The conversation must end with a learner message.', 400);
     const learnerState = typeof body.context === 'string' ? body.context.slice(0, 8000) : '{}';
     const system = chatInstruction(await storage().readProfile(), learnerState);
 

@@ -49,7 +49,7 @@ function AddWordForm({ onAdded, onClose }) {
     e.preventDefault();
     try {
       const added = await api.addVocabulary([form]);
-      if (!added.length) return setError('Bu kelime zaten kasanda.');
+      if (!added.length) return setError('This word is already in your vault.');
       onAdded();
       onClose();
     } catch (err) {
@@ -58,30 +58,30 @@ function AddWordForm({ onAdded, onClose }) {
   }
   return (
     <motion.form initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ duration: 0.35, ease }} onSubmit={submit} className="overflow-hidden">
-      <Panel className="mb-6 grid gap-4 p-5 @@3xl:grid-cols-2 @3xl:grid-cols-[1.2fr_0.6fr_1fr]">
-        <Field label="Kelime ya da ifade (İngilizce)">
+      <Panel className="mb-6 grid gap-4 p-5 @lg:grid-cols-2 @3xl:grid-cols-[1.2fr_0.6fr_1fr]">
+        <Field label="Word or phrase">
           <input required value={form.original} onChange={set('original')} className={inputCls} />
         </Field>
-        <Field label="Seviye">
+        <Field label="Level">
           <select value={form.cefr} onChange={set('cefr')} className={`${inputCls} font-mono`}>
             {LEVELS.map((l) => (
               <option key={l}>{l}</option>
             ))}
           </select>
         </Field>
-        <Field label="Türkçe anlamı">
-          <input value={form.meaning} onChange={set('meaning')} className={inputCls} lang="tr" />
+        <Field label="Meaning">
+          <input value={form.meaning} onChange={set('meaning')} className={inputCls} />
         </Field>
-        <Field label="Örnek cümle (İngilizce)">
+        <Field label="Example sentence">
           <input value={form.example} onChange={set('example')} className={inputCls} />
         </Field>
-        <Field label="Üst seviye karşılığı">
+        <Field label="Higher-level alternative">
           <input value={form.upgraded} onChange={set('upgraded')} className={inputCls} />
         </Field>
         <div className="flex items-end gap-2">
-          <Button type="submit">Kasaya ekle</Button>
+          <Button type="submit">Add to vault</Button>
           <Button type="button" variant="ghost" onClick={onClose}>
-            Vazgeç
+            Cancel
           </Button>
         </div>
         {error && <p className="text-sm text-brick @lg:col-span-2 @3xl:col-span-3">{error}</p>}
@@ -92,22 +92,22 @@ function AddWordForm({ onAdded, onClose }) {
 
 function SrsStatus({ r }) {
   const meta = (
-    <span className="font-mono" title="SM-2 kolaylık katsayısı ve art arda başarılı tekrar">
-      kolaylık {r.ease}, tekrar {r.reps}
+    <span className="font-mono" title="SM-2 ease factor and successful reviews in a row">
+      ease {r.ease}, reps {r.reps}
     </span>
   );
   if (r.due)
     return (
       <>
-        <span className="rounded-full bg-amber-soft px-2 py-0.5 text-amber">Tekrar zamanı · {stageTr(r.stage)}</span>
+        <span className="rounded-full bg-amber-soft px-2 py-0.5 text-amber">Due now · {stageTr(r.stage)}</span>
         {meta}
       </>
     );
   return (
     <>
-      {r.mastered === 'Yes' && <span className="rounded-full bg-emerald-soft px-2 py-0.5 text-emerald">Ustalaşıldı</span>}
-      <span className="font-mono" title={`Aralık ${stageTr(r.stage)}`}>
-        sonraki {r.next} ({stageTr(r.stage)})
+      {r.mastered === 'Yes' && <span className="rounded-full bg-emerald-soft px-2 py-0.5 text-emerald">Mastered</span>}
+      <span className="font-mono" title={`Interval ${stageTr(r.stage)}`}>
+        next {r.next} ({stageTr(r.stage)})
       </span>
       {meta}
     </>
@@ -126,7 +126,7 @@ function CanDoBoard({ profile }) {
     <section className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="max-w-xl text-[14px] text-ink-2">
-          Müfredatın 48 eylem odaklı hedefi. Bir Can-Do, geri bildirimle onaylanan 3 farklı görevde (%80+) kullanılınca kazanılır. Şimdiye kadar {all.filter((c) => canDoById(c.id)).length} kazanıldı.
+          The curriculum’s 48 action-oriented goals. A Can-Do is earned after you use it in 3 different tasks (80%+), confirmed by feedback. Earned so far: {all.filter((c) => canDoById(c.id)).length}.
         </p>
         <Segmented id="cdlevel" size="sm" value={level} onChange={setLevel} items={LEVELS.map((l) => ({ id: l, label: l }))} />
       </div>
@@ -134,7 +134,7 @@ function CanDoBoard({ profile }) {
         {bands.map((b) => (
           <Panel key={b.id} className="p-5">
             <h3 className="mb-1 font-mono text-sm font-semibold">{b.id}</h3>
-            <p className="mb-3 text-[12.5px] text-ink-3">{b.goal_tr}</p>
+            <p className="mb-3 text-[12.5px] text-ink-3">{b.goal}</p>
             <ul className="space-y-3">
               {bandStatus(profile, b.id).map((c) => {
                 const done = byId.get(c.id);
@@ -148,7 +148,7 @@ function CanDoBoard({ profile }) {
                       <p className={`text-[15px] leading-snug ${done ? 'text-ink' : 'text-ink-2'}`}>{c.text}</p>
                       <p className="flex items-center gap-1 text-[11.5px] text-ink-3">
                         <Icon size={12} /> {skillTr(c.skill)} · {fnTr(c.function)}
-                        {done ? `, ${dateTr(done.date, { day: 'numeric', month: 'short', year: 'numeric' })} tarihinde kazanıldı` : ''}
+                        {done ? `, earned ${dateTr(done.date, { day: 'numeric', month: 'short', year: 'numeric' })}` : ''}
                       </p>
                     </div>
                   </li>
@@ -160,7 +160,7 @@ function CanDoBoard({ profile }) {
       </div>
       {legacy.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-[12px] font-semibold tracking-[0.06em] text-ink-3 uppercase">Müfredat öncesi kazanımlar</h3>
+          <h3 className="text-[12px] font-semibold tracking-[0.06em] text-ink-3 uppercase">Earned before the curriculum</h3>
           <ul className="space-y-1.5 text-[13.5px] text-ink-2">
             {legacy.map((c) => (
               <li key={c.id}>
@@ -199,8 +199,8 @@ function VocabularyVault({ rows, reload, loading }) {
   return (
     <section>
       <div className="mb-6 flex flex-col gap-3 @3xl:flex-row @3xl:items-center">
-        <SearchBox value={q} onChange={setQ} placeholder="Kelime, anlam ya da örnek ara" label="Kelime ara" />
-        <div className="flex flex-wrap items-center gap-1.5" aria-label="Seviyeye göre filtrele">
+        <SearchBox value={q} onChange={setQ} placeholder="Search words, meanings or examples" label="Search words" />
+        <div className="flex flex-wrap items-center gap-1.5" aria-label="Filter by level">
           {LEVELS.map((l) => (
             <button key={l} onClick={() => toggle(l)} aria-pressed={levels.includes(l)} className={`${pill(levels.includes(l))} font-mono`}>
               {l}
@@ -213,13 +213,13 @@ function VocabularyVault({ rows, reload, loading }) {
           value={sort}
           onChange={setSort}
           items={[
-            { id: 'newest', label: 'En yeni' },
+            { id: 'newest', label: 'Newest' },
             { id: 'az', label: 'A-Z' },
-            { id: 'level', label: 'Seviye' },
+            { id: 'level', label: 'Level' },
           ]}
         />
         <Button variant="secondary" onClick={() => setAdding((a) => !a)}>
-          {adding ? <X size={16} /> : <Plus size={16} />} {adding ? 'Kapat' : 'Kelime ekle'}
+          {adding ? <X size={16} /> : <Plus size={16} />} {adding ? 'Close' : 'Add word'}
         </Button>
       </div>
 
@@ -230,9 +230,9 @@ function VocabularyVault({ rows, reload, loading }) {
         value={status}
         onChange={setStatus}
         items={[
-          { id: 'all', label: 'Tümü', count: rows.length },
-          { id: 'due', label: 'Bugün tekrar', count: counts.due },
-          { id: 'mastered', label: 'Ustalaşılan', count: counts.mastered },
+          { id: 'all', label: 'All', count: rows.length },
+          { id: 'due', label: 'Due today', count: counts.due },
+          { id: 'mastered', label: 'Mastered', count: counts.mastered },
         ]}
       />
 
@@ -250,8 +250,8 @@ function VocabularyVault({ rows, reload, loading }) {
         </div>
       ) : filtered.length === 0 ? (
         <div className="max-w-md py-12">
-          <p className="text-2xl font-semibold tracking-[-0.02em]">{rows.length ? 'Eşleşen kelime yok' : 'Kasan boş'}</p>
-          <p className="mt-2 text-ink-2">{rows.length ? 'Tüm kelimeleri görmek için aramayı ya da seviye filtrelerini temizle.' : 'Bir okuma ya da dinleme görevini bitirdiğinde anahtar kelimeleri burada toplanır. Kendin de kelime ekleyebilirsin.'}</p>
+          <p className="text-2xl font-semibold tracking-[-0.02em]">{rows.length ? 'No matching words' : 'Your vault is empty'}</p>
+          <p className="mt-2 text-ink-2">{rows.length ? 'Clear the search or level filters to see every word.' : 'Finish a reading or listening task and its key words are collected here. You can also add words yourself.'}</p>
         </div>
       ) : (
         <dl className="grid gap-x-10 @2xl:grid-cols-2 @5xl:grid-cols-3">
@@ -268,7 +268,7 @@ function VocabularyVault({ rows, reload, loading }) {
                 {r.cefr && <LevelBadge level={r.cefr} />}
               </dt>
               {r.meaning && (
-                <dd lang="tr" className="mt-0.5 text-sm text-ink-2">
+                <dd className="mt-0.5 text-sm text-ink-2">
                   {r.meaning}
                 </dd>
               )}
@@ -286,7 +286,7 @@ function VocabularyVault({ rows, reload, loading }) {
         </dl>
       )}
       <p className="mt-6 text-xs text-ink-3">
-        {rows.length} kelimeden {filtered.length} tanesi, kaynak: <code className="font-mono">vocabulary.md</code>
+        {filtered.length} of {rows.length} words, source: <code className="font-mono">vocabulary.md</code>
       </p>
     </section>
   );
@@ -294,7 +294,7 @@ function VocabularyVault({ rows, reload, loading }) {
 
 function StreakMeter({ streak }) {
   return (
-    <span className="flex flex-col items-end gap-1" title={`Art arda 3 oturumdan ${streak} tanesinde doğru`}>
+    <span className="flex flex-col items-end gap-1" title={`Correct in ${streak} of 3 sessions in a row`}>
       <span className="inline-flex gap-[3px]" aria-hidden>
         {[0, 1, 2].map((i) => (
           <span key={i} className={`h-1.5 w-4 rounded-full ${i < streak ? 'bg-emerald' : 'bg-line-strong'}`} />
@@ -316,11 +316,11 @@ function ErrorLedger({ data, loading }) {
   return (
     <section className="space-y-10">
       <div className="space-y-3">
-        <SearchBox value={q} onChange={setQ} placeholder="Kalıp, düzeltme ya da kural ara" label="Kalıp ara" />
+        <SearchBox value={q} onChange={setQ} placeholder="Search patterns, fixes or rules" label="Search patterns" />
         {categories.length > 1 && (
-          <div className="flex flex-wrap gap-1.5" aria-label="Kategoriye göre filtrele">
+          <div className="flex flex-wrap gap-1.5" aria-label="Filter by category">
             <button onClick={() => setCat('')} className={pill(!cat)} aria-pressed={!cat}>
-              Tümü
+              All
             </button>
             {categories.map((c) => (
               <button key={c} onClick={() => setCat(c === cat ? '' : c)} className={pill(c === cat)} aria-pressed={c === cat}>
@@ -335,8 +335,8 @@ function ErrorLedger({ data, loading }) {
         <Skeleton className="h-48 w-full rounded-[14px]" />
       ) : groups.length === 0 ? (
         <div className="max-w-md">
-          <p className="text-2xl font-semibold tracking-[-0.02em]">{data.active.length ? 'Eşleşen kalıp yok' : 'Henüz cilalanacak kalıp yok'}</p>
-          <p className="mt-2 text-ink-2">{data.active.length ? 'Aramayı ya da kategori filtresini temizle.' : 'Yazma ve konuşma geri bildirimindeki kalıplar burada tutulur. Doğru biçimi art arda 3 oturumda kullanınca kalıp kendiliğinden çözülür.'}</p>
+          <p className="text-2xl font-semibold tracking-[-0.02em]">{data.active.length ? 'No matching patterns' : 'Nothing to polish yet'}</p>
+          <p className="mt-2 text-ink-2">{data.active.length ? 'Clear the search or category filter.' : 'Patterns from your writing and speaking feedback are kept here. Use the correct form in 3 sessions in a row and the pattern resolves itself.'}</p>
         </div>
       ) : (
         <div className="space-y-8">
@@ -355,7 +355,7 @@ function ErrorLedger({ data, loading }) {
                     </div>
                     <p className="text-[13.5px] leading-relaxed text-ink-2">{e.rule}</p>
                     <div className="flex items-center gap-4 @2xl:justify-end">
-                      <span className="text-right" title={`İlk görülme ${e.firstSeen}`}>
+                      <span className="text-right" title={`First seen ${e.firstSeen}`}>
                         <span className={`block text-2xl leading-none font-semibold tracking-[-0.02em] tabular-nums ${e.count >= 3 ? 'text-amber' : ''}`}>×{e.count}</span>
                         <span className="font-mono text-[10.5px] text-ink-3">{e.lastSeen}</span>
                       </span>
@@ -372,7 +372,7 @@ function ErrorLedger({ data, loading }) {
       <div className="grid gap-10 border-t border-line pt-8 @3xl:grid-cols-2">
         <div>
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-            <Checks size={16} className="text-emerald" /> Çözülenler <span className="font-mono text-xs font-normal text-ink-3">{data.resolved.length}</span>
+            <Checks size={16} className="text-emerald" /> Resolved <span className="font-mono text-xs font-normal text-ink-3">{data.resolved.length}</span>
           </h3>
           {data.resolved.length ? (
             <ul className="space-y-2">
@@ -386,14 +386,14 @@ function ErrorLedger({ data, loading }) {
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-ink-3">Kalıplar art arda 3 oturumda doğru kullanılınca buraya kendiliğinden taşınır.</p>
+            <p className="text-sm text-ink-3">Patterns move here on their own once you use them correctly in 3 sessions in a row.</p>
           )}
         </div>
         <div>
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-            <Eye size={16} className="text-amber" /> İzleme listesi
+            <Eye size={16} className="text-amber" /> Watchlist
           </h3>
-          <p className="mb-3 text-sm text-ink-3">Önceki profilinden gelen zayıf noktalar. Cevaplarında henüz görülmedi.</p>
+          <p className="mb-3 text-sm text-ink-3">Weak spots carried over from your previous profile. Not seen in your answers yet.</p>
           <div className="flex flex-wrap gap-1.5">
             {data.watchlist.map((w) => (
               <span key={w} className="rounded-full bg-amber-soft px-2.5 py-1 text-[13px] text-amber">
@@ -404,7 +404,7 @@ function ErrorLedger({ data, loading }) {
         </div>
       </div>
       <p className="text-xs text-ink-3">
-        Kaynak: <code className="font-mono">error_ledger.md</code>
+        Source: <code className="font-mono">error_ledger.md</code>
       </p>
     </section>
   );
@@ -437,17 +437,17 @@ export default function Vault({ refreshKey, profile, onReviewed = undefined }) {
   return (
     <div className="space-y-7">
       <header className="max-w-2xl space-y-2">
-        <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Kasa</h1>
-        <p className="text-[15px] leading-relaxed text-ink-2">Topladığın her kelime ve üzerinde çalıştığın her kalıp, koç dosyalarından canlı okunur.</p>
+        <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Vault</h1>
+        <p className="text-[15px] leading-relaxed text-ink-2">Every word you’ve collected and every pattern you’re working on, read live from your coach files.</p>
       </header>
       <Segmented
         id="vault"
         value={tab}
         onChange={setTab}
         items={[
-          { id: 'review', label: 'Kartlar', icon: Cards, count: vocab.filter((v) => v.due).length },
-          { id: 'vocab', label: 'Kelimeler', icon: BookmarkSimple, count: vocab.length },
-          { id: 'errors', label: 'Polish listesi', icon: MagicWand, count: errors.active.length },
+          { id: 'review', label: 'Cards', icon: Cards, count: vocab.filter((v) => v.due).length },
+          { id: 'vocab', label: 'Words', icon: BookmarkSimple, count: vocab.length },
+          { id: 'errors', label: 'Polish list', icon: MagicWand, count: errors.active.length },
           { id: 'cando', label: 'Can-Do', icon: SealCheck, count: profile?.can_do_mastered?.length ?? 0 },
         ]}
       />

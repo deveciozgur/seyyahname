@@ -1,55 +1,59 @@
-# Seyyahname AI Coach v2: Node.js Sunucuya Kurulum
+# Seyyahname AI Coach v2: Deploying to a Node.js Server
 
-Seyyahname artık tek bir Node.js sunucusu olarak çalışır: sayfalar, kilit ekranı, veri dosyaları ve Gemini bağlantısı aynı süreçte. Ayrı bir PHP köprüsü ya da statik paket yoktur.
+Seyyahname runs as a single Node.js server: the pages, the lock screen, the data files and the Gemini connection all live in one process. There is no separate PHP bridge or static bundle.
 
-## Nasıl çalışır?
+## How it works
 
-| Parça | Nerede | Görevi |
+| Part | Where | What it does |
 |---|---|---|
-| Arayüz | `app/src/app/(coach)/*`, `/unlock` | Next.js App Router sayfaları. Koçluk mantığı (SM-2, alt bant, müfredat, hata defteri) tarayıcıda çalışır. |
-| Kapı | `app/src/proxy.ts` | Oturum yoksa her sayfa `/unlock`'a yönlenir. |
-| API | `/api/auth`, `/api/state`, `/api/feedback`, `/api/chat` | PIN → JWT oturum çerezi; veri dosyalarını atomik okuma/yazma; Gemini JSON geri bildirimi ve akışlı sohbet. |
-| Kurallar | `CLAUDE.md` | Build sırasında `.next/standalone/` içine kopyalanır ve Gemini'ye sistem talimatı olarak gönderilir. |
-| Veri | `DATA_DIR` (varsayılan `app/data/`) | `profile.json`, `vocabulary.md`, `error_ledger.md`, `sessions/`. Yoksa ilk istekte şablonlardan oluşturulur. |
+| Interface | `app/src/app/(coach)/*`, `/unlock` | Next.js App Router pages. The coaching logic (SM-2, sub-bands, curriculum, error ledger) runs in the browser. |
+| Gate | `app/src/proxy.ts` | Without a session, every page redirects to `/unlock`. |
+| API | `/api/auth`, `/api/state`, `/api/feedback`, `/api/chat` | PIN → JWT session cookie; atomic reads and writes of the data files; Gemini JSON feedback and streaming chat. |
+| Rules | `CLAUDE.md` | Copied into `.next/standalone/` at build time and sent to Gemini as the system instruction. |
+| Data | `DATA_DIR` (default `app/data/`) | `profile.json`, `vocabulary.md`, `error_ledger.md`, `sessions/`. Created from templates on the first request if missing. |
 
-## Gereksinimler
+The marketing site for the root domain is a separate, self-contained page in `landing/index.html` (no build step; upload it to `public_html`).
 
-- **Node.js 20.9 veya üstü** (22 LTS önerilir). Paylaşımlı hostingde panelde "Node.js uygulaması" özelliği olmalı (cPanel "Setup Node.js App", Plesk "Node.js", DirectAdmin vb.). Sadece PHP/FTP sunan paketlerde çalışmaz.
-- Veri klasörü için yazma izni.
+## Requirements
 
-## 1. Kodu sunucuya al
+- **Node.js 20.9 or later** (22 LTS recommended). On shared hosting, the control panel must offer a "Node.js application" feature (cPanel "Setup Node.js App", Plesk "Node.js", DirectAdmin, Hostinger, etc.). Plans that only offer PHP/FTP will not work.
+- Write access to the data folder.
+
+## 1. Get the code onto the server
 
 ```bash
-git clone https://github.com/deveciozgur/claude-english-coach.git seyyahname
+git clone https://github.com/deveciozgur/seyyahname.git seyyahname
 cd seyyahname/app
 npm ci
-npm run build          # .next/standalone/ oluşur; public/, static/ ve CLAUDE.md içine kopyalanır
+npm run build          # creates .next/standalone/ and copies public/, static/ and CLAUDE.md into it
 ```
 
-`npm run build` sonunda tüm `/api/*` rotaları `ƒ (Dynamic)` olarak listelenir.
+When `npm run build` finishes, every `/api/*` route is listed as `ƒ (Dynamic)`.
 
-## 2. Ortam değişkenleri
+The production build uses Webpack (`next build --webpack`). Turbopack's PostCSS step runs in a child Node process that some shared hosts (for example Hostinger) cannot reach, which crashes the CSS build with a `TurbopackInternalError`. `npm run dev` still uses Turbopack locally.
 
-Panelin "Environment variables" bölümüne gir (ya da `app/.env` dosyası oluştur; şablon: `app/.env.example`).
+## 2. Environment variables
 
-| Değişken | Zorunlu | Açıklama |
+Open the panel's "Environment variables" section (or create `app/.env`; template: `app/.env.example`).
+
+| Variable | Required | Description |
 |---|---|---|
-| `APP_SECRET_PIN` | **Evet** | Kilit ekranının istediği PIN. Boşsa API 503 döner. |
-| `APP_SESSION_SECRET` | **Evet** (üretimde) | Oturum JWT'sini imzalayan uzun rastgele metin. Değiştirmek herkesi çıkış yaptırır. Üret: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
-| `GEMINI_API_KEY` | Önerilir | Koç sohbeti ve yapay zekâ geri bildirimi. Yoksa çevrimdışı geri bildirim motoru çalışır. |
-| `GEMINI_MODEL` | Hayır | Varsayılan `gemini-flash-latest` (Google'ın güncel Flash modeli). |
-| `DATA_DIR` | Hayır | Veri klasörü. Göreli yollar `app/` klasöründen başlar; en güvenlisi uygulamanın dışında mutlak bir yol (`/home/KULLANICI/seyyahname-data`). |
-| `SESSION_DAYS` | Hayır | Oturum süresi, gün (varsayılan 7). |
-| `SITE_URL` | Hayır | Paylaşım önizlemeleri (OpenGraph/Twitter) için genel adres, örn. `https://coach.ozgurdeveci.com`. |
-| `PORT` | Panel ayarlar | `npm start` portu (varsayılan 3000). |
+| `APP_SECRET_PIN` | **Yes** | The PIN the lock screen asks for. If empty, the API returns 503. |
+| `APP_SESSION_SECRET` | **Yes** (in production) | A long random string that signs the session JWT. Changing it signs everyone out. Generate one: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
+| `GEMINI_API_KEY` | Recommended | Enables the coach chat and AI feedback. Without it, the offline feedback engine runs. |
+| `GEMINI_MODEL` | No | Defaults to `gemini-flash-latest` (Google's current Flash model). |
+| `DATA_DIR` | No | Data folder. Relative paths start at the `app/` folder; safest is an absolute path outside the app (`/home/USER/seyyahname-data`). |
+| `SESSION_DAYS` | No | Session length in days (default 7). |
+| `SITE_URL` | No | Public address used for share previews (OpenGraph/Twitter), e.g. `https://app.seyyahname.com`. |
+| `PORT` | Set by the panel | Port for `npm start` (default 3000). |
 
-## 3. Başlat
+## 3. Start the app
 
-**Hosting paneli (cPanel / Plesk):**
-- Uygulama kökü: `seyyahname/app`
-- Başlangıç dosyası (startup file): `.next/standalone/server.js`
-- Node sürümü: 22
-- Kaydet ve "Restart" de. Panel `PORT`'u kendisi verir; `server.js` bunu okur.
+**Hosting panel (cPanel / Plesk / Hostinger):**
+- Application root: `seyyahname/app`
+- Startup file: `.next/standalone/server.js`
+- Node version: 22
+- Save and click "Restart". The panel provides `PORT` itself; `server.js` reads it.
 
 **VPS (pm2 + Nginx):**
 
@@ -59,56 +63,57 @@ PORT=3000 pm2 start npm --name seyyahname -- start
 pm2 save
 ```
 
-Nginx'te `proxy_pass http://127.0.0.1:3000;` ile yönlendir. Sohbet akışı için `proxy_buffering off;` ekle; API zaten `X-Accel-Buffering: no` gönderir. Gerçek ziyaretçi IP'si için `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;` ve HTTPS için `proxy_set_header X-Forwarded-Proto $scheme;` ekle.
+Route traffic in Nginx with `proxy_pass http://127.0.0.1:3000;`. Add `proxy_buffering off;` so the chat streams; the API already sends `X-Accel-Buffering: no`. For the real visitor IP add `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;`, and for HTTPS add `proxy_set_header X-Forwarded-Proto $scheme;`.
 
-## 4. PHP sürümünden veri taşıma
+## 4. Migrating data from the PHP version
 
-Eski kurulumdaki ilerlemen sunucudaki `data/` klasöründe duruyor (`profile.json`, `vocabulary.md`, `error_ledger.md`, `sessions/`).
+Your progress from the old installation lives in the server's `data/` folder (`profile.json`, `vocabulary.md`, `error_ledger.md`, `sessions/`).
 
-1. Eski sunucudan `data/` klasörünü FTP ile indir.
-2. Yeni sunucuda `DATA_DIR` klasörüne (varsayılan `app/data/`) aynen kopyala. `.version`, `backups/` gibi dosyalar da gelebilir; zararsızdır.
-3. Uygulamayı yeniden başlat. Dosya biçimleri değişmedi; hiçbir anahtar silinmez veya yeniden adlandırılmaz.
+1. Download the `data/` folder from the old server over FTP.
+2. Copy it as-is into `DATA_DIR` on the new server (default `app/data/`). Files such as `.version` or `backups/` may come along; they are harmless.
+3. Restart the app. The file formats have not changed; no key is deleted or renamed.
 
-Kayıtlı tema tercihi tarayıcıda yeni anahtara (`seyyahname.theme`) geçtiği için bir kez varsayılana (Sistem) döner; eski oturum çerezleri geçersizdir, bir kez PIN girmek yeterli.
+The saved theme preference moves to a new browser key (`seyyahname.theme`), so it resets to the default (System) once. Old session cookies are no longer valid; entering the PIN once is enough.
 
-## 5. Güvenlik
+## 5. Security
 
-- **Veri klasörü web'den erişilemez:** Next.js yalnızca `public/` ve derleme çıktısını sunar; `DATA_DIR`, `.env` ve `CLAUDE.md` hiçbir adresten okunamaz.
-- **Oturum:** Doğru PIN, `jose` ile HS256 imzalı, süreli (varsayılan 7 gün) bir JWT üretir. Çerez: `seyyahname_session; HttpOnly; Path=/; SameSite=Lax; Secure` (üretimde ve HTTPS arkasında her zaman `Secure`).
-- **PIN karşılaştırması:** sabit sürede (`timingSafeEqual`).
-- **Deneme sınırı:** Aynı IP'den 5 yanlış PIN o IP'yi 15 dakika kilitler; tüm IP'lerden 30 yanlış deneme herkesi 15 dakika kilitler. IP, ters proxy'nin eklediği son `X-Forwarded-For` girdisidir (istemcinin yazdıkları dikkate alınmaz).
-- **Başka sitelerden gelen istekler:** Veri değiştiren her istek `x-requested-with: seyyahname` başlığı ister; `SameSite=Lax` çerezle birlikte siteler arası istekleri engeller.
-- **Kaydetme:** Yalnızca `profile.json`, `vocabulary.md`, `error_ledger.md` ve `sessions/YYYY-MM-DD.md` yazılabilir (her biri en fazla 1 MB; `profile.json` geçerli bir JSON nesnesi olmalı). Yazmalar geçici dosyaya yapılıp atomik `rename` ile yerine konur; kilit dosyası aynı anda iki yazmayı önler; sürüm numarası iki cihazın birbirinin üzerine yazmasını engeller (409 → güncel veri yüklenip işlem tekrarlanır).
-- **Başlıklar:** `X-Powered-By` kapalı; `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy` (mikrofon yalnızca bu site için) gönderilir. API yanıtları `no-store` ve `noindex`.
-- **Kilit ekranı anonim:** `/unlock` ekranında yalnızca PIN kutusu ve "Giriş" düğmesi var; sekme başlığı "Giriş". Not: paylaşım önizlemeleri için sayfa başlığında (görünmeyen meta etiketlerde) Seyyahname adı ve açıklaması bulunur.
+- **The data folder is not reachable from the web:** Next.js only serves `public/` and the build output; `DATA_DIR`, `.env` and `CLAUDE.md` cannot be read from any URL.
+- **Session:** a correct PIN produces an expiring JWT (default 7 days) signed with HS256 via `jose`. Cookie: `seyyahname_session; HttpOnly; Path=/; SameSite=Lax; Secure` (always `Secure` in production and behind HTTPS).
+- **PIN comparison:** constant-time (`timingSafeEqual`).
+- **Rate limiting:** 5 wrong PINs from one IP lock that IP for 15 minutes; 30 wrong attempts across all IPs lock everyone out for 15 minutes. The IP is the last `X-Forwarded-For` entry, the one added by the reverse proxy (entries written by the client are ignored).
+- **Cross-site requests:** every request that changes data must carry the `x-requested-with: seyyahname` header; together with the `SameSite=Lax` cookie this blocks cross-site requests.
+- **Saving:** only `profile.json`, `vocabulary.md`, `error_ledger.md` and `sessions/YYYY-MM-DD.md` can be written (at most 1 MB each; `profile.json` must be a valid JSON object). Writes go to a temporary file and are moved into place with an atomic `rename`; a lock file prevents two simultaneous writes; a version number stops two devices from overwriting each other (409 → the latest data is reloaded and the operation retried).
+- **Headers:** `X-Powered-By` is off; `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy` and `Permissions-Policy` (microphone for this site only) are sent. API responses are `no-store` and `noindex`.
+- **Anonymous lock screen:** `/unlock` shows only a PIN field and a sign-in button, with a neutral tab title. Note: for share previews, the page head (invisible meta tags) contains the Seyyahname name and description.
 
-## 6. Güncelleme
+## 6. Updating
 
 ```bash
 cd seyyahname && git pull
 cd app && npm ci && npm run build
-# panelde "Restart" ya da: pm2 restart seyyahname
+# "Restart" in the panel, or: pm2 restart seyyahname
 ```
 
-Veri klasörü derleme çıktısının dışında olduğu için güncelleme ilerlemeye dokunmaz.
+The data folder sits outside the build output, so updates never touch your progress.
 
-## 7. Yedekleme
+## 7. Backups
 
-- **Otomatik:** Her gün ilk kayıttan önce `DATA_DIR/backups/YYYY-MM-DD/` altına bir kopya alınır; son 14 gün saklanır.
-- **Elle:** `DATA_DIR` klasörünü ara sıra indir.
+- **Automatic:** before the first save of each day, a copy is written to `DATA_DIR/backups/YYYY-MM-DD/`; the last 14 days are kept.
+- **Manual:** download the `DATA_DIR` folder from time to time.
 
-## 8. Sürekli entegrasyon
+## 8. Continuous integration
 
-`.github/workflows/ci.yml` her push ve pull request'te `npm ci`, `npm run typecheck`, `npm test` ve `npm run build` çalıştırır.
+`.github/workflows/ci.yml` runs `npm ci`, `npm run typecheck`, `npm test` and `npm run build` on every push and pull request.
 
-## 9. Sorun giderme
+## 9. Troubleshooting
 
-| Belirti | Çözüm |
+| Symptom | Fix |
 |---|---|
-| "APP_SECRET_PIN tanımlı değil" | Ortam değişkenini panelde ekle ve uygulamayı yeniden başlat. |
-| "Veri klasörü hazırlanamadı" | `DATA_DIR` klasörüne yazma izni ver ya da yazılabilir mutlak bir yol ayarla. |
-| PIN doğru ama tekrar kilit ekranı geliyor | Site HTTP üzerinden açılıyor olabilir (`Secure` çerez yalnızca HTTPS'te saklanır). HTTPS kullan; proxy arkasındaysan `X-Forwarded-Proto` gönderildiğinden emin ol. |
-| Sohbet yanıtı parça parça değil, en sonda geliyor | Ters proxy yanıtı tamponluyor: Nginx'te `proxy_buffering off;`. |
-| "Gemini modeli bulunamadı" | `GEMINI_MODEL` değerini düzelt (ör. `gemini-flash-latest`). |
-| "Gemini API anahtarını kabul etmedi" | `GEMINI_API_KEY` değerini kontrol et. |
-| Sayfa stilleri yüklenmiyor | `npm run build` sonrası `postbuild` adımı çalışmamış olabilir: `node scripts/standalone-assets.mjs`. |
+| "APP_SECRET_PIN is not set" | Add the environment variable in the panel and restart the app. |
+| The data folder cannot be prepared | Give write access to the `DATA_DIR` folder, or set a writable absolute path. |
+| The PIN is correct but the lock screen keeps coming back | The site may be served over HTTP (a `Secure` cookie is only stored over HTTPS). Use HTTPS; behind a proxy, make sure `X-Forwarded-Proto` is sent. |
+| Chat replies arrive all at once instead of streaming | The reverse proxy is buffering the response: set `proxy_buffering off;` in Nginx. |
+| `TurbopackInternalError` / PostCSS panic during the build | Make sure the build runs `next build --webpack` (the `build` script in `app/package.json`). |
+| "Gemini model … was not found" | Fix `GEMINI_MODEL` (e.g. `gemini-flash-latest`). |
+| "Gemini rejected the API key" | Check `GEMINI_API_KEY`. |
+| Page styles do not load | The `postbuild` step may not have run after `npm run build`: `node scripts/standalone-assets.mjs`. |

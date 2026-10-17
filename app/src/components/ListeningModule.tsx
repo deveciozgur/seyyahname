@@ -140,15 +140,15 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
             onClick={() => (isPlayingAll ? stop() : speakLines(lines.map((_, i) => i)))}
             disabled={!hasTTS}
             className="grid size-12 shrink-0 place-items-center rounded-full bg-ink text-paper transition-transform hover:scale-[1.03] active:scale-[0.97] disabled:bg-line-strong"
-            aria-label={isPlayingAll ? 'Durdur' : 'Diyaloğu oynat'}
+            aria-label={isPlayingAll ? 'Stop' : 'Play the dialogue'}
           >
             {isPlayingAll ? <Stop size={18} weight="fill" /> : <Play size={18} weight="fill" className="translate-x-px" />}
           </button>
           <div className="min-w-0">
-            <div className="text-sm font-medium">{isPlayingAll ? 'Diyalog oynatılıyor' : plays ? 'Yeniden oynat ya da tek bir satıra dokun' : 'Diyaloğu oynat'}</div>
+            <div className="text-sm font-medium">{isPlayingAll ? 'Playing the dialogue' : plays ? 'Play again, or tap a single line' : 'Play the dialogue'}</div>
             <div className="text-xs text-ink-3">
-              {plays} kez oynatıldı
-              {!hasTTS && ', bu tarayıcıda konuşma sentezi yok'}
+              Played {plays}×
+              {!hasTTS && ', speech synthesis is not available in this browser'}
             </div>
           </div>
           <button
@@ -156,7 +156,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
             aria-pressed={letters}
             className={`ml-auto inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] font-medium transition-colors ${letters ? 'bg-amber-soft text-amber' : 'border border-line text-ink-3 hover:border-ink-3 hover:text-ink'}`}
           >
-            <Lightbulb size={14} weight={letters ? 'fill' : 'regular'} /> İlk harfler
+            <Lightbulb size={14} weight={letters ? 'fill' : 'regular'} /> First letters
           </button>
           <div>
             <Segmented id="speed" size="sm" value={rate} onChange={setRate} items={SPEEDS.map((s) => ({ id: s, label: `${s}×` }))} />
@@ -172,7 +172,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
                   onClick={() => (playing === i ? stop() : speakLines([i]))}
                   disabled={!hasTTS}
                   className={`mt-1 grid size-8 shrink-0 place-items-center rounded-full transition-colors ${playing === i ? 'bg-ink text-paper' : 'border border-line text-ink-3 hover:border-ink hover:text-ink'}`}
-                  aria-label={`${i + 1}. satırı oynat`}
+                  aria-label={`Play line ${i + 1}`}
                 >
                   <SpeakerSimpleHigh size={14} weight={playing === i ? 'fill' : 'regular'} />
                 </button>
@@ -190,7 +190,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
                             value={gapAnswers[p.gap] ?? ''}
                             disabled={checked}
                             onChange={(e) => setGapAnswers((a) => ({ ...a, [p.gap]: e.target.value }))}
-                            aria-label={`${p.gap + 1}. boşluk`}
+                            aria-label={`Gap ${p.gap + 1}`}
                             placeholder={letters && !checked ? `${p.answer[0]}${'_'.repeat(Math.max(0, p.answer.length - 1))}` : ''}
                             autoComplete="off"
                             className={`mx-1 w-28 border-0 border-b-2 bg-transparent px-1 text-center text-[17px] tracking-wide placeholder:text-ink-3/70 focus:outline-none ${!checked ? 'border-line-strong focus:border-ink' : gapOk(p) ? 'border-emerald text-emerald' : 'border-amber text-ink-3 line-through'}`}
@@ -207,7 +207,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
         </ol>
         {!reveal && (
           <p className="flex items-center gap-2 border-t border-line px-6 py-3.5 text-[13px] text-ink-3 sm:px-9">
-            <EyeSlash size={16} /> Kontrol edene kadar metin bulanık; böylece okumak yerine dinleme çalışırsın.
+            <EyeSlash size={16} /> The transcript stays blurred until you check, so you practise listening instead of reading.
           </p>
         )}
       </Panel>
@@ -218,7 +218,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
             <legend className="flex w-full items-start gap-3">
               <span className="w-5 shrink-0 pt-0.5 font-mono text-[13px] leading-none text-ink-3">{q.id}</span>
               <span className="flex-1 text-[15.5px] leading-snug font-medium">{q.q}</span>
-              {checked && (mcOk(q) ? <Check size={20} weight="bold" className="text-emerald" aria-label="Doğru" /> : <ArrowBendDownRight size={20} weight="bold" className="text-amber" aria-label="Neredeyse" />)}
+              {checked && (mcOk(q) ? <Check size={20} weight="bold" className="text-emerald" aria-label="Correct" /> : <ArrowBendDownRight size={20} weight="bold" className="text-amber" aria-label="Almost" />)}
             </legend>
             <div className="grid gap-1.5 pl-8">
               {q.options.map((opt, i) => {
@@ -244,9 +244,9 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
           {!checked ? (
             <div className="flex flex-wrap items-center gap-4">
               <Button onClick={check} disabled={plays === 0 && hasTTS} size="lg">
-                Cevapları kontrol et
+                Check answers
               </Button>
-              {plays === 0 && hasTTS && <span className="text-sm text-ink-3">Diyaloğu en az bir kez oynat.</span>}
+              {plays === 0 && hasTTS && <span className="text-sm text-ink-3">Play the dialogue at least once.</span>}
             </div>
           ) : (
             <div className="space-y-5">
@@ -254,19 +254,19 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
                 <Score value={score} />
                 <div>
                   <div className="font-medium">
-                    {total} sorudan {correct} doğru
+                    {correct} of {total} correct
                   </div>
-                  <p className="text-sm text-ink-2">{score >= MASTERY ? 'Kulakların çok iyi! Bir dahaki sefere daha hızlı dene.' : `${correct} tanesini şimdiden yakaladın. Tek satırları 0.7× hızda, ilk harfler açıkken yeniden dinle; gerisi ortaya çıkacak.`}</p>
+                  <p className="text-sm text-ink-2">{score >= MASTERY ? 'Great ear! Try a faster speed next time.' : `You already caught ${correct}. Replay single lines at 0.7× with first letters on, and the rest will come through.`}</p>
                 </div>
               </div>
               <SaveReceipt result={activity.result} error={activity.error} />
               <div className="flex flex-wrap gap-2">
                 <Button variant="secondary" onClick={() => go(index)}>
-                  <ArrowCounterClockwise size={16} /> Tekrar dene
+                  <ArrowCounterClockwise size={16} /> Try again
                 </Button>
                 {tasks.length > 1 && (
                   <Button variant="ghost" onClick={() => go((index + 1) % tasks.length)}>
-                    Sonraki diyalog <ArrowRight size={16} />
+                    Next dialogue <ArrowRight size={16} />
                   </Button>
                 )}
               </div>

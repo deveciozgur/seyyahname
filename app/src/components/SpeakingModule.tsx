@@ -56,7 +56,7 @@ function useRecorder({ lang }) {
       mr.start();
       media.current = mr;
     } catch (e) {
-      setError(e.name === 'NotAllowedError' ? 'Mikrofon erişimi engellendi. Adres çubuğundan izin ver ya da söylediklerini yaz.' : `Mikrofon kullanılamıyor: ${e.message}`);
+      setError(e.name === 'NotAllowedError' ? 'Microphone access is blocked. Allow it from the address bar, or type what you said.' : `Microphone unavailable: ${e.message}`);
       if (!Recognition) {
         active.current = false;
         return;
@@ -80,7 +80,7 @@ function useRecorder({ lang }) {
       };
       r.onerror = (e) => {
         if (e.error === 'no-speech' || e.error === 'aborted') return;
-        setError(e.error === 'not-allowed' ? 'Konuşma tanıma izni reddedildi.' : e.error === 'network' ? 'Chrome’da canlı döküm için internet bağlantısı gerekir.' : `Konuşma tanıma hatası: ${e.error}`);
+        setError(e.error === 'not-allowed' ? 'Speech recognition permission was denied.' : e.error === 'network' ? 'Live transcription in Chrome needs an internet connection.' : `Speech recognition error: ${e.error}`);
       };
       // Chrome ends recognition after a silence; keep listening until Stop.
       r.onend = () => active.current && r.start();
@@ -128,11 +128,11 @@ function Playback({ url }) {
       <button
         onClick={() => (playing ? audio.current.pause() : audio.current.play())}
         className="grid size-9 place-items-center rounded-full border border-line-strong text-ink transition-colors hover:border-ink"
-        aria-label={playing ? 'Kaydını duraklat' : 'Kaydını oynat'}
+        aria-label={playing ? 'Pause your recording' : 'Play your recording'}
       >
         {playing ? <Pause size={14} weight="fill" /> : <Play size={14} weight="fill" />}
       </button>
-      <span className="text-sm text-ink-2">Kaydın</span>
+      <span className="text-sm text-ink-2">Your recording</span>
       <span className="font-mono text-xs text-ink-3">{fmt(time)}</span>
     </div>
   );
@@ -198,7 +198,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
             <TaskPicker tasks={tasks} index={index} onChange={go} passedIds={passedIds} />
           </TaskTitle>
           <p className="max-w-[60ch] text-[17px] leading-relaxed text-ink">{task.prompt}</p>
-          {task.tr && <TurkishHint>{task.tr}</TurkishHint>}
+          {task.hint && <TurkishHint>{task.hint}</TurkishHint>}
           {task.hints?.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
               <Lightbulb size={16} className="text-amber" aria-hidden />
@@ -217,7 +217,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
             <button
               onClick={r.recording ? r.stop : r.start}
               className="group relative block h-36 w-full text-left focus-visible:outline-offset-[-4px]"
-              aria-label={r.recording ? 'Kaydı durdur' : r.elapsed ? 'Kayda devam et' : 'Konuşmaya başla'}
+              aria-label={r.recording ? 'Stop recording' : r.elapsed ? 'Resume recording' : 'Start speaking'}
             >
               <div className="absolute inset-x-6 inset-y-6">
                 <Waveform analyser={r.analyser} active={r.recording} />
@@ -226,13 +226,13 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
                 <span className="absolute inset-0 grid place-items-center">
                   <span className="inline-flex items-center gap-2.5 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper shadow-paper transition-transform duration-200 group-hover:scale-[1.03] group-active:scale-[0.98]">
                     <Microphone size={16} weight="fill" />
-                    {r.elapsed ? 'Konuşmaya devam et' : 'Konuşmaya başlamak için dokun'}
+                    {r.elapsed ? 'Keep speaking' : 'Tap to start speaking'}
                   </span>
                 </span>
               )}
             </button>
             {r.recording && (
-              <button onClick={r.stop} className="absolute top-4 right-4 grid size-9 place-items-center rounded-full bg-brick text-paper transition-transform active:scale-95" aria-label="Kaydı durdur">
+              <button onClick={r.stop} className="absolute top-4 right-4 grid size-9 place-items-center rounded-full bg-brick text-paper transition-transform active:scale-95" aria-label="Stop recording">
                 <Stop size={14} weight="fill" />
               </button>
             )}
@@ -247,21 +247,21 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
             </div>
             {r.recording && (
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-brick" role="status">
-                <span className="size-1.5 animate-pulse rounded-full bg-brick" aria-hidden /> Dinleniyor
+                <span className="size-1.5 animate-pulse rounded-full bg-brick" aria-hidden /> Listening
               </span>
             )}
-            <select value={lang} onChange={(e) => setLang(e.target.value)} disabled={r.recording} className="h-7 rounded-full border border-line bg-transparent px-2 text-xs text-ink-2" aria-label="Döküm için aksan">
-              <option value="en-GB">İngiliz</option>
-              <option value="en-US">Amerikan</option>
+            <select value={lang} onChange={(e) => setLang(e.target.value)} disabled={r.recording} className="h-7 rounded-full border border-line bg-transparent px-2 text-xs text-ink-2" aria-label="Transcription accent">
+              <option value="en-GB">British</option>
+              <option value="en-US">American</option>
             </select>
           </div>
 
           <div className="border-t border-line px-5 pt-4 pb-5">
             <div className="mb-2 flex items-baseline justify-between">
               <label htmlFor="transcript" className="text-sm font-semibold">
-                Canlı döküm
+                Live transcript
               </label>
-              <span className="text-xs text-ink-3">{r.recording ? 'Konuştukça güncelleniyor' : 'Hataları silme; analize yardımcı olurlar.'}</span>
+              <span className="text-xs text-ink-3">{r.recording ? 'Updates as you speak' : 'Keep the slips in; they help the analysis.'}</span>
             </div>
             {r.recording ? (
               <p className="min-h-[136px] text-[17px] leading-8" aria-live="polite">
@@ -275,7 +275,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
                 value={r.finalText}
                 onChange={(e) => r.setFinalText(e.target.value)}
                 rows={4}
-                placeholder={Recognition ? 'Konuştukça sözlerin burada görünecek.' : 'Bu tarayıcıda canlı döküm yok. Kendini kaydet, sonra söylediklerini İngilizce yaz.'}
+                placeholder={Recognition ? 'Your words will appear here as you speak.' : 'Live transcription is not available in this browser. Record yourself, then type what you said in English.'}
                 className="block min-h-[136px] w-full resize-y bg-transparent text-[17px] leading-8 placeholder:text-ink-3 focus:outline-none"
               />
             )}
@@ -286,7 +286,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
               {r.audioUrl && <Playback url={r.audioUrl} />}
               {!Recognition && (
                 <p className="flex items-start gap-2 text-[13px] text-amber">
-                  <WarningCircle size={16} className="mt-px shrink-0" /> Canlı döküm Chrome ve Edge’de çalışır.
+                  <WarningCircle size={16} className="mt-px shrink-0" /> Live transcription works in Chrome and Edge.
                 </p>
               )}
               {r.error && (
@@ -300,14 +300,14 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
 
         <div className="flex flex-wrap gap-2">
           <Button onClick={analyse} disabled={!transcript || loading || r.recording}>
-            <MagicWand size={16} /> Analiz et
+            <MagicWand size={16} /> Analyze
           </Button>
           <Button variant="secondary" onClick={() => go(index)} disabled={r.recording}>
-            <ArrowCounterClockwise size={16} /> Baştan başla
+            <ArrowCounterClockwise size={16} /> Start over
           </Button>
           {tasks.length > 1 && (
             <Button variant="ghost" onClick={() => go((index + 1) % tasks.length)}>
-              Sonraki görev <ArrowRight size={16} />
+              Next task <ArrowRight size={16} />
             </Button>
           )}
         </div>

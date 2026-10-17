@@ -4,12 +4,12 @@ export { LEVELS, SKILLS, BANDS, FUNCTIONS, FUNCTION_INFO, CAN_DO, bandLevel, nex
 export const MASTERY = 80;
 
 export const LEVEL_INFO = {
-  A1: { name: 'Beginner', tr: 'Başlangıç' },
-  A2: { name: 'Elementary', tr: 'Temel' },
-  B1: { name: 'Intermediate', tr: 'Orta' },
-  B2: { name: 'Upper-Intermediate', tr: 'Orta üstü' },
-  C1: { name: 'Advanced', tr: 'İleri' },
-  C2: { name: 'Mastery', tr: 'Ustalık' },
+  A1: { name: 'Beginner' },
+  A2: { name: 'Elementary' },
+  B1: { name: 'Intermediate' },
+  B2: { name: 'Upper-Intermediate' },
+  C1: { name: 'Advanced' },
+  C2: { name: 'Mastery' },
 };
 
 export const levelIndex = (l) => LEVELS.indexOf(l);

@@ -26,10 +26,10 @@ const choice = (selected, state) =>
 function hintFor(q) {
   if (q.type === 'short') {
     const a = q.accept[0][0];
-    return { text: `"${a.slice(0, Math.max(1, Math.ceil(a.length / 3)))}…" ile başlıyor` };
+    return { text: `Starts with "${a.slice(0, Math.max(1, Math.ceil(a.length / 3)))}…"` };
   }
-  if (q.type === 'mc') return { text: 'Bir seçenek elendi. Kalanlar arasından seç.', remove: q.options.findIndex((_, i) => i !== q.answer) };
-  return { text: 'Sorudaki anahtar kelimenin geçtiği cümleyi bul ve yavaşça oku.' };
+  if (q.type === 'mc') return { text: 'One option is gone. Choose from the rest.', remove: q.options.findIndex((_, i) => i !== q.answer) };
+  return { text: 'Find the sentence with the key word from the question and read it slowly.' };
 }
 
 function Question({ q, value, onChange, checked, shield }) {
@@ -45,17 +45,16 @@ function Question({ q, value, onChange, checked, shield }) {
         <span className="w-5 shrink-0 pt-0.5 font-mono text-[13px] leading-none text-ink-3">{q.id}</span>
         <span className="flex-1">
           <span className="block text-[15.5px] leading-snug font-medium">{q.q}</span>
-          {q.tr && <TurkishHint className="mt-1">{q.tr}</TurkishHint>}
         </span>
         {checked ? (
           ok ? (
-            <Check size={20} weight="bold" className="shrink-0 text-emerald" aria-label="Doğru" />
+            <Check size={20} weight="bold" className="shrink-0 text-emerald" aria-label="Correct" />
           ) : (
-            <ArrowBendDownRight size={20} weight="bold" className="shrink-0 text-amber" aria-label="Neredeyse" />
+            <ArrowBendDownRight size={20} weight="bold" className="shrink-0 text-amber" aria-label="Almost" />
           )
         ) : (
           q.type !== 'yesno' && (
-            <button onClick={() => setHint((x) => !x)} className={`shrink-0 rounded-full p-1 transition-colors ${hint ? 'text-amber' : 'text-ink-3 hover:text-amber'}`} aria-pressed={hint} aria-label="İpucu" title="İpucu">
+            <button onClick={() => setHint((x) => !x)} className={`shrink-0 rounded-full p-1 transition-colors ${hint ? 'text-amber' : 'text-ink-3 hover:text-amber'}`} aria-pressed={hint} aria-label="Hint" title="Hint">
               <Lightbulb size={18} weight={hint ? 'fill' : 'regular'} />
             </button>
           )
@@ -70,8 +69,8 @@ function Question({ q, value, onChange, checked, shield }) {
             value={value ?? ''}
             disabled={checked}
             onChange={(e) => onChange(e.target.value)}
-            aria-label={`${q.id}. sorunun cevabı`}
-            placeholder="Cevabın (İngilizce)"
+            aria-label={`Answer to question ${q.id}`}
+            placeholder="Your answer"
             className={`h-11 w-full rounded-[10px] border bg-raised px-3.5 text-[15px] placeholder:text-ink-3 focus:border-ink focus:outline-none ${checked ? (ok ? 'border-emerald' : 'border-amber') : 'border-line-strong'}`}
           />
         )}
@@ -106,7 +105,7 @@ function Question({ q, value, onChange, checked, shield }) {
         )}
         {checked && !ok && q.type === 'short' && (
           <p className="mt-2 text-sm text-ink-2">
-            Doğrusu: <span className="font-medium text-emerald">{correctText(q)}</span>
+            Answer: <span className="font-medium text-emerald">{correctText(q)}</span>
           </p>
         )}
       </div>
@@ -166,14 +165,14 @@ export default function ReadingModule({ level, tasks, onActivitySaved, passedIds
 
         <AnimatePresence>
           {checked && (
-            <motion.section initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }} className="overflow-hidden" aria-label="Anahtar kelimeler">
+            <motion.section initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }} className="overflow-hidden" aria-label="Key words">
               <div className="mt-9 border-t border-line pt-6">
-                <h3 className="mb-4 text-sm font-semibold">Anahtar kelimeler artık kasanda</h3>
+                <h3 className="mb-4 text-sm font-semibold">Key words are now in your vault</h3>
                 <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
                   {task.vocab.map((v) => (
                     <div key={v.word}>
                       <dt className="text-lg font-semibold tracking-[-0.01em]">{v.word}</dt>
-                      <dd lang="tr" className="text-sm text-ink-3">
+                      <dd className="text-sm text-ink-3">
                         {v.meaning}
                       </dd>
                       <dd className="mt-0.5 text-[14.5px] text-ink-2">{v.example}</dd>
@@ -195,9 +194,9 @@ export default function ReadingModule({ level, tasks, onActivitySaved, passedIds
           {!checked ? (
             <div className="flex flex-wrap items-center gap-4">
               <Button onClick={check} disabled={!answeredAll} size="lg">
-                Cevapları kontrol et
+                Check answers
               </Button>
-              {!answeredAll && <span className="text-sm text-ink-3">Her soruyu cevapla. Emin değil misin? &ldquo;I don&rsquo;t know&rdquo; yaz.</span>}
+              {!answeredAll && <span className="text-sm text-ink-3">Answer every question. Not sure? Type &ldquo;I don&rsquo;t know&rdquo;.</span>}
             </div>
           ) : (
             <div className="space-y-5">
@@ -205,19 +204,19 @@ export default function ReadingModule({ level, tasks, onActivitySaved, passedIds
                 <Score value={score} />
                 <div>
                   <div className="font-medium">
-                    {task.questions.length} sorudan {correct} doğru
+                    {correct} of {task.questions.length} correct
                   </div>
-                  <p className="text-sm text-ink-2">{score >= MASTERY ? `Güçlü bir okuma. Bu metin ${level} ustalığına sayılıyor.` : `${correct} doğru cevap, güzel bir başlangıç. Metni yeniden oku, gerisi oturacak; istersen ipuçları hazır.`}</p>
+                  <p className="text-sm text-ink-2">{score >= MASTERY ? `Strong reading. This text counts toward ${level} mastery.` : `${correct} right is a solid start. Reread the text and the rest will click; hints are ready if you want them.`}</p>
                 </div>
               </div>
               <SaveReceipt result={activity.result} error={activity.error} />
               <div className="flex flex-wrap gap-2">
                 <Button variant="secondary" onClick={() => go(index)}>
-                  <ArrowCounterClockwise size={16} /> Tekrar dene
+                  <ArrowCounterClockwise size={16} /> Try again
                 </Button>
                 {tasks.length > 1 && (
                   <Button variant="ghost" onClick={() => go((index + 1) % tasks.length)}>
-                    Sonraki metin <ArrowRight size={16} />
+                    Next text <ArrowRight size={16} />
                   </Button>
                 )}
               </div>

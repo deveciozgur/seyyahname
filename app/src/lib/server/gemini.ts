@@ -22,14 +22,14 @@ export class GeminiError extends Error {
   }
 }
 
-/** A learner-readable (Turkish) message for an SDK or network failure. */
+/** A learner-readable message for an SDK or network failure. */
 export function geminiMessage(err: unknown): string {
   const status = err instanceof ApiError ? err.status : 0;
   const msg = err instanceof Error ? err.message : String(err);
-  if ((status === 400 && /api key/i.test(msg)) || status === 401 || status === 403) return 'Gemini API anahtarını kabul etmedi';
-  if (status === 404) return `Gemini modeli "${env.geminiModel}" bulunamadı. GEMINI_MODEL değerini düzeltin`;
-  if (status === 429) return 'Gemini kullanım sınırına ulaşıldı. Bir dakika sonra tekrar deneyin';
-  return `Gemini hatası (${status || 'bağlantı yok'})${msg ? `: ${msg.slice(0, 300)}` : ''}`;
+  if ((status === 400 && /api key/i.test(msg)) || status === 401 || status === 403) return 'Gemini rejected the API key';
+  if (status === 404) return `Gemini model "${env.geminiModel}" was not found. Check GEMINI_MODEL`;
+  if (status === 429) return 'Gemini rate limit reached. Please try again in a minute';
+  return `Gemini error (${status || 'no connection'})${msg ? `: ${msg.slice(0, 300)}` : ''}`;
 }
 
 /** Triple-Layer feedback as JSON. A schema the model rejects (400) is retried in plain JSON mode. */
@@ -49,7 +49,7 @@ export async function generateFeedbackJson(systemInstruction: string, prompt: st
     }
   }
   const text = res.text ?? '';
-  if (!text) throw new GeminiError(`Gemini yanıt vermedi (${res.candidates?.[0]?.finishReason ?? res.promptFeedback?.blockReason ?? 'boş'})`);
+  if (!text) throw new GeminiError(`Gemini returned no answer (${res.candidates?.[0]?.finishReason ?? res.promptFeedback?.blockReason ?? 'empty'})`);
   return { text, model: res.modelVersion ?? env.geminiModel };
 }
 

@@ -39,7 +39,7 @@ const ChatContext = createContext<ChatState | null>(null);
 
 /**
  * The conversation lives here, above the pages: the messages, the draft and a running stream survive
- * every navigation (Çalışma, Müfredat, Kasa, Arşiv), whichever view shows the chat.
+ * every navigation (Studio, Curriculum, Vault, Archive), whichever view shows the chat.
  */
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -100,7 +100,7 @@ export function useChat(): ChatState {
 
 /**
  * The chat view. docked: the persistent right-hand column on wide screens (full height, its own scroll);
- * otherwise the full Koç page on smaller screens. Both read the same conversation from ChatProvider.
+ * otherwise the full Coach page on smaller screens. Both read the same conversation from ChatProvider.
  */
 export default function CoachChat({ llm, docked = false }: { llm: boolean; docked?: boolean }) {
   const { messages, draft, setDraft, busy, error, send, stop, clear } = useChat();
@@ -115,13 +115,13 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
 
   const offline = !llm && (
     <p className={`rounded-xl border border-dashed border-line-strong px-4 py-3 text-ink-2 ${docked ? 'mx-4 mt-3 text-[12.5px]' : 'text-sm'}`}>
-      Yapay zekâ koçu çevrimdışı. Sunucunun ortam değişkenlerine (veya <code className="font-mono">.env</code> dosyasına) <code className="font-mono">GEMINI_API_KEY</code> ekleyin. Çalışma görevleri çevrimdışı geri bildirimle çalışmaya devam eder.
+      The AI coach is offline. Add <code className="font-mono">GEMINI_API_KEY</code> to the server environment variables (or the <code className="font-mono">.env</code> file). Studio tasks keep working with offline feedback.
     </p>
   );
 
   const newChat = messages.length > 0 && (
     <Button variant="ghost" size="sm" onClick={clear} disabled={busy}>
-      <ArrowCounterClockwise size={14} /> Yeni sohbet
+      <ArrowCounterClockwise size={14} /> New chat
     </Button>
   );
 
@@ -130,7 +130,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
       {messages.length === 0 ? (
         <div className="space-y-4">
           <p className="inline-flex items-center gap-2 text-sm text-ink-3">
-            <Sparkle size={16} /> Bunlardan birini dene
+            <Sparkle size={16} /> Try one of these
           </p>
           <div className={docked ? 'flex flex-col gap-2' : 'flex flex-wrap gap-2'}>
             {STARTERS.map((s) => (
@@ -148,7 +148,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
             </div>
           ) : (
             <div key={i} className={`prose-session max-w-[65ch] ${docked ? 'text-[14px]' : 'text-[15px]'}`}>
-              {m.content ? <div dangerouslySetInnerHTML={{ __html: marked.parse(m.content) }} /> : <span className="inline-block h-4 w-2 animate-pulse bg-ink-3" aria-label="Koç yazıyor" />}
+              {m.content ? <div dangerouslySetInnerHTML={{ __html: marked.parse(m.content) }} /> : <span className="inline-block h-4 w-2 animate-pulse bg-ink-3" aria-label="The coach is typing" />}
             </div>
           ),
         )
@@ -172,7 +172,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
         className="flex items-end gap-2 border-t border-line p-3"
       >
         <label htmlFor={docked ? 'chat-input-docked' : 'chat-input'} className="sr-only">
-          Koça mesaj yaz
+          Message the coach
         </label>
         <textarea
           id={docked ? 'chat-input-docked' : 'chat-input'}
@@ -185,17 +185,17 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
               send(draft);
             }
           }}
-          placeholder={llm ? (docked ? 'İngilizce yaz, Enter ile gönder' : 'İngilizce yaz. Göndermek için Enter, yeni satır için Shift+Enter.') : 'Yapay zekâ koçu çevrimdışı'}
+          placeholder={llm ? (docked ? 'Write in English, press Enter to send' : 'Write in English. Enter to send, Shift+Enter for a new line.') : 'The AI coach is offline'}
           disabled={!llm}
           className={`min-h-12 flex-1 resize-none rounded-xl bg-sunk outline-none focus:ring-2 focus:ring-line-strong ${docked ? 'px-3 py-2.5 text-[14px]' : 'px-4 py-3'}`}
         />
         {busy ? (
-          <Button type="button" variant="secondary" onClick={stop} aria-label="Durdur" className={docked ? 'w-10 px-0' : ''}>
-            <Stop size={16} /> {!docked && 'Durdur'}
+          <Button type="button" variant="secondary" onClick={stop} aria-label="Stop" className={docked ? 'w-10 px-0' : ''}>
+            <Stop size={16} /> {!docked && 'Stop'}
           </Button>
         ) : (
-          <Button type="submit" disabled={!draft.trim() || !llm} aria-label="Gönder" className={docked ? 'w-10 px-0' : ''}>
-            <PaperPlaneRight size={16} /> {!docked && 'Gönder'}
+          <Button type="submit" disabled={!draft.trim() || !llm} aria-label="Send" className={docked ? 'w-10 px-0' : ''}>
+            <PaperPlaneRight size={16} /> {!docked && 'Send'}
           </Button>
         )}
       </form>
@@ -204,11 +204,11 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
 
   if (docked) {
     return (
-      <aside aria-label="Koç sohbeti" className="flex h-full flex-col">
+      <aside aria-label="Coach chat" className="flex h-full flex-col">
         <header className="flex h-[52px] shrink-0 items-center justify-between gap-2 border-b border-line px-4">
           <span className="inline-flex items-center gap-2 text-[13.5px] font-semibold">
-            <ChatsCircle size={16} className="text-amber" /> Koç
-            <i className={`size-1.5 rounded-full ${llm ? 'bg-emerald shadow-[0_0_8px_var(--emerald)]' : 'bg-ink-3'}`} aria-label={llm ? 'Bağlı' : 'Çevrimdışı'} />
+            <ChatsCircle size={16} className="text-amber" /> Coach
+            <i className={`size-1.5 rounded-full ${llm ? 'bg-emerald shadow-[0_0_8px_var(--emerald)]' : 'bg-ink-3'}`} aria-label={llm ? 'Connected' : 'Offline'} />
           </span>
           {newChat}
         </header>
@@ -223,8 +223,8 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Koç</h1>
-          <p className="mt-2 text-ink-2">Seyyahname ile İngilizce konuş. Alt bantlarını, serini, tekrar zamanı gelen kelimelerini ve Polish kalıplarını biliyor.</p>
+          <h1 className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">Coach</h1>
+          <p className="mt-2 text-ink-2">Talk with Seyyahname in English. It knows your sub-bands, your streak, the words due for review and your Polish patterns.</p>
         </div>
         {newChat}
       </header>

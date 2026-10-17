@@ -7,7 +7,7 @@ import { LEVELS } from './store.ts';
 
 // [pattern, replacement (string or fn), category, rule]
 const GRAMMAR_RULES: [RegExp, string | ((...m: string[]) => string), string, string][] = [
-  [/\b(I|i) have (\d+) years?( old)?\b/g, (m, _i, n) => `I am ${n} years old`, 'Verb choice (be/have)', 'Age uses "be", not "have": I am 25 years old. (TR: 25 yaşındayım)'],
+  [/\b(I|i) have (\d+) years?( old)?\b/g, (m, _i, n) => `I am ${n} years old`, 'Verb choice (be/have)', 'Age uses "be", not "have": I am 25 years old. (A common slip for Turkish speakers, since Turkish uses "have" here.)'],
   [/\b(he|she|it) have (\d+) years?( old)?\b/gi, (m, p, n) => `${p} is ${n} years old`, 'Verb choice (be/have)', 'Age uses "be": She is 30 years old.'],
   [/\bI am agree\b/gi, 'I agree', 'Verb form', '"Agree" is a verb, not an adjective: I agree.'],
   // lookbehind skips correct questions/negatives/modals: "Does she like…", "Can he go…"

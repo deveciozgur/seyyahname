@@ -8,8 +8,8 @@ import { Button, Panel } from './ui';
 import { WinsBurst } from './momentum';
 import { themeTr } from '@/lib/tr';
 
-// mode_reason is stored in English in profile.json; shown in Turkish.
-const REASON_TR = (r: string) => (/tough rounds/.test(r) ? `art arda ${parseInt(r, 10) || 2} zorlu tur oldu` : /shorter/.test(r) ? 'cevapların kısalmaya başladı' : r);
+// mode_reason is stored in profile.json, e.g. "2 tough rounds in a row"; shown as part of a sentence.
+const REASON_TR = (r: string) => (/tough rounds/.test(r) ? `you had ${parseInt(r, 10) || 2} tough rounds in a row` : /shorter/.test(r) ? 'your answers were getting shorter' : r);
 
 const ease = [0.16, 1, 0.3, 1] as const;
 export const THEME_ICONS = { Gaming: GameController, Travel: Airplane, Tech: Cpu, Culture: Palette, 'Daily life': House };
@@ -90,15 +90,15 @@ export default function QuickPlay({ profile, reason, onSaved, onExit }) {
   }
 
   return (
-    <Panel as="section" aria-label="Hafif mod hızlı tur" className="overflow-hidden">
+    <Panel as="section" aria-label="Low-effort mode quick round" className="overflow-hidden">
       <div className="flex flex-wrap items-center gap-3 border-b border-line bg-indigo-soft px-6 py-4">
         <Coffee size={20} className="text-indigo" />
         <div className="min-w-0 flex-1">
-          <h2 className="text-sm font-semibold">Hafif Mod (Low-Effort Mode)</h2>
-          <p className="text-[13px] text-ink-2">{reason ? `Açıldı, çünkü ${REASON_TR(reason)}. ` : ''}Sadece dokunmalı, hafif turlar. Her tur seriye ve XP'ye yine sayılır.</p>
+          <h2 className="text-sm font-semibold">Low-effort mode</h2>
+          <p className="text-[13px] text-ink-2">{reason ? `Switched on because ${REASON_TR(reason)}. ` : ''}Light, tap-only rounds. Every round still counts toward your streak and XP.</p>
         </div>
         <Button variant="secondary" size="sm" onClick={onExit}>
-          Tam çalışmaya dön <ArrowRight size={14} />
+          Back to full practice <ArrowRight size={14} />
         </Button>
       </div>
 
@@ -143,21 +143,21 @@ export default function QuickPlay({ profile, reason, onSaved, onExit }) {
                   );
                 })}
               </div>
-              {picked !== null && picked !== round[i].answer && <p className="text-sm text-ink-2">Çok yakındın! Doğrusu &ldquo;{round[i].options[round[i].answer]}&rdquo;. Bunu yeniden göreceksin.</p>}
+              {picked !== null && picked !== round[i].answer && <p className="text-sm text-ink-2">So close! It&rsquo;s &ldquo;{round[i].options[round[i].answer]}&rdquo;. You&rsquo;ll see this one again.</p>}
             </motion.div>
           </AnimatePresence>
         ) : (
           <div className="space-y-5">
             <p className="text-2xl font-semibold tracking-[-0.02em]">
-              {correct} / {round.length}. {correct >= 4 ? 'Harika gidiyorsun.' : correct >= 2 ? 'Rahat ve sakin. Bu da sayılır.' : 'Buradaydın; alışkanlığı kuran da bu.'}
+              {correct} / {round.length}. {correct >= 4 ? 'You’re on a roll.' : correct >= 2 ? 'Nice and easy. That still counts.' : 'You showed up, and that’s what builds the habit.'}
             </p>
             {result && <WinsBurst motivation={result.motivation} />}
             <div className="flex flex-wrap gap-2">
               <Button onClick={again}>
-                <ArrowCounterClockwise size={16} /> Bir tur daha
+                <ArrowCounterClockwise size={16} /> One more round
               </Button>
               <Button variant="secondary" onClick={onExit}>
-                Tam çalışmaya dön
+                Back to full practice
               </Button>
             </div>
           </div>

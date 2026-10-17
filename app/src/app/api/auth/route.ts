@@ -33,7 +33,7 @@ export function POST(req: NextRequest) {
     const { pin } = await readJson<VerifyRequest>(req, 4096);
     if (typeof pin !== 'string' || !pin || !samePin(pin, env.pin)) {
       const locked = pinLimiter.fail(ip);
-      throw new HttpError(locked ? lockedMessage(locked) : 'PIN hatalı.', locked ? 429 : 401);
+      throw new HttpError(locked ? lockedMessage(locked) : 'Incorrect PIN.', locked ? 429 : 401);
     }
     pinLimiter.clear(ip);
     const { token, maxAge } = await createSessionToken();

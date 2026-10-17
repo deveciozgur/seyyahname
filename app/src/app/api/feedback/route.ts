@@ -14,10 +14,10 @@ export function POST(req: NextRequest) {
   return handle(async () => {
     await assertAuthenticated(req);
     assertSameApp(req);
-    if (!env.geminiKey) throw new HttpError('GEMINI_API_KEY tanımlı değil.', 503);
+    if (!env.geminiKey) throw new HttpError('GEMINI_API_KEY is not set.', 503);
     const body = await readJson<FeedbackRequest>(req, 256 * 1024);
     const prompt = typeof body.prompt === 'string' ? body.prompt.slice(0, 20000) : '';
-    if (!prompt) throw new HttpError('prompt gerekli.', 400);
+    if (!prompt) throw new HttpError('prompt is required.', 400);
     const schema = body.schema && typeof body.schema === 'object' && !Array.isArray(body.schema) ? body.schema : undefined;
     const result = await generateFeedbackJson(feedbackInstruction(await storage().readProfile()), prompt, schema);
     return json<FeedbackResponse>(result);

@@ -25,11 +25,11 @@ export class HttpError extends Error {
 
 /** Mutating requests must carry the app's header (a cross-site request cannot set it without CORS). */
 export function assertSameApp(req: NextRequest) {
-  if (req.headers.get(CSRF_HEADER) !== CSRF_VALUE) throw new HttpError('Erişim reddedildi.', 403);
+  if (req.headers.get(CSRF_HEADER) !== CSRF_VALUE) throw new HttpError('Access denied.', 403);
 }
 
 export function assertConfigured() {
-  if (!env.pin) throw new HttpError('APP_SECRET_PIN tanımlı değil. Sunucu ortam değişkenlerine (veya .env dosyasına) ekleyin.', 503);
+  if (!env.pin) throw new HttpError('APP_SECRET_PIN is not set. Add it to the server environment variables (or the .env file).', 503);
 }
 
 export async function isAuthenticated(req: NextRequest) {
@@ -38,22 +38,22 @@ export async function isAuthenticated(req: NextRequest) {
 
 export async function assertAuthenticated(req: NextRequest) {
   assertConfigured();
-  if (!(await isAuthenticated(req))) throw new HttpError('Oturum kapalı.', 401, { locked: true });
+  if (!(await isAuthenticated(req))) throw new HttpError('Session expired.', 401, { locked: true });
 }
 
 /** JSON body with a size limit (the coach files are at most 1 MB each). */
 export async function readJson<T>(req: NextRequest, maxBytes = 4 * 1024 * 1024): Promise<T> {
   const length = Number(req.headers.get('content-length') ?? 0);
-  if (length > maxBytes) throw new HttpError('İstek çok büyük.', 413);
+  if (length > maxBytes) throw new HttpError('Request too large.', 413);
   const text = await req.text();
-  if (Buffer.byteLength(text) > maxBytes) throw new HttpError('İstek çok büyük.', 413);
+  if (Buffer.byteLength(text) > maxBytes) throw new HttpError('Request too large.', 413);
   try {
     const data = JSON.parse(text);
     if (data && typeof data === 'object' && !Array.isArray(data)) return data as T;
   } catch {
     /* fall through */
   }
-  throw new HttpError('İstek gövdesi JSON nesnesi olmalı.', 400);
+  throw new HttpError('The request body must be a JSON object.', 400);
 }
 
 /** Runs a handler and maps thrown HttpError / StorageError (anything with a status) to JSON errors. */
@@ -64,7 +64,7 @@ export async function handle(fn: () => Promise<Response>): Promise<Response> {
     const status = typeof err?.status === 'number' ? err.status : 500;
     if (status === 500) console.error('[seyyahname] api error:', err);
     const extra = (err?.extra ?? {}) as Omit<ApiErrorBody, 'error'>;
-    return fail(status === 500 ? 'Sunucu hatası. Ayrıntılar sunucu günlüğünde.' : err.message, status, extra);
+    return fail(status === 500 ? 'Server error. See the server log for details.' : err.message, status, extra);
   }
 }
 

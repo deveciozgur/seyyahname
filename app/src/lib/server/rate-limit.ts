@@ -63,4 +63,4 @@ export function clientIp(headers: Headers): string {
   return headers.get('x-real-ip')?.trim() || 'local';
 }
 
-export const lockedMessage = (ms: number) => `Çok fazla deneme. ${Math.max(1, Math.ceil(ms / 60000))} dakika sonra tekrar deneyin.`;
+export const lockedMessage = (ms: number) => `Too many attempts. Try again in ${Math.max(1, Math.ceil(ms / 60000))} minute${Math.ceil(ms / 60000) > 1 ? 's' : ''}.`;

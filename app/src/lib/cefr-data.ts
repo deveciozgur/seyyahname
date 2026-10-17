@@ -12,9 +12,9 @@ export const firstBand = (level) => `${level}.1`;
 /** Communicative functions. Moving up one sub-band needs one passed task of each, in that skill. */
 export const FUNCTIONS = ['transactional', 'interactional', 'evaluative'];
 export const FUNCTION_INFO = {
-  transactional: { label: 'Transactional', short: 'T', tr: 'İş halletme', about: 'Getting things done: information, services, arrangements.' },
-  interactional: { label: 'Interactional', short: 'I', tr: 'Sosyal etkileşim', about: 'Building relationships: introductions, news, personal stories.' },
-  evaluative: { label: 'Evaluative', short: 'E', tr: 'Değerlendirme', about: 'Giving and understanding opinions, feelings and comparisons.' },
+  transactional: { label: 'Transactional', short: 'T', about: 'Getting things done: information, services, arrangements.' },
+  interactional: { label: 'Interactional', short: 'I', about: 'Building relationships: introductions, news, personal stories.' },
+  evaluative: { label: 'Evaluative', short: 'E', about: 'Giving and understanding opinions, feelings and comparisons.' },
 };
 
 export const canDoId = (skill, level, fn) => `${skill}.${level}.${fn}`;
