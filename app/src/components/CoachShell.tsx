@@ -219,7 +219,7 @@ function LoadingShell() {
         <Skeleton className="h-32 w-full" />
         <Skeleton className="h-28 w-full" />
       </div>
-      <div className="space-y-4 p-8">
+      <div className="space-y-4 p-4 sm:p-6 md:p-8">
         <Skeleton className="h-10 w-72" />
         <Skeleton className="h-[420px] w-full max-w-3xl rounded-[14px]" />
       </div>

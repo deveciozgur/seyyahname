@@ -66,7 +66,7 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
 
   if (!cards.length && !results.length) {
     return (
-      <Panel className="flex flex-col items-start gap-3 px-6 py-10">
+      <Panel className="flex flex-col items-start gap-3 px-5 py-8 sm:px-6 sm:py-10">
         <CheckCircle size={28} className="text-emerald" />
         <p className="text-2xl font-semibold tracking-[-0.02em]">No cards are due in your vault.</p>
         <p className="max-w-md text-ink-2">Every word is resting until its next review. New words from today’s tasks will show up tomorrow.</p>

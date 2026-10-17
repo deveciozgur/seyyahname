@@ -102,6 +102,12 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* clip (not hidden): nothing can widen the page sideways, and sticky headers/columns keep working. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   @apply bg-paper font-sans text-ink antialiased;
   /* Landscape iPhones: keep content clear of the notch (viewport-fit=cover). */
@@ -211,7 +217,12 @@ summary,
 .prose-session table { @apply my-4 w-full border-collapse font-sans text-sm; }
 .prose-session th { @apply border-b border-line-strong px-2 py-2 text-left font-medium text-ink-3; }
 .prose-session td { @apply border-b border-line px-2 py-2; }
-.prose-session code { @apply rounded bg-sunk px-1 font-mono text-[0.85em]; }
+.prose-session code { @apply rounded bg-sunk px-1 font-mono text-[0.85em]; overflow-wrap: anywhere; }
+/* Long code and wide tables from the coach scroll inside the message instead of widening the page. */
+.prose-session pre { @apply my-3 max-w-full overflow-x-auto rounded-lg bg-sunk p-3 text-[0.85em]; }
+.prose-session pre code { @apply bg-transparent p-0; overflow-wrap: normal; }
+.prose-session table { display: block; max-width: 100%; overflow-x: auto; }
+.prose-session a { overflow-wrap: anywhere; }
 
 @media (prefers-reduced-motion: reduce) {
   *,

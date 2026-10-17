@@ -400,7 +400,7 @@ export default function FeedbackCard({ feedback, loading, text, level = 'A1' }) 
 
   if (!feedback)
     return (
-      <Panel className="flex flex-col justify-between p-7 @4xl:min-h-[420px]">
+      <Panel className="flex flex-col justify-between p-5 sm:p-6 md:p-7 @4xl:min-h-[420px]">
         <div>
           <p className="text-2xl font-semibold tracking-[-0.03em]">Three-layer feedback</p>
           <p className="mt-2 max-w-sm text-[15px] leading-relaxed text-ink-2">Submit your answer and each layer will be marked up and explained here.</p>

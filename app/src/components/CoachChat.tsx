@@ -143,7 +143,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
       ) : (
         messages.map((m, i) =>
           m.role === 'user' ? (
-            <div key={i} className={`ml-auto max-w-[85%] rounded-[12px] rounded-br-[4px] border border-line-strong bg-sunk px-3.5 py-2.5 whitespace-pre-wrap text-ink ${docked ? 'text-[14px]' : ''}`}>
+            <div key={i} className={`ml-auto max-w-[85%] rounded-[12px] rounded-br-[4px] border border-line-strong bg-sunk px-3.5 py-2.5 whitespace-pre-wrap [overflow-wrap:anywhere] text-ink ${docked ? 'text-[14px]' : ''}`}>
               {m.content}
             </div>
           ) : (
