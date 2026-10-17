@@ -102,9 +102,12 @@ export function CurriculumWords({ band, refreshKey, onAdded = null }: { band: st
                 onClick={() => !done && add([w])}
                 disabled={done}
                 title={`${w.meaning} · ${w.example}`}
-                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[12.5px] transition-colors ${done ? 'bg-emerald-soft text-emerald' : 'border border-line-strong text-ink-2 hover:bg-hover hover:text-ink'}`}
+                className={`inline-flex items-start gap-1.5 rounded-2xl px-3 py-1.5 text-left text-[12.5px] leading-snug transition-colors ${done ? 'bg-emerald-soft text-emerald' : 'border border-line-strong text-ink-2 hover:bg-hover hover:text-ink'}`}
               >
-                {done ? <Check size={12} /> : <Plus size={12} />} {w.word} <span className="text-ink-3">· {w.meaning}</span>
+                {done ? <Check size={12} className="mt-[3px] shrink-0" /> : <Plus size={12} className="mt-[3px] shrink-0" />}
+                <span>
+                  {w.word} <span className="text-ink-3">· {w.meaning}</span>
+                </span>
               </button>
             </li>
           );

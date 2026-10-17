@@ -442,13 +442,14 @@ export default function Vault({ refreshKey, profile, onReviewed = undefined }) {
       </header>
       <Segmented
         id="vault"
+        fill
         value={tab}
         onChange={setTab}
         items={[
           { id: 'review', label: 'Cards', icon: Cards, count: vocab.filter((v) => v.due).length },
           { id: 'vocab', label: 'Words', icon: BookmarkSimple, count: vocab.length },
           { id: 'errors', label: 'Polish list', icon: MagicWand, count: errors.active.length },
-          { id: 'cando', label: 'Can-Do', icon: SealCheck, count: profile?.can_do_mastered?.length ?? 0 },
+          { id: 'cando', label: 'Can‑Do', icon: SealCheck, count: profile?.can_do_mastered?.length ?? 0 },
         ]}
       />
       {loadError && (

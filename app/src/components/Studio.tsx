@@ -146,7 +146,7 @@ export default function Studio({ profile, onActivitySaved, refreshKey }) {
           })}
         </div>
 
-        <Segmented id="skill" items={SKILLS.map((s) => ({ id: s, label: skillLabel(s), icon: SKILL_ICONS[s] }))} value={skill} onChange={setSkill} />
+        <Segmented id="skill" fill items={SKILLS.map((s) => ({ id: s, label: skillLabel(s), icon: SKILL_ICONS[s] }))} value={skill} onChange={setSkill} />
 
         <DiagnosticStrip diagnostic={profile.diagnostic} current={skill} onPick={setSkill} />
 

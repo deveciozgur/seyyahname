@@ -64,9 +64,10 @@ export function Button({ variant = 'primary', size = 'md', className = '', child
 }
 
 /** Segmented control with a sliding indicator (shared layout animation). */
-export function Segmented({ id, items, value, onChange, size = 'md', className = '' }) {
+/** fill: on phones the tabs share the full width in equal columns (labels may wrap) instead of scrolling. */
+export function Segmented({ id, items, value, onChange, size = 'md', className = '', fill = false }) {
   return (
-    <div role="tablist" className={`inline-flex max-w-full gap-0.5 overflow-x-auto rounded-full border border-line bg-sunk/60 p-1 ${className}`}>
+    <div role="tablist" className={`${fill ? 'grid w-full auto-cols-fr grid-flow-col sm:inline-flex sm:w-auto' : 'inline-flex max-w-full overflow-x-auto'} gap-0.5 rounded-full border border-line bg-sunk/60 p-1 ${className}`}>
       {items.map((it) => {
         const active = value === it.id;
         return (
@@ -75,7 +76,7 @@ export function Segmented({ id, items, value, onChange, size = 'md', className =
             role="tab"
             aria-selected={active}
             onClick={() => onChange(it.id)}
-            className={`relative inline-flex shrink-0 items-center gap-1.5 rounded-full font-medium whitespace-nowrap transition-colors ${size === 'sm' ? 'h-7 px-3 text-[12.5px]' : 'h-9 px-3 text-sm sm:px-4'} ${active ? 'text-ink' : 'text-ink-3 hover:text-ink'}`}
+            className={`relative inline-flex shrink-0 items-center gap-1.5 rounded-full font-medium transition-colors ${fill ? 'min-w-0 justify-center px-1.5 text-center leading-tight sm:whitespace-nowrap' : 'whitespace-nowrap'} ${size === 'sm' ? 'h-7 px-3 text-[12.5px]' : fill ? 'h-9 text-[12.5px] sm:px-4 sm:text-sm' : 'h-9 px-3 text-sm sm:px-4'} ${active ? 'text-ink' : 'text-ink-3 hover:text-ink'}`}
           >
             {active && <motion.span layoutId={`seg-${id}`} className="absolute inset-0 rounded-full border border-line bg-raised shadow-paper" transition={{ type: 'spring', stiffness: 420, damping: 36 }} />}
             <span className="relative inline-flex items-center gap-1.5">
@@ -197,7 +198,7 @@ export function SaveReceipt({ result, error }) {
 export function TaskPicker({ tasks, index, onChange, passedIds = [] }) {
   if (tasks.length < 2) return null;
   return (
-    <div className="flex flex-wrap justify-end gap-1" aria-label="Choose a task">
+    <div className="flex flex-wrap gap-1 min-[480px]:justify-end" aria-label="Choose a task">
       {tasks.map((t, i) => {
         const passed = passedIds.includes(t.id);
         return (
@@ -237,10 +238,11 @@ export function TaskTitle({ level, title, theme, hook, fn, skill, canDoId = null
   const canDo = canDoId ? `${canDoId}: ${canDoById(canDoId)?.text ?? ''}` : fn && skill ? canDoStatement(skill, level, fn) : '';
   return (
     <div className="space-y-2">
-      <div className="flex items-start justify-between gap-3">
+      {/* On phones the task picker drops below the title instead of squeezing it. */}
+      <div className="flex flex-col-reverse items-start gap-3 min-[480px]:flex-row min-[480px]:justify-between">
         <div className="flex min-w-0 items-center gap-2.5">
           <LevelBadge level={level} />
-          <h2 className="truncate text-[22px] leading-tight font-semibold tracking-[-0.02em]">{title}</h2>
+          <h2 className="text-[22px] leading-tight font-semibold tracking-[-0.02em] text-balance min-[480px]:truncate">{title}</h2>
         </div>
         {children}
       </div>

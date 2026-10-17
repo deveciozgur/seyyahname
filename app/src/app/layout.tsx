@@ -29,6 +29,12 @@ export function generateMetadata(): Metadata {
 }
 
 export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  // Edge-to-edge on notched phones (content uses env(safe-area-inset-*)); on Android the layout
+  // viewport shrinks with the virtual keyboard, so dvh-based screens stay fully visible.
+  viewportFit: 'cover',
+  interactiveWidget: 'resizes-content',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#f9fafb' },
     { media: '(prefers-color-scheme: dark)', color: '#0a0a0b' },

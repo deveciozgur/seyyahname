@@ -53,9 +53,26 @@ const THEME_OPTIONS = [
 ] as const;
 
 /** System / Dark / Light. "System" follows the OS setting; a manual choice is remembered and wins. */
-function ThemeSwitch() {
+function ThemeSwitch({ compact = false }: { compact?: boolean }) {
   const { mode, setMode } = useTheme();
   const pill = useId(); // the top bar and the mobile header each have a switch
+  if (compact) {
+    // Phones: one 44px button that cycles System → Dark → Light, so the header fits at 320px.
+    const i = THEME_OPTIONS.findIndex((o) => o.id === mode);
+    const current = THEME_OPTIONS[i < 0 ? 0 : i];
+    const next = THEME_OPTIONS[(Math.max(0, i) + 1) % THEME_OPTIONS.length];
+    const Icon = current.icon;
+    return (
+      <button
+        onClick={() => setMode(next.id)}
+        aria-label={`Theme: ${current.label}. Switch to ${next.label}`}
+        title={`Theme: ${current.label}`}
+        className="grid size-11 shrink-0 place-items-center rounded-lg border border-line-strong bg-sunk/60 text-ink-2 transition-colors hover:text-ink"
+      >
+        <Icon size={17} weight="fill" />
+      </button>
+    );
+  }
   return (
     <div role="radiogroup" aria-label="Theme" className="relative flex shrink-0 items-center gap-0.5 rounded-lg border border-line-strong bg-sunk/60 p-0.5">
       {THEME_OPTIONS.map(({ id, label, icon: Icon }) => {
@@ -106,7 +123,7 @@ function Brand() {
     <div className="flex items-center gap-2.5 px-1.5">
       <span className="size-[26px] shrink-0 rounded-lg bg-[radial-gradient(circle_at_30%_30%,#fff3d6,#e8c07d_45%,#8a6a35)] shadow-[0_0_18px_var(--glow)]" aria-hidden />
       <span className="font-semibold tracking-[-0.01em]">{APP_NAME}</span>
-      <span className="rounded-[5px] border border-line-strong px-1.5 font-mono text-[10.5px] text-ink-3">AI Coach</span>
+      <span className="hidden rounded-[5px] border border-line-strong px-1.5 font-mono text-[10.5px] whitespace-nowrap text-ink-3 min-[400px]:inline">AI Coach</span>
     </div>
   );
 }
@@ -124,9 +141,9 @@ function Nav({ pathname }: { pathname: string }) {
             key={href}
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={`flex items-center justify-center gap-2.5 rounded-lg px-2.5 py-[7px] text-[13.5px] transition-colors lg:justify-start ${active ? 'bg-sunk text-ink shadow-[inset_0_0_0_1px_var(--line-strong)]' : 'text-ink-2 hover:bg-hover hover:text-ink'}`}
+            className={`flex min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1.5 text-[11px] leading-tight transition-colors sm:flex-row sm:gap-2.5 sm:px-2.5 sm:py-[7px] sm:text-[13.5px] lg:justify-start ${active ? 'bg-sunk text-ink shadow-[inset_0_0_0_1px_var(--line-strong)]' : 'text-ink-2 hover:bg-hover hover:text-ink'}`}
           >
-            <Icon size={16} weight={active ? 'fill' : 'regular'} className="hidden opacity-80 lg:block" />
+            <Icon size={16} weight={active ? 'fill' : 'regular'} className="shrink-0 opacity-80" />
             {label}
           </Link>
         );
@@ -160,7 +177,7 @@ function TopBar({ pathname, llm, onLogout }: { pathname: string; llm: boolean; o
 function LevelUp({ up, onClose, onRoadmap }) {
   const next = getBand(up.to);
   return (
-    <motion.div className="fixed inset-0 z-50 grid place-items-center bg-paper/70 px-4 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
+    <motion.div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-paper/70 px-4 py-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
       <motion.div
         role="dialog"
         aria-modal="true"
@@ -302,7 +319,7 @@ function Frame({ children }: { children: React.ReactNode }) {
           <LoadingShell />
         ) : (
           <CoachContext.Provider value={value}>
-            <div className="min-h-dvh lg:grid lg:grid-cols-[272px_minmax(0,1fr)] xl:grid-cols-[272px_minmax(0,1fr)_minmax(340px,400px)]">
+            <div className="min-h-dvh pt-[env(safe-area-inset-top)] lg:grid lg:grid-cols-[272px_minmax(0,1fr)] lg:pt-0 xl:grid-cols-[272px_minmax(0,1fr)_minmax(340px,400px)]">
               <LearnerSheet
                 profile={profile}
                 refreshKey={refreshKey}
@@ -310,7 +327,7 @@ function Frame({ children }: { children: React.ReactNode }) {
                   <div className="flex items-center justify-between gap-2">
                     <Brand />
                     <span className="flex items-center gap-1 lg:hidden">
-                      <ThemeSwitch />
+                      <ThemeSwitch compact />
                       <LockButton onLogout={logout} />
                     </span>
                   </div>

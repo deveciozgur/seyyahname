@@ -169,7 +169,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
           e.preventDefault();
           send(draft);
         }}
-        className="flex items-end gap-2 border-t border-line p-3"
+        className={`flex items-end gap-2 border-t border-line p-3 ${docked ? 'pb-[max(0.75rem,env(safe-area-inset-bottom))]' : 'sticky bottom-0 z-10 rounded-b-[14px] bg-raised/95 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur'}`}
       >
         <label htmlFor={docked ? 'chat-input-docked' : 'chat-input'} className="sr-only">
           Message the coach
@@ -185,17 +185,17 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
               send(draft);
             }
           }}
-          placeholder={llm ? (docked ? 'Write in English, press Enter to send' : 'Write in English. Enter to send, Shift+Enter for a new line.') : 'The AI coach is offline'}
+          placeholder={llm ? 'Write in English, press Enter to send' : 'The AI coach is offline'}
           disabled={!llm}
           className={`min-h-12 flex-1 resize-none rounded-xl bg-sunk outline-none focus:ring-2 focus:ring-line-strong ${docked ? 'px-3 py-2.5 text-[14px]' : 'px-4 py-3'}`}
         />
         {busy ? (
           <Button type="button" variant="secondary" onClick={stop} aria-label="Stop" className={docked ? 'w-10 px-0' : ''}>
-            <Stop size={16} /> {!docked && 'Stop'}
+            <Stop size={16} /> {!docked && <span className="hidden sm:inline">Stop</span>}
           </Button>
         ) : (
           <Button type="submit" disabled={!draft.trim() || !llm} aria-label="Send" className={docked ? 'w-10 px-0' : ''}>
-            <PaperPlaneRight size={16} /> {!docked && 'Send'}
+            <PaperPlaneRight size={16} /> {!docked && <span className="hidden sm:inline">Send</span>}
           </Button>
         )}
       </form>

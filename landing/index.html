@@ -81,7 +81,19 @@
     :root { color-scheme: dark; }
     html { -webkit-text-size-adjust: 100%; }
     body { background: #0A0A0B; color: #EDEDEF; font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
-    section[id] { scroll-margin-top: 84px; }
+    section[id] { scroll-margin-top: calc(84px + env(safe-area-inset-top)); }
+    /* clip (not hidden): decorative glows can't widen the page, and sticky elements keep working. */
+    html, body { overflow-x: clip; }
+    body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); overflow-wrap: break-word; }
+
+    /* Touch & viewport */
+    a, button, input, select, textarea, label, summary, [role='button'], [role='switch'] { touch-action: manipulation; }
+    @media (pointer: coarse), (max-width: 767px) {
+      :is(button, select, [role='switch'], [role='button'], a.tap):not(.sr-only) { min-height: 44px; min-width: 44px; }
+    }
+    .overflow-y-auto, .overflow-auto { overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
+    #site-header { padding-top: env(safe-area-inset-top); }
+    footer { padding-bottom: max(3rem, env(safe-area-inset-bottom)); }
     ::selection { background: rgba(232,192,125,0.3); color: #fff; }
 
     /* Background light */
@@ -223,7 +235,7 @@
   <!-- ============ HEADER ============ -->
   <header id="site-header" class="fixed inset-x-0 top-0 z-50 border-b border-transparent">
     <div class="mx-auto flex h-[68px] max-w-page items-center gap-6 px-4 sm:px-6">
-      <a href="#" class="group flex items-center gap-2.5" aria-label="Seyyahname home">
+      <a href="#" class="group flex min-h-11 items-center gap-2.5" aria-label="Seyyahname home">
         <span class="relative size-8 rounded-[10px] bg-[radial-gradient(circle_at_30%_30%,#fff3d6,#e8c07d_45%,#8a6a35)] shadow-[0_0_22px_rgba(232,192,125,0.45)] transition-transform duration-300 group-hover:rotate-6" aria-hidden="true">
           <span class="absolute inset-[9px] rounded-full border border-black/25"></span>
         </span>
@@ -231,16 +243,16 @@
       </a>
 
       <nav aria-label="Main navigation" class="mx-auto hidden items-center gap-1 lg:flex">
-        <a href="#features" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Features</a>
-        <a href="#method" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Method</a>
-        <a href="#demo" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Live Demo</a>
-        <a href="#pricing" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Pricing</a>
-        <a href="#faq" class="nav-link rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">FAQ</a>
+        <a href="#features" class="tap nav-link inline-flex items-center rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Features</a>
+        <a href="#method" class="tap nav-link inline-flex items-center rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Method</a>
+        <a href="#demo" class="tap nav-link inline-flex items-center rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Live Demo</a>
+        <a href="#pricing" class="tap nav-link inline-flex items-center rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">Pricing</a>
+        <a href="#faq" class="tap nav-link inline-flex items-center rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink">FAQ</a>
       </nav>
 
       <div class="ml-auto flex items-center gap-2 lg:ml-0">
-        <a href="https://app.seyyahname.com/unlock" class="hidden rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink sm:inline-flex">Sign in</a>
-        <a href="https://app.seyyahname.com" class="btn-gold hidden h-10 items-center gap-2 whitespace-nowrap rounded-full px-5 text-[14px] font-semibold sm:inline-flex">
+        <a href="https://app.seyyahname.com/unlock" class="tap hidden items-center rounded-full px-3.5 py-2 text-[14px] text-ink-2 transition-colors hover:text-ink sm:inline-flex">Sign in</a>
+        <a href="https://app.seyyahname.com" class="tap btn-gold hidden h-10 items-center gap-2 whitespace-nowrap rounded-full px-5 text-[14px] font-semibold sm:inline-flex">
           Open the app <i class="ph-bold ph-arrow-up-right text-[13px]" aria-hidden="true"></i>
         </a>
         <button id="menu-toggle" type="button" class="grid size-10 place-items-center rounded-full border border-line bg-white/[0.03] text-ink lg:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
@@ -705,7 +717,7 @@
   <footer class="border-t border-line px-4 py-12 sm:px-6">
     <div class="mx-auto flex max-w-page flex-col gap-10 md:flex-row md:items-start md:justify-between">
       <div class="max-w-xs">
-        <a href="#" class="flex items-center gap-2.5" aria-label="Seyyahname home">
+        <a href="#" class="inline-flex min-h-11 items-center gap-2.5" aria-label="Seyyahname home">
           <span class="size-7 rounded-[9px] bg-[radial-gradient(circle_at_30%_30%,#fff3d6,#e8c07d_45%,#8a6a35)]" aria-hidden="true"></span>
           <span class="text-[16px] font-semibold tracking-[-0.02em]">Seyyahname</span>
         </a>
@@ -732,10 +744,10 @@
         <div>
           <p class="text-[13px] font-semibold">Follow us</p>
           <div class="mt-3 flex gap-2">
-            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="X (Twitter)"><i class="ph ph-x-logo" aria-hidden="true"></i></a>
-            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="Instagram"><i class="ph ph-instagram-logo" aria-hidden="true"></i></a>
-            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="LinkedIn"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></a>
-            <a href="#" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="YouTube"><i class="ph ph-youtube-logo" aria-hidden="true"></i></a>
+            <a href="#" class="tap grid size-11 shrink-0 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="X (Twitter)"><i class="ph ph-x-logo" aria-hidden="true"></i></a>
+            <a href="#" class="tap grid size-11 shrink-0 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="Instagram"><i class="ph ph-instagram-logo" aria-hidden="true"></i></a>
+            <a href="#" class="tap grid size-11 shrink-0 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="LinkedIn"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></a>
+            <a href="#" class="tap grid size-11 shrink-0 place-items-center rounded-full border border-line text-ink-2 transition-colors hover:border-champagne/40 hover:text-champagne" aria-label="YouTube"><i class="ph ph-youtube-logo" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>

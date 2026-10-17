@@ -104,6 +104,47 @@ html {
 
 body {
   @apply bg-paper font-sans text-ink antialiased;
+  /* Landscape iPhones: keep content clear of the notch (viewport-fit=cover). */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  overflow-wrap: break-word;
+}
+
+/* ---------- Touch & viewport ---------- */
+/* No double-tap-to-zoom delay on controls. */
+a,
+button,
+input,
+select,
+textarea,
+label,
+summary,
+[role='button'],
+[role='tab'],
+[role='radio'],
+[role='switch'] {
+  touch-action: manipulation;
+}
+/* 44px minimum hit area on touchscreens and phone-width windows. Inline text links are unaffected
+   (min-height does not apply to inline boxes); screen-reader-only controls are excluded. */
+@media (pointer: coarse), (max-width: 767px) {
+  :is(button, a, select, [role='tab'], [role='radio'], [role='switch'], [role='button']):not(.sr-only) {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  input:not([type='checkbox'], [type='radio'], [type='range'], .sr-only) {
+    min-height: 44px;
+  }
+}
+/* Inner scroll areas keep their scroll to themselves (no body scroll chaining on iOS). */
+.overflow-y-auto,
+.overflow-auto {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.overflow-x-auto {
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 ::selection {
