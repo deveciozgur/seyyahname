@@ -1,0 +1,71 @@
+{
+  "overall_cefr": "A1",
+  "sub_band": "A1.1",
+  "target_cefr": "C2",
+  "skills": {
+    "reading": "A1",
+    "writing": "A1",
+    "listening": "A1",
+    "speaking": "A1"
+  },
+  "skill_bands": {
+    "reading": "A1.1",
+    "writing": "A1.1",
+    "listening": "A1.1",
+    "speaking": "A1.1"
+  },
+  "can_do_mastered": [],
+  "gamification": {
+    "streak_days": 0,
+    "xp_total": 0,
+    "confidence_index": 80,
+    "longest_streak": 0,
+    "last_active_date": null,
+    "unlocked_milestones": [],
+    "struggle_streak": 0,
+    "mode": "normal",
+    "mode_reason": null
+  },
+  "srs_queue": [],
+  "interests": [],
+  "progress": {},
+  "stats": {
+    "activities_completed": 0,
+    "per_skill": {}
+  },
+  "metrics": {
+    "vocabulary_size_estimate": 500,
+    "weaknesses": [],
+    "strengths": [],
+    "previous_profile_notes": {
+      "levels": "Overall B1 (reading B2)",
+      "weaknesses": [
+        "inversion",
+        "prepositions of place",
+        "third conditional"
+      ],
+      "strengths": [
+        "past simple",
+        "daily vocabulary",
+        "email conventions"
+      ]
+    }
+  },
+  "diagnostic": {
+    "status": "paused",
+    "start_level": "A1",
+    "stages": {
+      "reading": "pending",
+      "writing": "pending",
+      "listening": "pending",
+      "speaking": "pending"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-10-17",
+      "event": "level_reset",
+      "note": "User found the B2+ reading text too difficult and asked to start from A1 in all four skills. Diagnostic restarted at A1."
+    }
+  ]
+}

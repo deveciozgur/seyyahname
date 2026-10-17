@@ -1,0 +1,198 @@
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+@import 'tailwindcss';
+
+/*
+  Design tokens: Concept C "Dark Elegance", in two themes.
+  Dark (default): near-black surfaces, 1px hairlines, one champagne accent.
+  Light: the same hierarchy on cool porcelain, with the accent deepened to bronze for contrast.
+  The theme is set on <html data-theme="dark|light"> by the inline script in layout.tsx
+  (stored choice, else the system setting) and switched with the sun/moon toggle.
+
+  Colour carries meaning, never decoration:
+    amber   = champagne/bronze accent: progress, CEFR A band, hints
+    emerald = strengths, correct answers, vocabulary upgrades, CEFR B band
+    indigo  = recasts, pronunciation / phonetics, CEFR C band
+    brick   = deletions in diffs, errors
+  Interactive elements use ink. Shape: panels 14px, inputs 10px, buttons/badges/tabs full pill.
+*/
+:root {
+  color-scheme: dark;
+  --paper: #0a0a0b;
+  --paper-raised: #111113;
+  --paper-sunk: #18181b;
+  --panel: #111113;
+  --hover: #1f1f23;
+  --line: #232327;
+  --line-strong: #2e2e33;
+  --ink: #ededef;
+  --ink-2: #a1a1aa;
+  --ink-3: #7c7c86;
+  --emerald: #4ade80;
+  --emerald-soft: rgb(74 222 128 / 0.12);
+  --amber: #e8c07d;
+  --amber-soft: rgb(232 192 125 / 0.14);
+  --indigo: #7dd3fc;
+  --indigo-soft: rgb(125 211 252 / 0.12);
+  --brick: #f87171;
+  --brick-soft: rgb(248 113 113 / 0.12);
+  --glow: rgb(232 192 125 / 0.45);
+  --shadow: 0 0 0;
+  --shadow-strength: 0;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --paper: #f9fafb;
+  --paper-raised: #ffffff;
+  --paper-sunk: #f3f4f6;
+  --panel: #ffffff;
+  --hover: #f0f1f3;
+  --line: #e5e7eb;
+  --line-strong: #d4d4d8;
+  --ink: #18181b;
+  --ink-2: #52525b;
+  --ink-3: #6b6b74;
+  --emerald: #15803d;
+  --emerald-soft: rgb(21 128 61 / 0.1);
+  --amber: #946318;
+  --amber-soft: rgb(176 124 40 / 0.14);
+  --indigo: #0369a1;
+  --indigo-soft: rgb(3 105 161 / 0.09);
+  --brick: #b91c1c;
+  --brick-soft: rgb(185 28 28 / 0.08);
+  --glow: rgb(176 124 40 / 0.25);
+  --shadow: 24 24 27;
+  --shadow-strength: 1;
+}
+
+@theme inline {
+  --font-sans: 'Geist Variable', -apple-system, ui-sans-serif, system-ui, sans-serif;
+  /* Concept C sets everything in Geist; "serif" classes are kept as the display/reading face. */
+  --font-serif: 'Geist Variable', -apple-system, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+
+  --color-paper: var(--paper);
+  --color-raised: var(--paper-raised);
+  --color-sunk: var(--paper-sunk);
+  --color-panel: var(--panel);
+  --color-hover: var(--hover);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-emerald: var(--emerald);
+  --color-emerald-soft: var(--emerald-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-indigo: var(--indigo);
+  --color-indigo-soft: var(--indigo-soft);
+  --color-brick: var(--brick);
+  --color-brick-soft: var(--brick-soft);
+
+  /* Light theme: a soft lift. Dark theme: hairlines only (shadow strength 0). */
+  --shadow-paper: 0 1px 0 rgb(var(--shadow) / calc(0.04 * var(--shadow-strength))), 0 12px 32px -18px rgb(var(--shadow) / calc(0.22 * var(--shadow-strength)));
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  font-feature-settings: 'ss01', 'cv11';
+  transition: background-color 0.2s ease;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-paper font-sans text-ink antialiased;
+}
+
+::selection {
+  background: var(--amber-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--amber) 75%, transparent);
+  outline-offset: 2px;
+}
+
+/* Hairline accent across the top edge of a card (Concept C). Set --edge to a colour token. */
+.edge-top {
+  position: relative;
+}
+.edge-top::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--edge, var(--amber)), transparent);
+  pointer-events: none;
+}
+
+/* Display numerals and headings with a soft vertical gradient (dark) / solid ink (light). */
+.text-sheen {
+  background: linear-gradient(180deg, var(--ink), color-mix(in srgb, var(--ink) 62%, var(--paper)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Long-form reading text */
+.reading {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  hanging-punctuation: first;
+}
+.reading p + p {
+  margin-top: 1.1em;
+}
+
+/* Rendered session markdown */
+.prose-session {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.prose-session h1 { @apply mb-4 font-serif text-3xl font-medium tracking-tight; }
+.prose-session h2 { @apply mt-10 mb-3 border-t border-line pt-6 font-sans text-sm font-semibold text-ink-2; }
+.prose-session h3 { @apply mt-6 mb-1 font-sans text-[15px] font-semibold text-ink; }
+.prose-session p { @apply my-2; }
+.prose-session strong { @apply font-sans text-[0.9em] font-semibold text-ink-2; }
+.prose-session ul { @apply my-2 list-disc pl-5 marker:text-line-strong; }
+.prose-session ol { @apply my-2 list-decimal pl-5; }
+.prose-session li { @apply my-1; }
+.prose-session table { @apply my-4 w-full border-collapse font-sans text-sm; }
+.prose-session th { @apply border-b border-line-strong px-2 py-2 text-left font-medium text-ink-3; }
+.prose-session td { @apply border-b border-line px-2 py-2; }
+.prose-session code { @apply rounded bg-sunk px-1 font-mono text-[0.85em]; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* One-time sheen across special badges (milestones, level ups). Disabled by the reduced-motion rule above. */
+.shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: sheen 1.6s 0.4s ease-out 1 forwards;
+  pointer-events: none;
+}
+@keyframes sheen {
+  to {
+    transform: translateX(120%);
+  }
+}

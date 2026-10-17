@@ -1,0 +1,38 @@
+{
+  "name": "seyyahname",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "postbuild": "node scripts/standalone-assets.mjs",
+    "start": "node .next/standalone/server.js",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test src/lib/core/*.test.ts src/lib/server/*.test.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/geist-mono": "^5.3.0",
+    "@google/genai": "^2.30.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "jose": "^6.2.12",
+    "marked": "^18.1.1",
+    "motion": "^14.3.0",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "description": "Seyyahname: Full-stack AI English learning coach featuring CEFR curriculum, SM-2 vocabulary system, and real-time streaming feedback."
+}

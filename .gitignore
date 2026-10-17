@@ -1,0 +1,20 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+dist/
+release/
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets: every .env file except the committed template
+.env*
+!.env.example
+
+# Local learner data written by the app (DATA_DIR) and its backups
+data/
+
+# Editor / OS / temporary files
+*.tmp
+*.log
+.DS_Store
