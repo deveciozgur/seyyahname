@@ -8,9 +8,11 @@ cp .env.example .env   # set APP_SECRET_PIN (and GEMINI_API_KEY for AI feedback)
 npm run dev            # http://localhost:3000
 npm test               # node --test: coach logic (src/lib/core) and server layer (src/lib/server)
 npm run typecheck      # tsc --noEmit
-npm run build          # next build → .next/standalone (+ public/, static/, CLAUDE.md copied in)
+npm run build          # next build --webpack → .next/standalone (+ public/, static/, CLAUDE.md copied in)
 npm start              # node .next/standalone/server.js, port from $PORT (default 3000)
 ```
+
+The production build uses Webpack (`next build --webpack`): Turbopack's PostCSS step runs in a child Node process that some shared Node hosts (e.g. Hostinger) cannot reach, which crashes the CSS build. `npm run dev` still uses Turbopack.
 
 Interface: Concept C "Dark Elegance" with a light theme (tokens in `src/app/globals.css`, `src/lib/theme/`), Turkish UI strings (`src/lib/tr.ts`; learning content stays English).
 
