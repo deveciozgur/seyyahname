@@ -1,4 +1,4 @@
-// Interest-led framing (CLAUDE.md, "Real-life & interest-led scenarios"):
+// Interest-led framing (CLAUDE.md, section 5: drills built on real-life or interest-led micro-stories):
 // every task gets a theme and, for A1-A2, a one-line hook that makes you want to read on.
 
 export const THEMES = ['Gaming', 'Travel', 'Tech', 'Culture', 'Daily life'];

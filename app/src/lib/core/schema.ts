@@ -1,4 +1,4 @@
-// profile.json schema (CLAUDE.md, section 7). normalizeProfile() upgrades any earlier layout
+// profile.json schema (CLAUDE.md, section 6.C). normalizeProfile() upgrades any earlier layout
 // (user.*, motivation.*) to the current one and is idempotent.
 
 

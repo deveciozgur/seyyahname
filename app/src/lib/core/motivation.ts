@@ -1,6 +1,6 @@
-// Motivation engine (CLAUDE.md, section 6): XP, daily streak, milestones, confidence index,
-// micro-wins, the Frustration Shield and Low-Effort Mode. Pure functions over profile.gamification;
-// store.js persists the result. Sub-band progress itself comes from functional tasks, not XP.
+// Motivation engine: XP, daily streak, milestones, confidence index and micro-wins (CLAUDE.md, section
+// 6.C), plus the Frustration Shield and Low-Effort Mode (section 1). Pure functions over profile.gamification;
+// store.ts persists the result. Sub-band progress itself comes from functional tasks, not XP.
 
 
 import { LEVELS } from '../cefr-data.ts';

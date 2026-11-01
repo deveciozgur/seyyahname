@@ -1,11 +1,13 @@
 // File-backed state for the coach: profile.json, vocabulary.md, error_ledger.md, sessions/.
-// All writes go through a single queue and are written atomically (tmp file + rename),
+// All writes go through a single queue to the file system set with useFileSystem(). In the app that is the
+// browser's copy of the files, saved through /api/state; the server writes them atomically (tmp file + rename),
 // so the Markdown/JSON files stay valid and remain the single source of truth.
 //
-// Rules implemented here (see ../CLAUDE.md):
+// Rules implemented here (see CLAUDE.md at the repository root):
 // - Sub-bands (A1.1 -> A1.2 -> A2.1 ...): one Transactional, one Interactional and one Evaluative task
 //   at 80%+ in a skill, each a distinct task at that skill's level, moves the skill up one sub-band.
-// - Can-Do statements are achieved by passing a task of that skill, level and function at 80%+.
+// - Curriculum Can-Dos are mastered after 3 pieces of evidence from different tasks at 80%+ (confirmed by the
+//   AI feedback's can_do_ids when present); mastering all 4 of the active band levels up (curriculum.ts).
 // - SM-2 spaced repetition (1, 3, 7, 14, 30 days, then ease-factor growth); a lapse returns to 1 day.
 // - Error ledger: a pattern is resolved only after correct use in 3 sessions (days) in a row.
 // - Sessions: a 5-line summary at the top of each day's file, refreshed after every activity.

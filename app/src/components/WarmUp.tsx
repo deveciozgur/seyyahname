@@ -59,8 +59,8 @@ export function CardFace({ card, revealed }) {
 }
 
 /**
- * Curriculum vocabulary for the warm-up: up to 3 words from the active band's lexical domains that are
- * not in vocabulary.md yet. Adding one writes a new SM-2 row (EF 2.50, 0 reps, 1d), due tomorrow.
+ * Curriculum vocabulary for the warm-up: up to 3 words from the lexical domains of the active band and the
+ * bands below it (active band first) that are not in vocabulary.md yet. Adding one writes a new SM-2 row (EF 2.50, 0 reps, 1d), due tomorrow.
  */
 export function CurriculumWords({ band, refreshKey, onAdded = null }: { band: string; refreshKey: number; onAdded?: (() => void) | null }) {
   const [words, setWords] = useState(null);
