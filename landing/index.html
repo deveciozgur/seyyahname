@@ -144,6 +144,7 @@
     .marquee-track { animation: marquee 38s linear infinite; }
     .marquee:hover .marquee-track, .marquee.paused .marquee-track { animation-play-state: paused; }
     .motion-paused .caret::after { animation: none; }
+    .motion-paused .dots span { animation-play-state: paused; }
     @keyframes marquee { to { transform: translateX(-50%); } }
 
     @media (prefers-reduced-motion: reduce) {
@@ -359,6 +360,7 @@
               <div class="mx-auto flex h-7 w-full max-w-sm items-center justify-center gap-2 rounded-lg border border-line bg-black/30 font-mono text-[12px] text-ink-3">
                 <svg class="ph-icon text-[12px]" aria-hidden="true"><use href="#i-lock-simple"/></svg> app.seyyahname.com
               </div>
+              <button id="sim-toggle" type="button" aria-pressed="false" aria-label="Pause the demo" class="hidden shrink-0 items-center gap-1.5 rounded-full border border-line px-3 py-1 text-[12px] text-ink-2 transition-colors hover:text-ink"><svg class="ph-icon" aria-hidden="true"><use href="#i-pause"/></svg><span>Pause</span></button>
               <button id="sim-replay" type="button" class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line px-3 py-1 text-[12px] text-ink-2 transition-colors hover:text-ink"><svg class="ph-icon" aria-hidden="true"><use href="#i-arrow-counter-clockwise"/></svg> Replay</button>
             </div>
 
@@ -490,7 +492,7 @@
               </svg>
               <!-- HTML labels (not SVG text) so they stay 12px however small the chart scales; centred under the review dots. -->
               <div class="relative mt-1 h-4 font-mono text-[12px] leading-none text-ink-3">
-                <span class="absolute left-[15.625%] -translate-x-1/2">1d</span><span class="absolute left-[37.5%] -translate-x-1/2">3d</span><span class="absolute left-[67.1875%] -translate-x-1/2">7d</span><span class="absolute right-0">14d → 30d</span>
+                <span class="absolute left-[15.625%] -translate-x-1/2">1d</span><span class="absolute left-[37.5%] -translate-x-1/2">3d</span><span class="absolute left-[67.1875%] -translate-x-1/2">7d</span><span class="absolute right-0">14d→30d</span>
               </div>
             </div>
           </article>
@@ -840,16 +842,18 @@
 
       /* ---------- Pause controls for looping motion ---------- */
       // Looping animations get a visible Pause/Play button; with reduced motion nothing loops, so the buttons hide.
+      // Returns a setter so a control can also be reset from code (e.g. when the demo restarts).
       function motionToggle(btn, name, onChange) {
-        if (reduceMotion) { btn.hidden = true; return; }
-        btn.addEventListener('click', function () {
-          var paused = btn.getAttribute('aria-pressed') !== 'true';
+        if (reduceMotion) { btn.hidden = true; return function () {}; }
+        function set(paused) {
           btn.setAttribute('aria-pressed', String(paused));
           btn.setAttribute('aria-label', (paused ? 'Play ' : 'Pause ') + name);
           setIcon(btn.querySelector('svg'), paused ? 'i-play' : 'i-pause');
           btn.querySelector('span').textContent = paused ? 'Play' : 'Pause';
           onChange(paused);
-        });
+        }
+        btn.addEventListener('click', function () { set(btn.getAttribute('aria-pressed') !== 'true'); });
+        return set;
       }
       motionToggle(document.getElementById('marquee-toggle'), 'the level carousel', function (paused) {
         $('.marquee').classList.toggle('paused', paused);
@@ -936,7 +940,26 @@
       var COACH_TEXT = "That sounds like a big day! Feeling nervous before an interview is completely normal, and it's great that you still think it went well. Which question surprised you the most?";
       var run = 0, started = false;
 
-      function wait(ms) { return new Promise(function (r) { setTimeout(r, reduceMotion ? 0 : ms); }); }
+      // Pause/Play shares the Replay slot: Pause while the demo plays, Replay once it has finished.
+      var simToggle = document.getElementById('sim-toggle');
+      var simPaused = false, simResume = null;
+      var setSimPaused = motionToggle(simToggle, 'the demo', function (paused) {
+        simPaused = paused;
+        feed.classList.toggle('motion-paused', paused);
+        if (!paused && simResume) { var go = simResume; simResume = null; go(); }
+      });
+      function showSimControl(playing) {
+        var pausable = playing && !reduceMotion;
+        var focused = document.activeElement;
+        simToggle.classList.toggle('hidden', !pausable); simToggle.classList.toggle('inline-flex', pausable);
+        replay.classList.toggle('hidden', pausable); replay.classList.toggle('inline-flex', !pausable);
+        // Keep keyboard focus when the control under it swaps out.
+        if (focused === simToggle && !pausable) replay.focus();
+        else if (focused === replay && pausable) simToggle.focus();
+      }
+
+      // Every step of the demo waits here, so pausing holds it at the next step until Play.
+      function wait(ms) { return new Promise(function (r) { setTimeout(function next() { if (simPaused) simResume = next; else r(); }, reduceMotion ? 0 : ms); }); }
       function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
       function scrollFeed() { feed.scrollTop = feed.scrollHeight; }
 
@@ -962,6 +985,8 @@
       async function playSim() {
         var my = ++run;
         var alive = function () { return my === run; };
+        setSimPaused(false);
+        showSimControl(true);
         resetSim();
         await wait(600); if (!alive()) return;
 
@@ -1022,6 +1047,7 @@
         var win = el('div', 'msg inline-flex items-center gap-2 rounded-full border border-jade/25 bg-jade-soft px-3.5 py-1.5 text-[12.5px] text-jade', '<svg class="ph-icon" aria-hidden="true"><use href="#i-fill-seal-check"/></svg> Can-Do earned · 3 words added to your vault');
         feed.appendChild(win); scrollFeed();
         simStatus.textContent = 'Demo finished: the coach replied with three-layer feedback, scored the answer 86 out of 100, and added 3 words to the vault.';
+        showSimControl(false);
       }
 
       replay.addEventListener('click', function () { playSim(); });
