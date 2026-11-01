@@ -130,6 +130,15 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
   const { messages, draft, setDraft, busy, error, send, stop, clear } = useChat();
   const end = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
+  const composer = useRef<HTMLFormElement>(null);
+
+  // On the Coach page the composer sticks to the bottom of the screen. Browsers only scroll a focused
+  // element if it is off screen, not if a sticky bar covers it, so lift it clear of the composer here.
+  const keepFocusVisible = (e: React.FocusEvent) => {
+    if (docked || !composer.current) return;
+    const overlap = (e.target as HTMLElement).getBoundingClientRect().bottom - composer.current.getBoundingClientRect().top + 12;
+    if (overlap > 12) window.scrollBy({ top: overlap });
+  };
 
   useEffect(() => {
     // The docked column scrolls itself; scrollIntoView would also move the page behind it.
@@ -150,7 +159,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
   );
 
   const feed = (
-    <div ref={scroller} className={docked ? 'min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4' : 'flex-1 space-y-6 px-6 py-6'}>
+    <div ref={scroller} className={docked ? 'min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4' : 'flex-1 space-y-6 px-6 py-6 [&_a]:scroll-mb-28 [&_button]:scroll-mb-28'} onFocus={keepFocusVisible}>
       {messages.length === 0 ? (
         <div className="space-y-4">
           <p className="inline-flex items-center gap-2 text-sm text-ink-3">
@@ -189,6 +198,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
         </p>
       )}
       <form
+        ref={composer}
         onSubmit={(e) => {
           e.preventDefault();
           send(draft);

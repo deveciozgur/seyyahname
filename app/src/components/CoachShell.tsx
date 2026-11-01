@@ -4,7 +4,7 @@
 // navigation on the left, the page in the centre and, from 1280px, the coach chat as a persistent right
 // column. Because it lives in the layout, the frame and the chat never unmount while the learner moves
 // between pages; pages read the profile and actions from useCoach().
-import { createContext, useCallback, useContext, useEffect, useId, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { MotionConfig, motion, AnimatePresence } from 'motion/react';
@@ -176,9 +176,51 @@ function TopBar({ pathname, llm, onLogout }: { pathname: string; llm: boolean; o
 /** Shown once when a band's four Can-Dos are all mastered and the next sub-band opens. */
 function LevelUp({ up, onClose, onRoadmap }) {
   const next = getBand(up.to);
+  const dialog = useRef<HTMLDivElement>(null);
+  // The parent passes a fresh onClose each render; keep the latest so the effect below runs only on open/close.
+  const close = useRef(onClose);
+  close.current = onClose;
+
+  // Modal focus: move focus in, keep Tab inside the dialog, close on Escape, and hand focus back on close.
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    const box = dialog.current;
+    box?.querySelector<HTMLElement>('button')?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close.current();
+        return;
+      }
+      if (e.key !== 'Tab' || !box) return;
+      const items = [...box.querySelectorAll<HTMLElement>('button, a[href]')];
+      const first = items[0];
+      const last = items.at(-1);
+      if (!box.contains(document.activeElement)) {
+        e.preventDefault();
+        first?.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      // Back to the control that opened it; if that is gone (or focus had already dropped to <body>
+      // while the answer was being checked), to the page content rather than the top of the document.
+      const back = opener && opener !== document.body && opener.isConnected ? opener : document.getElementById('main-content');
+      back?.focus();
+    };
+  }, []);
+
   return (
     <motion.div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-paper/70 px-4 py-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
       <motion.div
+        ref={dialog}
         role="dialog"
         aria-modal="true"
         aria-labelledby="levelup-title"

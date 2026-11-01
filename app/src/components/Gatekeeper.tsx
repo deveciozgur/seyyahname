@@ -156,7 +156,8 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
         >
           <div className="flex flex-col items-center text-center">
             <span className="inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 font-mono text-[12px] tracking-widest text-zinc-400 uppercase">
-              <span className="mr-2 inline-block size-1.5 animate-pulse rounded-full bg-emerald-500" aria-hidden />
+              {/* Pulses twice (4s), then stays solid: motion that ends within 5s needs no pause control. */}
+              <span className="mr-2 inline-block size-1.5 animate-pulse rounded-full bg-emerald-500 [animation-iteration-count:2]" aria-hidden />
               Restricted workspace
             </span>
             <div className="mt-6">

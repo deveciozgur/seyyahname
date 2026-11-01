@@ -227,10 +227,12 @@ summary,
 .prose-session a { overflow-wrap: anywhere; }
 
 @media (prefers-reduced-motion: reduce) {
+  /* One near-instant iteration: without the count, infinite animations keep cycling every 0.01ms. */
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
