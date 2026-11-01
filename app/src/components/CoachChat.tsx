@@ -158,7 +158,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
           </p>
           <div className={docked ? 'flex flex-col gap-2' : 'flex flex-wrap gap-2'}>
             {STARTERS.map((s) => (
-              <button key={s} onClick={() => send(s)} disabled={!llm} className={`rounded-full border border-line-strong px-4 py-2 text-left hover:border-ink disabled:opacity-50 ${docked ? 'rounded-[12px] text-[13px]' : 'text-sm'}`}>
+              <button key={s} onClick={() => send(s)} disabled={!llm} className={`rounded-full border border-line-strong px-4 py-2 text-left hover:border-ink disabled:cursor-not-allowed disabled:text-ink-3 disabled:hover:border-line-strong ${docked ? 'rounded-[12px] text-[13px]' : 'text-sm'}`}>
                 {s}
               </button>
             ))}

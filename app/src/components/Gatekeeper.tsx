@@ -236,7 +236,10 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
             <button
               type="submit"
               disabled={!complete || busy}
-              className="mt-3 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-sm font-medium text-zinc-950 transition-all hover:bg-zinc-200 active:scale-[0.99] disabled:opacity-50"
+              // Waiting for the PIN: muted but readable. While verifying it stays white, since that state is progress.
+              className={`mt-3 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-medium transition-all ${
+                !complete && !busy ? 'cursor-not-allowed bg-white/[0.06] text-zinc-400 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]' : 'bg-white text-zinc-950 hover:bg-zinc-200 active:scale-[0.99]'
+              }`}
             >
               {success ? (
                 <>

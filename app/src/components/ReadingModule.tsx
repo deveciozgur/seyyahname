@@ -122,7 +122,8 @@ export default function ReadingModule({ level, tasks, onActivitySaved, passedIds
 
   const correct = task.questions.filter((q) => isCorrect(q, answers[q.id])).length;
   const score = Math.round((correct / task.questions.length) * 100);
-  const answeredAll = task.questions.every((q) => answers[q.id] !== undefined && answers[q.id] !== '');
+  const answeredCount = task.questions.filter((q) => answers[q.id] !== undefined && answers[q.id] !== '').length;
+  const answeredAll = answeredCount === task.questions.length;
 
   function check() {
     setChecked(true);
@@ -193,10 +194,15 @@ export default function ReadingModule({ level, tasks, onActivitySaved, passedIds
         <div className="border-t border-line pt-6">
           {!checked ? (
             <div className="flex flex-wrap items-center gap-4">
-              <Button onClick={check} disabled={!answeredAll} size="lg">
+              <Button onClick={check} disabled={!answeredAll} size="lg" aria-describedby={answeredAll ? undefined : 'check-hint'}>
                 Check answers
               </Button>
-              {!answeredAll && <span className="text-sm text-ink-3">Answer every question. Not sure? Type &ldquo;I don&rsquo;t know&rdquo;.</span>}
+              {/* Says why the button is disabled; linked to it so screen readers hear the reason too. */}
+              {!answeredAll && (
+                <span id="check-hint" className="text-sm text-ink-3">
+                  {answeredCount} of {task.questions.length} answered. Answer every question. Not sure? Type &ldquo;I don&rsquo;t know&rdquo;.
+                </span>
+              )}
             </div>
           ) : (
             <div className="space-y-5">

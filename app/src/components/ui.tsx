@@ -45,7 +45,8 @@ export function Panel({ as: Tag = 'div', className = '', children, ...props }: {
 }
 
 const BTN = {
-  primary: 'bg-ink text-paper hover:bg-ink-2 disabled:bg-line-strong disabled:text-paper',
+  // Disabled: outlined and muted, but its label stays readable (ink-3 on sunk is 4.5:1+ in both themes).
+  primary: 'bg-ink text-paper hover:bg-ink-2 disabled:bg-sunk disabled:text-ink-3 disabled:shadow-[inset_0_0_0_1px_var(--line-strong)]',
   secondary: 'border border-line-strong bg-sunk/50 text-ink hover:border-ink-3 hover:bg-hover disabled:text-ink-3 disabled:border-line',
   ghost: 'text-ink-2 hover:bg-hover hover:text-ink disabled:text-ink-3',
   danger: 'bg-brick text-paper hover:opacity-90',

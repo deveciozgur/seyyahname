@@ -243,10 +243,15 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
         <div className="border-t border-line pt-6">
           {!checked ? (
             <div className="flex flex-wrap items-center gap-4">
-              <Button onClick={check} disabled={plays === 0 && hasTTS} size="lg">
+              <Button onClick={check} disabled={plays === 0 && hasTTS} size="lg" aria-describedby={plays === 0 && hasTTS ? 'listen-check-hint' : undefined}>
                 Check answers
               </Button>
-              {plays === 0 && hasTTS && <span className="text-sm text-ink-3">Play the dialogue at least once.</span>}
+              {/* Says why the button is disabled; linked to it so screen readers hear the reason too. */}
+              {plays === 0 && hasTTS && (
+                <span id="listen-check-hint" className="text-sm text-ink-3">
+                  Play the dialogue at least once.
+                </span>
+              )}
             </div>
           ) : (
             <div className="space-y-5">
