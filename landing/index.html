@@ -60,7 +60,7 @@
             raised: '#161618',
             sunk: '#1C1C1F',
             line: 'rgba(255,255,255,0.08)',
-            ink: { DEFAULT: '#EDEDEF', 2: '#A1A1AA', 3: '#71717A' },
+            ink: { DEFAULT: '#EDEDEF', 2: '#A1A1AA', 3: '#8B8B94' },
             champagne: { DEFAULT: '#E8C07D', hover: '#D8AD68', soft: 'rgba(232,192,125,0.12)' },
             jade: { DEFAULT: '#4ADE80', soft: 'rgba(74,222,128,0.12)' },
             sky: { DEFAULT: '#7DD3FC', soft: 'rgba(125,211,252,0.12)' },
@@ -133,6 +133,8 @@
     #mobile-menu { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s cubic-bezier(.16,1,.3,1), opacity .25s; opacity: 0; }
     #mobile-menu.open { grid-template-rows: 1fr; opacity: 1; }
     #mobile-menu > div { overflow: hidden; }
+    /* The id rule above outranks Tailwind's lg:hidden, so hide the menu here on desktop. */
+    @media (min-width: 1024px) { #mobile-menu { display: none; } }
 
     /* Reveal on scroll */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
@@ -171,6 +173,8 @@
 
     .marquee { mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
     .marquee-track { animation: marquee 38s linear infinite; }
+    .marquee:hover .marquee-track, .marquee.paused .marquee-track { animation-play-state: paused; }
+    .motion-paused .caret::after { animation: none; }
     @keyframes marquee { to { transform: translateX(-50%); } }
 
     @media (prefers-reduced-motion: reduce) {
@@ -262,7 +266,7 @@
       </div>
     </div>
 
-    <div id="mobile-menu" class="lg:hidden" aria-hidden="true">
+    <div id="mobile-menu" class="lg:hidden" aria-hidden="true" inert>
       <div>
         <nav aria-label="Mobile navigation" class="mx-4 mb-4 flex flex-col gap-1 rounded-2xl border border-line bg-panel/95 p-3 backdrop-blur-xl">
           <a href="#features" class="m-link rounded-xl px-4 py-3 text-[15px] text-ink-2 hover:bg-white/[0.04] hover:text-ink">Features</a>
@@ -352,11 +356,14 @@
       </div>
 
       <!-- CEFR band marquee -->
-      <div class="marquee mx-auto mt-20 max-w-page overflow-hidden" aria-hidden="true">
+      <div class="mx-auto mt-20 flex max-w-page flex-col">
+      <div class="marquee overflow-hidden" aria-hidden="true">
         <div class="marquee-track flex w-max gap-3 font-mono text-[12.5px] text-ink-3">
           <span class="rounded-full border border-line px-3.5 py-1.5">A1.1 · Introduce yourself</span><span class="rounded-full border border-line px-3.5 py-1.5">A1.2 · Daily routines</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.1 · Past events</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.2 · Plans &amp; comparisons</span><span class="rounded-full border border-champagne/30 px-3.5 py-1.5 text-champagne">B1.1 · Defend an opinion</span><span class="rounded-full border border-line px-3.5 py-1.5">B1.2 · Professional email</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.1 · Build an argument</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.2 · Switch register</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.1 · Nuance with idioms</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.2 · Abstract debate</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.1 · Irony &amp; style</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.2 · Native-like rhetoric</span>
           <span class="rounded-full border border-line px-3.5 py-1.5">A1.1 · Introduce yourself</span><span class="rounded-full border border-line px-3.5 py-1.5">A1.2 · Daily routines</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.1 · Past events</span><span class="rounded-full border border-line px-3.5 py-1.5">A2.2 · Plans &amp; comparisons</span><span class="rounded-full border border-champagne/30 px-3.5 py-1.5 text-champagne">B1.1 · Defend an opinion</span><span class="rounded-full border border-line px-3.5 py-1.5">B1.2 · Professional email</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.1 · Build an argument</span><span class="rounded-full border border-line px-3.5 py-1.5">B2.2 · Switch register</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.1 · Nuance with idioms</span><span class="rounded-full border border-line px-3.5 py-1.5">C1.2 · Abstract debate</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.1 · Irony &amp; style</span><span class="rounded-full border border-line px-3.5 py-1.5">C2.2 · Native-like rhetoric</span>
         </div>
+      </div>
+      <button id="marquee-toggle" type="button" aria-pressed="false" aria-label="Pause the level carousel" class="motion-toggle mt-3 inline-flex items-center gap-1.5 self-end rounded-full border border-line px-3 py-1 text-[12px] text-ink-2 transition-colors hover:text-ink"><i class="ph ph-pause" aria-hidden="true"></i><span>Pause</span></button>
       </div>
     </section>
 
@@ -445,7 +452,8 @@
                   <span class="inline-flex items-center gap-2 text-[13.5px] font-semibold"><i class="ph-fill ph-chats-circle text-champagne" aria-hidden="true"></i> Coach <span class="pulse-ring size-1.5 rounded-full bg-jade"></span></span>
                   <span class="font-mono text-[11px] text-ink-3">i+1 · B1.2</span>
                 </div>
-                <div id="chat-feed" class="chat-scroll flex-1 space-y-4 overflow-y-auto px-5 py-5" aria-live="polite" aria-label="Simulated coach chat"></div>
+                <div id="chat-feed" class="chat-scroll flex-1 space-y-4 overflow-y-auto px-5 py-5" role="group" aria-label="Simulated coach chat"></div>
+                <p id="sim-status" class="sr-only" role="status" aria-atomic="true"></p>
                 <div class="border-t border-line p-3">
                   <div class="flex items-center gap-2 rounded-xl bg-sunk px-3.5 py-2.5">
                     <span id="chat-input" class="min-h-[22px] flex-1 truncate text-[14px] text-ink-3">Type in English, press Enter to send</span>
@@ -477,9 +485,10 @@
             <div class="flex items-center gap-3">
               <span class="grid size-11 place-items-center rounded-xl bg-champagne-soft text-champagne"><i class="ph-fill ph-lightning text-[20px]" aria-hidden="true"></i></span>
               <h3 class="text-[20px] font-semibold tracking-[-0.02em]">Real-time streaming AI</h3>
+              <button id="stream-toggle" type="button" aria-pressed="false" aria-label="Pause the streaming demo" class="motion-toggle ml-auto inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1 text-[12px] text-ink-2 transition-colors hover:text-ink"><i class="ph ph-pause" aria-hidden="true"></i><span>Pause</span></button>
             </div>
             <p class="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-ink-2">Fluid, natural conversation practice with zero wait. Replies stream in word by word, so your coach is ready the moment you finish typing.</p>
-            <div class="mt-7 rounded-2xl border border-line bg-black/25 p-4 font-mono text-[13px] leading-relaxed" aria-hidden="true">
+            <div id="stream-box" class="mt-7 rounded-2xl border border-line bg-black/25 p-4 font-mono text-[13px] leading-relaxed" aria-hidden="true">
               <p class="text-ink-3">coach ▸</p>
               <p class="text-ink"><span id="stream-demo"></span><span class="caret"></span></p>
             </div>
@@ -505,7 +514,7 @@
                 <path d="M10 15 C 40 80, 60 95, 80 98" fill="none" stroke="rgba(255,255,255,0.18)" stroke-dasharray="3 4" />
                 <path d="M10 15 C 25 50, 35 60, 50 62 L 50 18 C 75 45, 95 55, 120 56 L 120 20 C 160 38, 190 44, 215 45 L 215 22 C 255 30, 285 33, 310 34" fill="none" stroke="#7DD3FC" stroke-width="2" />
                 <g fill="#E8C07D"><circle cx="50" cy="18" r="3.5" /><circle cx="120" cy="20" r="3.5" /><circle cx="215" cy="22" r="3.5" /></g>
-                <g font-family="Geist Mono, monospace" font-size="10" fill="#71717A"><text x="44" y="106">1d</text><text x="113" y="106">3d</text><text x="207" y="106">7d</text><text x="285" y="106">14d → 30d</text></g>
+                <g font-family="Geist Mono, monospace" font-size="10" fill="#8B8B94"><text x="44" y="106">1d</text><text x="113" y="106">3d</text><text x="207" y="106">7d</text><text x="285" y="106">14d → 30d</text></g>
               </svg>
             </div>
           </article>
@@ -793,6 +802,7 @@
       function setMenu(open) {
         menu.classList.toggle('open', open);
         menu.setAttribute('aria-hidden', String(!open));
+        menu.toggleAttribute('inert', !open);
         menuBtn.setAttribute('aria-expanded', String(open));
         menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
         menuBtn.querySelector('i').className = 'ph ' + (open ? 'ph-x' : 'ph-list') + ' text-[20px]';
@@ -850,8 +860,31 @@
         o.observe(el);
       });
 
+      /* ---------- Pause controls for looping motion ---------- */
+      // Looping animations get a visible Pause/Play button; with reduced motion nothing loops, so the buttons hide.
+      function motionToggle(btn, name, onChange) {
+        if (reduceMotion) { btn.hidden = true; return; }
+        btn.addEventListener('click', function () {
+          var paused = btn.getAttribute('aria-pressed') !== 'true';
+          btn.setAttribute('aria-pressed', String(paused));
+          btn.setAttribute('aria-label', (paused ? 'Play ' : 'Pause ') + name);
+          btn.querySelector('i').className = 'ph ' + (paused ? 'ph-play' : 'ph-pause');
+          btn.querySelector('span').textContent = paused ? 'Play' : 'Pause';
+          onChange(paused);
+        });
+      }
+      motionToggle(document.getElementById('marquee-toggle'), 'the level carousel', function (paused) {
+        $('.marquee').classList.toggle('paused', paused);
+      });
+
       /* ---------- Streaming demo (bento) ---------- */
       var streamEl = document.getElementById('stream-demo');
+      var streamPaused = false, streamResume = null;
+      motionToggle(document.getElementById('stream-toggle'), 'the streaming demo', function (paused) {
+        streamPaused = paused;
+        document.getElementById('stream-box').classList.toggle('motion-paused', paused);
+        if (!paused && streamResume) { var go = streamResume; streamResume = null; go(); }
+      });
       var streamLines = [
         "Great question! Let's practise ordering coffee like a local.",
         "Nice! \"Could I get a flat white to go?\" sounds very natural.",
@@ -862,9 +895,13 @@
         if (reduceMotion) { streamEl.textContent = text; return; }
         streamEl.textContent = '';
         var timer = setInterval(function () {
+          if (streamPaused) return;
           n += 1 + Math.round(Math.random());
           streamEl.textContent = text.slice(0, n);
-          if (n >= text.length) { clearInterval(timer); setTimeout(function () { streamLoop(i + 1); }, 2200); }
+          if (n >= text.length) {
+            clearInterval(timer);
+            setTimeout(function next() { if (streamPaused) streamResume = next; else streamLoop(i + 1); }, 2200);
+          }
         }, 38);
       })(0);
 
@@ -899,11 +936,14 @@
         var bid = 'faq-q-' + i, pid = 'faq-a-' + i;
         btn.id = bid; panel.id = pid;
         btn.setAttribute('aria-controls', pid); panel.setAttribute('aria-labelledby', bid);
+        // Collapsed answers stay out of the tab order.
+        panel.toggleAttribute('inert', !item.classList.contains('open'));
         btn.addEventListener('click', function () {
           var open = !item.classList.contains('open');
-          $$('.faq-item.open').forEach(function (o) { if (o !== item) { o.classList.remove('open'); $('.faq-btn', o).setAttribute('aria-expanded', 'false'); } });
+          $$('.faq-item.open').forEach(function (o) { if (o !== item) { o.classList.remove('open'); $('.faq-btn', o).setAttribute('aria-expanded', 'false'); $('.faq-panel', o).setAttribute('inert', ''); } });
           item.classList.toggle('open', open);
           btn.setAttribute('aria-expanded', String(open));
+          panel.toggleAttribute('inert', !open);
         });
       });
 
@@ -922,8 +962,13 @@
       function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
       function scrollFeed() { feed.scrollTop = feed.scrollHeight; }
 
+      // The feed itself is not a live region (a word-by-word stream would flood screen readers);
+      // one status message announces the outcome when the replay ends.
+      var simStatus = document.getElementById('sim-status');
+
       function resetSim() {
         feed.innerHTML = '';
+        simStatus.textContent = '';
         input.textContent = 'Type in English, press Enter to send';
         input.className = 'min-h-[22px] flex-1 truncate text-[14px] text-ink-3';
         radar.setAttribute('points', RADAR_START);
@@ -998,6 +1043,7 @@
         document.getElementById('vault-delta').style.opacity = '1';
         var win = el('div', 'msg inline-flex items-center gap-2 rounded-full border border-jade/25 bg-jade-soft px-3.5 py-1.5 text-[12.5px] text-jade', '<i class="ph-fill ph-seal-check" aria-hidden="true"></i> Can-Do earned · 3 words added to your vault');
         feed.appendChild(win); scrollFeed();
+        simStatus.textContent = 'Demo finished: the coach replied with three-layer feedback, scored the answer 86 out of 100, and added 3 words to the vault.';
         replay.classList.remove('hidden');
         replay.classList.add('inline-flex');
       }
