@@ -12,7 +12,7 @@ Seyyahname runs as a single Node.js server: the pages, the lock screen, the data
 | Rules | `CLAUDE.md` | Copied into `.next/standalone/` at build time and sent to Gemini as the system instruction. |
 | Data | `DATA_DIR` (default `app/data/`) | `profile.json`, `vocabulary.md`, `error_ledger.md`, `sessions/`. Created from templates on the first request if missing. |
 
-The marketing site for the root domain is a separate, self-contained page in `landing/index.html` (no build step; upload it to `public_html`).
+The marketing site for the root domain is a separate, self-contained page in `landing/index.html` (one file, nothing else to upload: put it in `public_html`. After editing classes in it, run `node landing/build-css.mjs` to recompile the inlined Tailwind CSS).
 
 ## Requirements
 

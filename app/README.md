@@ -16,7 +16,7 @@ The production build uses Webpack (`next build --webpack`): Turbopack's PostCSS 
 
 Interface: Concept C "Dark Elegance" with a light theme (tokens in `src/app/globals.css`, `src/lib/theme/`). The whole interface is in English. The views are Studio, Curriculum & Roadmap, Coach, Vault and Archive.
 
-The marketing site for the root domain is a separate, self-contained page in [`../landing/index.html`](../landing/index.html) (single file, no build step).
+The marketing site for the root domain is a separate, self-contained page in [`../landing/index.html`](../landing/index.html) (single file; Tailwind CSS is precompiled into it, so after changing classes run `node landing/build-css.mjs`).
 
 It reads and writes the same state files as the coach does:
 
