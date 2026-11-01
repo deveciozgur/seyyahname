@@ -35,7 +35,8 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
   const [cards, setCards] = useState<Card[] | null>(null);
   const [i, setI] = useState(0);
   const [revealed, setRevealed] = useState(false);
-  const [busy, setBusy] = useState(false);
+  // The grade being saved (null when idle), so its button can stay highlighted while the others wait.
+  const [saving, setSaving] = useState<number | null>(null);
   const [results, setResults] = useState<Result[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -47,7 +48,7 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
   }, []);
 
   async function grade(q: number) {
-    setBusy(true);
+    setSaving(q);
     try {
       const r = await api.reviewVocabulary(cards[i].original, q);
       setResults((rs) => [...rs, { word: cards[i].original, q, stage: r.entry.stage }]);
@@ -57,7 +58,7 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
     } catch (e) {
       setError(e.message);
     } finally {
-      setBusy(false);
+      setSaving(null);
     }
   }
 
@@ -121,9 +122,13 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
                     <button
                       key={q}
                       onClick={() => grade(q)}
-                      disabled={busy}
+                      disabled={saving !== null}
+                      aria-busy={saving === q || undefined}
                       title={description}
-                      className={`flex flex-col items-center gap-0.5 rounded-xl border px-2 py-2.5 transition-colors active:scale-[0.98] disabled:opacity-50 ${TONE[tone]}`}
+                      // While a grade saves: the chosen one stays highlighted, the rest are muted but readable (no opacity fade).
+                      className={`flex flex-col items-center gap-0.5 rounded-xl border px-2 py-2.5 transition-colors active:scale-[0.98] disabled:cursor-not-allowed disabled:active:scale-100 ${
+                        saving === null ? TONE[tone] : saving === q ? 'border-ink bg-sunk text-ink' : 'border-line bg-sunk/50 text-ink-3'
+                      }`}
                     >
                       <span className="text-2xl leading-none font-semibold tabular-nums">{q}</span>
                       <span className="text-[12px] font-medium">{label}</span>
