@@ -5,14 +5,20 @@ import { Marked } from 'marked';
 import { PaperPlaneRight, Stop, Sparkle, ArrowCounterClockwise, ChatsCircle } from '@phosphor-icons/react';
 import { streamChat } from '@/api';
 import type { ChatMessage } from '@/lib/api-contract';
+import { demotedHeading } from '@/lib/markdown';
 import { readStored, writeStored } from '@/lib/useActivity';
 import { Button, Panel } from './ui';
 
 const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 // Replies can quote the learner, so raw HTML is shown as text, never rendered.
-const marked = new Marked({ gfm: true, breaks: true, renderer: { html: ({ text }) => escapeHtml(text) } });
+const marked = new Marked({ gfm: true, breaks: true, renderer: { html: ({ text }) => escapeHtml(text), heading: demotedHeading } });
 
-const STARTERS = ['Start today’s lesson at my level.', 'Give me a short speaking drill about my daily routine.', 'Check this sentence: "I am working in a office since 2020."', 'Teach me 3 travel phrases with IPA.'];
+/** A reply as plain text for screen readers (DOMParser builds an inert document: no scripts, no requests). */
+function plainText(markdown: string) {
+  return new DOMParser().parseFromString(marked.parse(markdown) as string, 'text/html').body.textContent?.trim() ?? '';
+}
+
+const STARTERS =['Start today’s lesson at my level.', 'Give me a short speaking drill about my daily routine.', 'Check this sentence: "I am working in a office since 2020."', 'Teach me 3 travel phrases with IPA.'];
 
 /** The saved conversation (JSON in localStorage); anything unreadable starts a fresh chat. */
 function loadHistory() {
@@ -46,6 +52,9 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // The feed is not a live region (every streamed chunk would be read out); this one status line
+  // announces that a reply started, then the finished reply once.
+  const [announcement, setAnnouncement] = useState('');
   const abort = useRef<AbortController | null>(null);
 
   // Loaded after hydration (the server has no localStorage); nothing is saved before that.
@@ -68,13 +77,21 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       setDraft('');
       setError(null);
       setBusy(true);
+      setAnnouncement('The coach is replying…');
       abort.current = new AbortController();
+      let reply = '';
       try {
         await streamChat(history, {
           signal: abort.current.signal,
-          onText: (t) => setMessages((ms) => [...ms.slice(0, -1), { role: 'assistant', content: ms.at(-1).content + t }]),
+          onText: (t) => {
+            reply += t;
+            setMessages((ms) => [...ms.slice(0, -1), { role: 'assistant', content: ms.at(-1).content + t }]);
+          },
         });
+        setAnnouncement(reply ? `Coach: ${plainText(reply)}` : '');
       } catch (e) {
+        // Errors are announced by their own role="alert" line.
+        setAnnouncement(e.name === 'AbortError' && reply ? `Reply stopped. Coach: ${plainText(reply)}` : '');
         if (e.name !== 'AbortError') setError(e.message);
         setMessages((ms) => (ms.at(-1)?.content ? ms : ms.slice(0, -1)));
       } finally {
@@ -89,7 +106,14 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     () => ({ messages, draft, setDraft, busy, error, send, stop: () => abort.current?.abort(), clear: () => setMessages([]) }),
     [messages, draft, busy, error, send],
   );
-  return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
+  return (
+    <ChatContext.Provider value={value}>
+      {children}
+      <p className="sr-only" role="status" aria-atomic="true">
+        {announcement}
+      </p>
+    </ChatContext.Provider>
+  );
 }
 
 export function useChat(): ChatState {
@@ -126,7 +150,7 @@ export default function CoachChat({ llm, docked = false }: { llm: boolean; docke
   );
 
   const feed = (
-    <div ref={scroller} className={docked ? 'min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4' : 'flex-1 space-y-6 px-6 py-6'} aria-live="polite">
+    <div ref={scroller} className={docked ? 'min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4' : 'flex-1 space-y-6 px-6 py-6'}>
       {messages.length === 0 ? (
         <div className="space-y-4">
           <p className="inline-flex items-center gap-2 text-sm text-ink-3">

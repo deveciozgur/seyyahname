@@ -27,7 +27,7 @@ export function FunctionSlots({ profile, skill, size = 'sm' }) {
         <span
           key={f}
           title={`${fnLabel(f)}${prog[f] ? ': done' : ': needed'}`}
-          className={`grid place-items-center rounded-full font-mono font-semibold ${size === 'sm' ? 'size-[18px] text-[9.5px]' : 'size-6 text-[11px]'} ${prog[f] ? 'bg-amber text-paper' : 'border border-dashed border-line-strong text-ink-3'}`}
+          className={`grid place-items-center rounded-full font-mono font-semibold ${size === 'sm' ? 'size-5 text-[12px]' : 'size-6 text-[12px]'} ${prog[f] ? 'bg-amber text-paper' : 'border border-dashed border-line-strong text-ink-3'}`}
         >
           {FN_SHORT[f]}
         </span>
@@ -66,7 +66,7 @@ function LevelCard({ profile, compact = false }) {
           <i key={l} className={`h-1 rounded-full ${i <= idx ? 'bg-amber shadow-[0_0_8px_var(--glow)]' : 'bg-line-strong'}`} />
         ))}
       </div>
-      <div className="mt-1.5 grid grid-cols-6 font-mono text-[10px] text-ink-3">
+      <div className="mt-1.5 grid grid-cols-6 font-mono text-[12px] text-ink-3">
         {LEVELS.map((l) => (
           <span key={l} className={l === profile.target_cefr ? 'text-amber' : ''}>
             {l}
@@ -82,7 +82,7 @@ function LevelCard({ profile, compact = false }) {
         <div className="h-[3px] flex-1 overflow-hidden rounded-full bg-line-strong">
           <motion.div className="h-full origin-left rounded-full bg-amber" initial={{ scaleX: 0 }} animate={{ scaleX: Math.max(0.02, filled / 12) }} transition={{ duration: 0.9, ease }} />
         </div>
-        <span className="font-mono text-[11px] text-ink-3" title="Function steps toward the next sub-band">
+        <span className="font-mono text-[12px] text-ink-3" title="Function steps toward the next sub-band">
           {filled}/12
         </span>
       </div>
@@ -106,13 +106,14 @@ function StatGrid({ profile, vault, compact = false }) {
         ]),
   ];
   return (
-    <dl className={`grid gap-px overflow-hidden rounded-xl border border-line bg-line ${compact ? 'grid-cols-4' : 'grid-cols-2'}`}>
+    <dl className={`grid gap-px overflow-hidden rounded-xl border border-line bg-line ${compact ? 'grid-cols-2 min-[360px]:grid-cols-4' : 'grid-cols-2'}`}>
       {items.map((it) => (
         <div key={it.label} className={`bg-panel ${compact ? 'px-2 py-2' : 'px-3 py-2.5'}`}>
-          <dt className={`text-ink-3 ${compact ? 'truncate text-[10px]' : 'text-[11px]'}`}>{it.label}</dt>
+          {/* Labels wrap rather than truncate in the compact four-up row, so "Vault confidence" stays readable on phones. */}
+          <dt className={`text-[12px] text-ink-3 ${compact ? 'leading-tight' : ''}`}>{it.label}</dt>
           <dd className={`font-medium tracking-[-0.01em] tabular-nums ${compact ? 'text-[15px]' : 'text-lg'} ${it.tone ?? ''}`}>
             {it.value}
-            {it.unit && <span className="ml-1 text-[11.5px] font-normal text-ink-3">{it.unit}</span>}
+            {it.unit && <span className="ml-1 text-[12px] font-normal text-ink-3">{it.unit}</span>}
           </dd>
           {it.meter != null && !compact && (
             <div className="mt-1.5 h-[3px] overflow-hidden rounded-full bg-line-strong">
@@ -126,7 +127,7 @@ function StatGrid({ profile, vault, compact = false }) {
 }
 
 function Eyebrow({ children }) {
-  return <div className="px-1.5 pb-2 font-mono text-[11px] tracking-[0.08em] text-ink-3 uppercase">{children}</div>;
+  return <div className="px-1.5 pb-2 font-mono text-[12px] tracking-[0.08em] text-ink-3 uppercase">{children}</div>;
 }
 
 function Skills({ profile }) {
@@ -151,7 +152,7 @@ function Skills({ profile }) {
                   <i key={f} className={`size-1.5 rounded-full ${prog[f] ? 'bg-amber' : 'bg-line-strong'}`} />
                 ))}
               </span>
-              <span className="font-mono text-[11px] text-ink-3">{band}</span>
+              <span className="font-mono text-[12px] text-ink-3">{band}</span>
             </li>
           );
         })}
@@ -169,7 +170,7 @@ function Diagnostic({ diagnostic }) {
         <h3 id="diag-h" className="font-medium text-ink-2">
           Placement
         </h3>
-        <span className="font-mono text-[11px] text-ink-3">{done}/4</span>
+        <span className="font-mono text-[12px] text-ink-3">{done}/4</span>
       </div>
       <ol className="mt-2 flex gap-1.5">
         {SKILLS.map((s) => {
@@ -217,7 +218,7 @@ export default function LearnerSheet({ profile, refreshKey = 0, nav, header }) {
           <section aria-label="Statistics" className="space-y-2">
             <StatGrid profile={profile} vault={vault} />
             {vault && (
-              <p className="flex items-center gap-1.5 px-1.5 text-[11.5px] text-ink-3">
+              <p className="flex items-center gap-1.5 px-1.5 text-[12px] text-ink-3">
                 <VaultIcon size={13} /> SM-2 vault: {vault.total} {vault.total === 1 ? 'word' : 'words'}, {vault.mastered} mastered
               </p>
             )}
@@ -231,7 +232,7 @@ export default function LearnerSheet({ profile, refreshKey = 0, nav, header }) {
               </Eyebrow>
               <div className="flex flex-wrap gap-1.5 px-1">
                 {weaknesses.map((w) => (
-                  <span key={w} className="rounded-full border border-line bg-amber-soft px-2.5 py-0.5 text-[11.5px] text-amber">
+                  <span key={w} className="rounded-full border border-line bg-amber-soft px-2.5 py-0.5 text-[12px] text-amber">
                     {w}
                   </span>
                 ))}

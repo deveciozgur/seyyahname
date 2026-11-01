@@ -30,7 +30,7 @@ export function CardFace({ card, revealed }) {
       <div className="flex items-center gap-2 text-[13px] text-ink-3">
         {card.cefr && <LevelBadge level={card.cefr} />}
         <span>{isUpgrade ? 'Say a stronger alternative:' : 'What does it mean? Use it in a sentence.'}</span>
-        <span className="ml-auto font-mono text-[11px]" title={`SM-2 ease factor ${card.ease}`}>
+        <span className="ml-auto font-mono text-[12px]" title={`SM-2 ease factor ${card.ease}`}>
           {stageLabel(card.stage)} · ease {card.ease}
         </span>
       </div>
@@ -230,7 +230,7 @@ export default function WarmUp({ refreshKey, onReviewed }) {
                   {GRADES.map((g) => (
                     <Button key={g.id} variant={g.variant} onClick={() => grade(g.id)} disabled={busy} title={g.description}>
                       {g.label}
-                      <span className="font-mono text-[11px] opacity-70">{stageLabel(cards[i].preview?.[g.id])}</span>
+                      <span className="font-mono text-[12px] opacity-70">{stageLabel(cards[i].preview?.[g.id])}</span>
                     </Button>
                   ))}
                 </div>

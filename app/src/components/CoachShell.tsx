@@ -123,7 +123,7 @@ function Brand() {
     <div className="flex items-center gap-2.5 px-1.5">
       <span className="size-[26px] shrink-0 rounded-lg bg-[radial-gradient(circle_at_30%_30%,#fff3d6,#e8c07d_45%,#8a6a35)] shadow-[0_0_18px_var(--glow)]" aria-hidden />
       <span className="font-semibold tracking-[-0.01em]">{APP_NAME}</span>
-      <span className="hidden rounded-[5px] border border-line-strong px-1.5 font-mono text-[10.5px] whitespace-nowrap text-ink-3 min-[400px]:inline">AI Coach</span>
+      <span className="hidden rounded-[5px] border border-line-strong px-1.5 font-mono text-[12px] whitespace-nowrap text-ink-3 min-[400px]:inline">AI Coach</span>
     </div>
   );
 }
@@ -133,7 +133,7 @@ const isActive = (pathname: string, href: string) => (href === '/' ? pathname ==
 /** Sidebar navigation: a vertical list on desktop, five tabs on mobile. Coach lives in the right column on wide screens. */
 function Nav({ pathname }: { pathname: string }) {
   return (
-    <nav aria-label="Main menu" className="grid grid-cols-5 gap-1 lg:grid-cols-1 lg:gap-0.5 xl:[&>a:nth-child(3)]:hidden">
+    <nav aria-label="Main menu" className="grid grid-cols-5 gap-0.5 min-[360px]:gap-1 lg:grid-cols-1 lg:gap-0.5 xl:[&>a:nth-child(3)]:hidden">
       {NAV.map(({ href, label, icon: Icon }) => {
         const active = isActive(pathname, href);
         return (
@@ -141,7 +141,7 @@ function Nav({ pathname }: { pathname: string }) {
             key={href}
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={`flex min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1.5 text-[11px] leading-tight transition-colors sm:flex-row sm:gap-2.5 sm:px-2.5 sm:py-[7px] sm:text-[13.5px] lg:justify-start ${active ? 'bg-sunk text-ink shadow-[inset_0_0_0_1px_var(--line-strong)]' : 'text-ink-2 hover:bg-hover hover:text-ink'}`}
+            className={`flex min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-0.5 py-1.5 text-[12px] leading-tight tracking-[-0.03em] transition-colors min-[360px]:px-1 min-[360px]:tracking-normal sm:flex-row sm:gap-2.5 sm:px-2.5 sm:py-[7px] sm:text-[13.5px] lg:justify-start ${active ? 'bg-sunk text-ink shadow-[inset_0_0_0_1px_var(--line-strong)]' : 'text-ink-2 hover:bg-hover hover:text-ink'}`}
           >
             <Icon size={16} weight={active ? 'fill' : 'regular'} className="shrink-0 opacity-80" />
             {label}
@@ -319,6 +319,13 @@ function Frame({ children }: { children: React.ReactNode }) {
           <LoadingShell />
         ) : (
           <CoachContext.Provider value={value}>
+            {/* First tab stop: jumps past the menu, theme and lock controls straight to the page. */}
+            <a
+              href="#main-content"
+              className="sr-only rounded-full bg-ink text-sm font-medium text-paper focus:not-sr-only focus:px-4 focus:py-2.5 focus:fixed focus:top-[max(0.75rem,env(safe-area-inset-top))] focus:left-3 focus:z-50"
+            >
+              Skip to content
+            </a>
             <div className="min-h-dvh pt-[env(safe-area-inset-top)] lg:grid lg:grid-cols-[272px_minmax(0,1fr)] lg:pt-0 xl:grid-cols-[272px_minmax(0,1fr)_minmax(340px,400px)]">
               <LearnerSheet
                 profile={profile}
@@ -336,7 +343,7 @@ function Frame({ children }: { children: React.ReactNode }) {
               />
               <div className="min-w-0">
                 <TopBar pathname={pathname} llm={llm} onLogout={logout} />
-                <main className="@container mx-auto max-w-[1120px] px-4 py-6 sm:px-6 lg:px-8 lg:py-9">
+                <main id="main-content" tabIndex={-1} className="@container mx-auto max-w-[1120px] px-4 py-6 outline-none sm:px-6 lg:px-8 lg:py-9">
                   <motion.div key={pathname} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}>
                     {children}
                   </motion.div>

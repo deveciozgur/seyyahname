@@ -78,7 +78,7 @@ export function WinBadge({ win, index = 0, size = 'md' }) {
     >
       <Icon size={size === 'sm' ? 13 : 15} weight="fill" aria-hidden />
       <span className="text-ink">{win.label}</span>
-      {win.points != null && <span className="font-mono text-[11px] opacity-80">+{win.points}</span>}
+      {win.points != null && <span className="font-mono text-[12px] opacity-80">+{win.points}</span>}
     </motion.li>
   );
 }
@@ -166,7 +166,7 @@ export function MomentumStats({ profile }) {
     <dl className="grid grid-cols-3 gap-2">
       {items.map(({ icon: Icon, label, value, tone }) => (
         <div key={label} className="rounded-[10px] bg-sunk/60 px-2.5 py-2">
-          <dt className="flex items-center gap-1 text-[10.5px] text-ink-3">
+          <dt className="flex items-center gap-1 text-[12px] text-ink-3">
             <Icon size={12} weight="fill" className={tone} /> {label}
           </dt>
           <dd className="text-xl font-semibold tabular-nums">{value}</dd>

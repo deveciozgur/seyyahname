@@ -21,6 +21,7 @@ const bandState = (id: string, active: string) => {
   const d = BANDS.indexOf(id) - BANDS.indexOf(active);
   return d < 0 ? 'done' : d === 0 ? 'active' : 'locked';
 };
+const STATE_LABELS = { done: 'Completed', active: 'Active band', locked: 'Up next' };
 
 function Tree({ active, selected, onSelect, profile }) {
   return (
@@ -42,12 +43,16 @@ function Tree({ active, selected, onSelect, profile }) {
                   <button
                     onClick={() => onSelect(b.id)}
                     aria-current={on ? 'true' : undefined}
+                    // The state icon and the clipped goal are visual only; say both in full.
+                    aria-label={`${b.id}: ${b.goal}. ${STATE_LABELS[st]}, ${mastered} of 4 Can-Dos mastered.`}
                     className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] transition-colors ${on ? 'bg-sunk text-ink shadow-[inset_0_0_0_1px_var(--line-strong)]' : 'text-ink-2 hover:bg-hover hover:text-ink'}`}
                   >
                     <Icon size={16} weight={st === 'locked' ? 'regular' : 'fill'} className={st === 'done' ? 'text-emerald' : st === 'active' ? 'text-amber' : 'text-ink-3'} />
                     <span className="font-mono font-medium">{b.id}</span>
-                    <span className="min-w-0 flex-1 truncate text-ink-3">{b.goal}</span>
-                    <span className="font-mono text-[11px] text-ink-3">{mastered}/4</span>
+                    <span className="min-w-0 flex-1 truncate text-ink-3" title={b.goal}>
+                      {b.goal}
+                    </span>
+                    <span className="font-mono text-[12px] text-ink-3">{mastered}/4</span>
                   </button>
                 </li>
               );
@@ -76,8 +81,8 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
       <div className="space-y-1.5">
         <div className="flex flex-wrap items-center gap-2.5">
           <h2 className="font-mono text-[22px] font-semibold tracking-[-0.02em]">{band.id}</h2>
-          <span className={`rounded-full px-2 py-0.5 text-[11.5px] font-medium ${state === 'done' ? 'bg-emerald-soft text-emerald' : state === 'active' ? 'bg-amber-soft text-amber' : 'border border-line-strong text-ink-3'}`}>
-            {state === 'done' ? 'Completed' : state === 'active' ? 'Active band' : 'Up next'}
+          <span className={`rounded-full px-2 py-0.5 text-[12px] font-medium ${state === 'done' ? 'bg-emerald-soft text-emerald' : state === 'active' ? 'bg-amber-soft text-amber' : 'border border-line-strong text-ink-3'}`}>
+            {STATE_LABELS[state]}
           </span>
         </div>
         <p className="max-w-[60ch] text-[16px] leading-relaxed text-ink">{band.goal}</p>
@@ -97,7 +102,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
               )}
               <span className="min-w-0 flex-1">
                 <span className="text-ink">{c.text}</span>
-                <span className="mt-0.5 block font-mono text-[11.5px] text-ink-3">
+                <span className="mt-0.5 block font-mono text-[12px] text-ink-3">
                   {c.id} · {PRACTICE_SKILLS[c.skill]} · {c.mastered ? 'mastered' : c.status === 'in_progress' ? `${c.count}/3 successful uses` : state === 'locked' ? 'up next' : '0/3'}
                 </span>
               </span>
@@ -132,7 +137,7 @@ function Detail({ band, state, profile, vault, onPractice, onRehearse, onAddWord
         <ul className="grid gap-3 @xl:grid-cols-3">
           {band.speaking_scenarios.map((s) => (
             <li key={s.id} className="flex flex-col gap-2 rounded-[12px] border border-line bg-sunk/50 p-3.5">
-              <span className="text-[11px] font-semibold tracking-[0.06em] text-amber uppercase">{SCENARIO_LABELS[s.type] ?? s.type}</span>
+              <span className="text-[12px] font-semibold tracking-[0.06em] text-amber uppercase">{SCENARIO_LABELS[s.type] ?? s.type}</span>
               <p className="text-[14px] font-medium">{s.title}</p>
               <p className="flex-1 text-[12.5px] text-ink-2">{s.setting}</p>
               <div className="flex flex-wrap gap-1.5">

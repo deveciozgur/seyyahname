@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { Marked } from 'marked';
 import { FileText } from '@phosphor-icons/react';
 import { api } from '@/api';
+import { demotedHeading } from '@/lib/markdown';
 import { Panel, Skeleton } from './ui';
 
 const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
 // Session logs contain the learner's own answers, so raw HTML is shown as text, never rendered.
-const marked = new Marked({ gfm: true, renderer: { html: ({ text }) => escapeHtml(text) } });
+const marked = new Marked({ gfm: true, renderer: { html: ({ text }) => escapeHtml(text), heading: demotedHeading } });
 
 const fmtDate = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
@@ -76,7 +77,7 @@ export default function SessionsView({ refreshKey }) {
         <Panel as="article" className="min-w-0 px-6 py-7 sm:px-10 sm:py-9">
           {selected && content !== null ? (
             <>
-              <div className="mb-5 flex items-center gap-1.5 font-mono text-[11px] text-ink-3">
+              <div className="mb-5 flex items-center gap-1.5 font-mono text-[12px] text-ink-3">
                 <FileText size={13} /> sessions/{selected}.md
               </div>
               <div className="prose-session max-w-[68ch]" dangerouslySetInnerHTML={{ __html: marked.parse(content) }} />

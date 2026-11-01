@@ -231,7 +231,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
                     className={`flex cursor-pointer items-center gap-3 rounded-[10px] border px-3.5 py-2.5 text-[15px] transition-colors ${right ? 'border-emerald bg-emerald-soft' : wrong ? 'border-amber bg-amber-soft' : sel ? 'border-ink bg-raised' : 'border-line hover:border-line-strong hover:bg-raised'}`}
                   >
                     <input type="radio" className="sr-only" name={`lq${q.id}`} checked={sel} disabled={checked} onChange={() => setMc((m) => ({ ...m, [q.id]: i }))} />
-                    <span className={`grid size-6 shrink-0 place-items-center rounded-full border font-mono text-[11px] ${sel ? 'border-ink bg-ink text-paper' : 'border-line-strong text-ink-3'}`}>{String.fromCharCode(97 + i)}</span>
+                    <span className={`grid size-6 shrink-0 place-items-center rounded-full border font-mono text-[12px] ${sel ? 'border-ink bg-ink text-paper' : 'border-line-strong text-ink-3'}`}>{String.fromCharCode(97 + i)}</span>
                     {opt}
                   </label>
                 );

@@ -19,7 +19,7 @@ export const bandClasses = (level) => BAND[band(level)];
 
 export function LevelBadge({ level, size = 'sm', className = '' }) {
   const b = bandClasses(level);
-  const sz = size === 'lg' ? 'px-2.5 py-1 text-sm' : 'px-2 py-0.5 text-[11px]';
+  const sz = size === 'lg' ? 'px-2.5 py-1 text-sm' : 'px-2 py-0.5 text-[12px]';
   return <span className={`inline-flex items-center rounded-full font-mono font-medium tracking-wide ${b.soft} ${b.text} ${sz} ${className}`}>{level}</span>;
 }
 
@@ -82,7 +82,7 @@ export function Segmented({ id, items, value, onChange, size = 'md', className =
             <span className="relative inline-flex items-center gap-1.5">
               {it.icon && <it.icon size={size === 'sm' ? 14 : 16} weight={active ? 'fill' : 'regular'} aria-hidden className={size === 'sm' ? '' : 'hidden sm:block'} />}
               {it.label}
-              {it.count != null && <span className={`font-mono text-[11px] ${active ? 'text-ink-2' : 'text-ink-3'}`}>{it.count}</span>}
+              {it.count != null && <span className={`font-mono text-[12px] ${active ? 'text-ink-2' : 'text-ink-3'}`}>{it.count}</span>}
             </span>
           </button>
         );
@@ -147,7 +147,7 @@ export function SaveReceipt({ result, error }) {
           functions && (
             <span className="inline-flex items-center gap-1.5 text-[13px] text-ink-3" title={`Function tasks completed toward the sub-band after ${functions.band}`}>
               {FUNCTIONS.map((f) => (
-                <span key={f} className={`grid size-[18px] place-items-center rounded-full font-mono text-[9.5px] font-semibold ${functions.done.includes(f) ? 'bg-emerald text-paper' : 'border border-dashed border-line-strong'}`}>
+                <span key={f} className={`grid size-5 place-items-center rounded-full font-mono text-[12px] font-semibold ${functions.done.includes(f) ? 'bg-emerald text-paper' : 'border border-dashed border-line-strong'}`}>
                   {FUNCTION_INFO[f].short}
                 </span>
               ))}
@@ -186,7 +186,7 @@ export function SaveReceipt({ result, error }) {
       )}
       <div className="flex flex-wrap gap-1.5">
         {files.map((f) => (
-          <span key={f} className="inline-flex items-center gap-1 rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-ink-3">
+          <span key={f} className="inline-flex items-center gap-1 rounded-full border border-line px-2 py-0.5 font-mono text-[12px] text-ink-3">
             <FileText size={12} /> {f}
           </span>
         ))}
@@ -223,7 +223,7 @@ export function Hint({ children, className = '' }) {
   if (!children) return null;
   return (
     <span className={`inline-flex items-baseline gap-1.5 ${className}`}>
-      <span className="inline-flex translate-y-[2px] items-center gap-1 rounded-full bg-sunk px-1.5 py-px text-[10.5px] font-medium text-ink-3">
+      <span className="inline-flex translate-y-[2px] items-center gap-1 rounded-full bg-sunk px-1.5 py-px text-[12px] font-medium text-ink-3">
         <Lightbulb size={11} weight="fill" className="text-amber" aria-hidden /> Hint
       </span>
       <span className="text-[14px] text-ink-3">{children}</span>

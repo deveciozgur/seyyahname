@@ -142,11 +142,11 @@ function CanDoBoard({ profile }) {
                 return (
                   <li key={c.id} className="flex gap-3">
                     <span className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-full ${done ? 'bg-emerald text-paper' : 'border border-dashed border-line-strong text-ink-3'}`}>
-                      {done ? <SealCheck size={14} weight="fill" /> : <span className="font-mono text-[10px]">{c.count}/3</span>}
+                      {done ? <SealCheck size={14} weight="fill" /> : <span className="font-mono text-[12px]">{c.count}/3</span>}
                     </span>
                     <div className="min-w-0">
                       <p className={`text-[15px] leading-snug ${done ? 'text-ink' : 'text-ink-2'}`}>{c.text}</p>
-                      <p className="flex items-center gap-1 text-[11.5px] text-ink-3">
+                      <p className="flex items-center gap-1 text-[12px] text-ink-3">
                         <Icon size={12} /> {skillLabel(c.skill)} · {fnLabel(c.function)}
                         {done ? `, earned ${formatDate(done.date, { day: 'numeric', month: 'short', year: 'numeric' })}` : ''}
                       </p>
@@ -164,7 +164,7 @@ function CanDoBoard({ profile }) {
           <ul className="space-y-1.5 text-[13.5px] text-ink-2">
             {legacy.map((c) => (
               <li key={c.id}>
-                {c.statement} <span className="font-mono text-[11.5px] text-ink-3">{c.id}</span>
+                {c.statement} <span className="font-mono text-[12px] text-ink-3">{c.id}</span>
               </li>
             ))}
           </ul>
@@ -300,7 +300,7 @@ function StreakMeter({ streak }) {
           <span key={i} className={`h-1.5 w-4 rounded-full ${i < streak ? 'bg-emerald' : 'bg-line-strong'}`} />
         ))}
       </span>
-      <span className="text-[10.5px] text-ink-3">{streak}/3 sessions</span>
+      <span className="text-[12px] text-ink-3">{streak}/3 sessions</span>
     </span>
   );
 }
@@ -357,7 +357,7 @@ function ErrorLedger({ data, loading }) {
                     <div className="flex items-center gap-4 @2xl:justify-end">
                       <span className="text-right" title={`First seen ${e.firstSeen}`}>
                         <span className={`block text-2xl leading-none font-semibold tracking-[-0.02em] tabular-nums ${e.count >= 3 ? 'text-amber' : ''}`}>×{e.count}</span>
-                        <span className="font-mono text-[10.5px] text-ink-3">{e.lastSeen}</span>
+                        <span className="font-mono text-[12px] text-ink-3">{e.lastSeen}</span>
                       </span>
                       <StreakMeter streak={e.streak} />
                     </div>
@@ -381,7 +381,7 @@ function ErrorLedger({ data, loading }) {
                   <span>
                     <span className="text-ink-3 line-through">{e.before}</span> <span className="text-ink">{e.after}</span>
                   </span>
-                  <span className="font-mono text-[11px] text-ink-3">{e.resolvedOn}</span>
+                  <span className="font-mono text-[12px] text-ink-3">{e.resolvedOn}</span>
                 </li>
               ))}
             </ul>

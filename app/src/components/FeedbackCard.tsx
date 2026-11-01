@@ -18,7 +18,7 @@ const Chip = ({ tone = 'neutral', children, title = undefined }: { tone?: string
     indigo: 'bg-indigo-soft text-indigo',
   };
   return (
-    <span title={title} className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11.5px] leading-5 font-medium ${T[tone]}`}>
+    <span title={title} className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[12px] leading-5 font-medium ${T[tone]}`}>
       {children}
     </span>
   );
@@ -106,7 +106,7 @@ function Manuscript({ text, items, active, onPick }) {
               aria-label={`Polish ${s.i + 1}: ${s.text}`}
             >
               {s.text}
-              <sup className="ml-0.5 font-sans text-[10px] font-semibold text-amber no-underline">{s.i + 1}</sup>
+              <sup className="ml-0.5 font-sans text-[12px] font-semibold text-amber no-underline">{s.i + 1}</sup>
             </button>
           ),
         )}
@@ -219,7 +219,7 @@ function RecastBlock({ text, recast, early }) {
           </span>
           Natural Recast
         </span>
-        <span className="ml-auto font-mono text-[11px] text-ink-3">{early ? 'said naturally' : 'your polished text'}</span>
+        <span className="ml-auto font-mono text-[12px] text-ink-3">{early ? 'said naturally' : 'your polished text'}</span>
       </div>
       <p className="text-[15.5px] leading-8">
         {parts
@@ -312,7 +312,7 @@ function SoundLayer({ speaking, pronunciation }) {
             <div key={label} className="sm:px-4 sm:first:pl-0">
               <dt className="text-xs text-ink-3">{label}</dt>
               <dd className="text-[26px] leading-tight font-semibold tracking-[-0.02em] tabular-nums">{value}</dd>
-              {hint && <dd className="text-[11.5px] text-ink-3">{hint}</dd>}
+              {hint && <dd className="text-[12px] text-ink-3">{hint}</dd>}
             </div>
           ))}
         </dl>

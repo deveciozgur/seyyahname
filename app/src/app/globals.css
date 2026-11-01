@@ -15,6 +15,7 @@
     indigo  = recasts, pronunciation / phonetics, CEFR C band
     brick   = deletions in diffs, errors
   Interactive elements use ink. Shape: panels 14px, inputs 10px, buttons/badges/tabs full pill.
+  Contrast: ink-3 and the accents keep 4.5:1 on every surface, including their own -soft tints.
 */
 :root {
   color-scheme: dark;
@@ -27,7 +28,7 @@
   --line-strong: #2e2e33;
   --ink: #ededef;
   --ink-2: #a1a1aa;
-  --ink-3: #7c7c86;
+  --ink-3: #8b8b94;
   --emerald: #4ade80;
   --emerald-soft: rgb(74 222 128 / 0.12);
   --amber: #e8c07d;
@@ -53,9 +54,9 @@
   --ink: #18181b;
   --ink-2: #52525b;
   --ink-3: #6b6b74;
-  --emerald: #15803d;
+  --emerald: #13733a;
   --emerald-soft: rgb(21 128 61 / 0.1);
-  --amber: #946318;
+  --amber: #855810;
   --amber-soft: rgb(176 124 40 / 0.14);
   --indigo: #0369a1;
   --indigo-soft: rgb(3 105 161 / 0.09);
@@ -206,9 +207,10 @@ summary,
   line-height: 1.7;
   color: var(--ink);
 }
-.prose-session h1 { @apply mb-4 font-serif text-3xl font-medium tracking-tight; }
-.prose-session h2 { @apply mt-10 mb-3 border-t border-line pt-6 font-sans text-sm font-semibold text-ink-2; }
-.prose-session h3 { @apply mt-6 mb-1 font-sans text-[15px] font-semibold text-ink; }
+/* Headings render one level lower than written (lib/markdown.ts); md-hN carries the written level's look. */
+.prose-session .md-h1 { @apply mb-4 font-serif text-3xl font-medium tracking-tight; }
+.prose-session .md-h2 { @apply mt-10 mb-3 border-t border-line pt-6 font-sans text-sm font-semibold text-ink-2; }
+.prose-session .md-h3 { @apply mt-6 mb-1 font-sans text-[15px] font-semibold text-ink; }
 .prose-session p { @apply my-2; }
 .prose-session strong { @apply font-sans text-[0.9em] font-semibold text-ink-2; }
 .prose-session ul { @apply my-2 list-disc pl-5 marker:text-line-strong; }

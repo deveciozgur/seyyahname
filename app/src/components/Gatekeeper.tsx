@@ -155,7 +155,7 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
           aria-describedby="unlock-help"
         >
           <div className="flex flex-col items-center text-center">
-            <span className="inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 font-mono text-[11px] tracking-widest text-zinc-400 uppercase">
+            <span className="inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 font-mono text-[12px] tracking-widest text-zinc-400 uppercase">
               <span className="mr-2 inline-block size-1.5 animate-pulse rounded-full bg-emerald-500" aria-hidden />
               Restricted workspace
             </span>
@@ -255,10 +255,10 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
           </fieldset>
         </form>
 
-        <a href="https://seyyahname.com" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center px-3 text-xs text-zinc-500 transition-colors hover:text-zinc-300">
+        <a href="https://seyyahname.com" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center px-3 text-xs text-zinc-400 transition-colors hover:text-zinc-300">
           ← Back to seyyahname.com
         </a>
-        <p className="mt-1 flex items-center justify-center gap-1.5 font-mono text-[11px] text-zinc-600">
+        <p className="mt-1 flex items-center justify-center gap-1.5 font-mono text-[12px] text-zinc-400/80">
           <LockSimple size={12} weight="fill" aria-hidden /> TLS-encrypted, signed session
         </p>
       </div>

@@ -127,7 +127,7 @@ export default function Flashcards({ onReviewed }: { onReviewed?: (r: { profile:
                     >
                       <span className="text-2xl leading-none font-semibold tabular-nums">{q}</span>
                       <span className="text-[12px] font-medium">{label}</span>
-                      <span className="font-mono text-[10.5px] text-ink-3">{stageLabel(card.preview?.[q])}</span>
+                      <span className="font-mono text-[12px] text-ink-3">{stageLabel(card.preview?.[q])}</span>
                     </button>
                   ))}
                 </div>

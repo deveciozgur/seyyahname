@@ -5,7 +5,7 @@ export default function StatusScreen({ code, title, message, children }: { code:
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0%,transparent_70%)]" />
       <div aria-hidden className="unlock-dots pointer-events-none fixed inset-0" />
       <div className="relative m-auto w-full max-w-[460px] py-6 text-center">
-        <p className="font-mono text-[11px] tracking-widest text-zinc-500 uppercase">{code}</p>
+        <p className="font-mono text-[12px] tracking-widest text-zinc-400 uppercase">{code}</p>
         <h1 className="mt-3 text-2xl font-semibold tracking-tight text-balance text-white sm:text-3xl">{title}</h1>
         <p className="mt-3 text-sm leading-relaxed text-balance text-zinc-400">{message}</p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">{children}</div>
