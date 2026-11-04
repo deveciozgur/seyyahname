@@ -36,10 +36,7 @@ here instead; this file is read by Claude Code only.
   file. `GEMINI_API_KEY` is optional (without it the Coach chat is off and offline feedback runs).
 - `DATA_DIR=data`: `app/data/` is created from the templates on first run and is git-ignored. Never download or edit
   the production learner data.
-- `node verify-local.mjs` (repo root) checks Node/npm/Git, sync with `origin/main`, push access (dry run),
-  `.env.local`, typecheck, tests and the signed-in pages on a dev server at port 3123. It changes no tracked file.
-- CI uses Node 22; local development on Node 24 also works (`engines` is `>=20.9`), so the script's "Node.js 22"
-  check is expected to fail there.
+- CI uses Node 22; local development on Node 24 also works (`engines` is `>=20.9`).
 - `npm start` (standalone) does not read `.env.local`; pass variables on the command line. Production cookies are
   `Secure`: Chrome accepts that on localhost, Safari may not.
 
