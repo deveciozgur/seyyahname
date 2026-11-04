@@ -10,6 +10,9 @@ next-env.d.ts
 # Secrets: every .env file except the committed template
 .env*
 !.env.example
+# private keys and certificates
+*.pem
+*.key
 
 # Runtime data written by the app (default DATA_DIR: app/data, incl. its sessions/ and backups/)
 # and local databases. Source data in app/src/data/ (curriculum, task bank) IS tracked.
