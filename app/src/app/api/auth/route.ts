@@ -33,7 +33,9 @@ export function POST(req: NextRequest) {
     const { pin } = await readJson<VerifyRequest>(req, 4096);
     if (typeof pin !== 'string' || !pin || !samePin(pin, env.pin)) {
       const locked = pinLimiter.fail(ip);
-      throw new HttpError(locked ? lockedMessage(locked) : 'Incorrect PIN.', locked ? 429 : 401);
+      // The attempt that triggers the lockout carries Retry-After too, like every locked request after it.
+      if (locked) return json({ error: lockedMessage(locked) }, 429, { 'Retry-After': String(Math.ceil(locked / 1000)) });
+      throw new HttpError('Incorrect PIN.', 401);
     }
     pinLimiter.clear(ip);
     const { token, maxAge } = await createSessionToken();

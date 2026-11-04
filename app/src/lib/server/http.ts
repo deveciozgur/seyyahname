@@ -28,7 +28,19 @@ export function assertSameApp(req: NextRequest) {
   if (req.headers.get(CSRF_HEADER) !== CSRF_VALUE) throw new HttpError('Access denied.', 403);
 }
 
+let warnedConfig = false;
+
+/** Missing settings degrade instead of crashing; this tells whoever reads the server log why, once per process. */
+export function warnMissingConfig() {
+  if (warnedConfig) return;
+  warnedConfig = true;
+  if (!env.pin) console.warn('[seyyahname] APP_SECRET_PIN is not set: the lock screen cannot be unlocked until it is.');
+  if (!env.sessionSecret) console.warn('[seyyahname] APP_SESSION_SECRET is not set: sessions are signed with a key derived from the PIN alone. Set a long random value.');
+}
+
+/** The routes answer 503 with the fix when the PIN is missing. */
 export function assertConfigured() {
+  warnMissingConfig();
   if (!env.pin) throw new HttpError('APP_SECRET_PIN is not set. Add it to the server environment variables (or the .env file).', 503);
 }
 
