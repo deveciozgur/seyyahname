@@ -29,6 +29,20 @@ here instead; this file is read by Claude Code only.
   `GEMINI_BASE_URL`, `COACH_RULES_FILE`, `PORT`, and `SITE_URL` (read at build time; defaults to
   `https://app.seyyahname.com` in production). See `app/.env.example`; never commit a real `.env`.
 
+## Local development
+
+- Copy `app/.env.example` to `app/.env.local` (git-ignored by `.env*`). Use a local `APP_SECRET_PIN`, never the
+  production one; generate `APP_SESSION_SECRET` with `crypto.randomBytes(32).toString('hex')` written straight to the
+  file. `GEMINI_API_KEY` is optional (without it the Coach chat is off and offline feedback runs).
+- `DATA_DIR=data`: `app/data/` is created from the templates on first run and is git-ignored. Never download or edit
+  the production learner data.
+- `node verify-local.mjs` (repo root) checks Node/npm/Git, sync with `origin/main`, push access (dry run),
+  `.env.local`, typecheck, tests and the signed-in pages on a dev server at port 3123. It changes no tracked file.
+- CI uses Node 22; local development on Node 24 also works (`engines` is `>=20.9`), so the script's "Node.js 22"
+  check is expected to fail there.
+- `npm start` (standalone) does not read `.env.local`; pass variables on the command line. Production cookies are
+  `Secure`: Chrome accepts that on localhost, Safari may not.
+
 ## Landing page
 
 - Tailwind is compiled into the inline `tailwind` style block in `<head>`. After changing classes run
