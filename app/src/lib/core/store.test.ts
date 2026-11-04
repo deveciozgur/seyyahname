@@ -247,6 +247,6 @@ test('ACTFL tolerance: A1 local slips cost little and are recast; B2 demands reg
 test('strength-first and speaking rules', () => {
   const fb = heur.heuristicFeedback({ mode: 'speaking', text: 'um i like football because it is fun she work in a bank', level: 'A1', durationSec: 2 });
   assert.match(fb.strength, /because/);
-  assert.ok(fb.grammar.every((g) => !['Capitalisation', 'Punctuation'].includes(g.category)));
+  assert.ok(fb.grammar.every((g) => !['Capitalization', 'Punctuation'].includes(g.category)));
   assert.equal(fb.speaking.wpm, null);
 });

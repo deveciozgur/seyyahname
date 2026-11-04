@@ -33,7 +33,7 @@ export const TASK_META = {
   // listening
   'l-a1-hotel': { fn: 'transactional', theme: 'Travel', hook: 'You just arrived. What time is breakfast?' },
   'l-a1-cafe': { fn: 'transactional', theme: 'Daily life', hook: 'Order like a local, then check the bill.' },
-  'l-a1-neighbour': { fn: 'interactional', theme: 'Daily life', hook: 'A new neighbour knocks. Catch the details.' },
+  'l-a1-neighbor': { fn: 'interactional', theme: 'Daily life', hook: 'A new neighbor knocks. Catch the details.' },
   'l-a2-plans': { fn: 'interactional', theme: 'Culture', hook: 'A free concert in the park. Are you in?' },
   'l-a2-directions': { fn: 'transactional', theme: 'Travel', hook: 'Lost in a new city? Listen for left and right.' },
   'l-a2-weekend': { fn: 'interactional', theme: 'Travel', hook: 'Camping, a lake, and very cold water.' },
@@ -48,7 +48,7 @@ export const TASK_META = {
   's-a1-room': { fn: 'interactional', theme: 'Daily life', hook: 'Give a 30-second tour of the room you are in.' },
   's-a1-day': { fn: 'interactional', theme: 'Daily life', hook: 'From alarm clock to bedtime in 30 seconds.' },
   's-a2-holiday': { fn: 'interactional', theme: 'Travel', hook: 'Your best holiday story, told to a friend.' },
-  's-a2-directions': { fn: 'transactional', theme: 'Travel', hook: 'Be the local guide: get someone to your favourite café.' },
+  's-a2-directions': { fn: 'transactional', theme: 'Travel', hook: 'Be the local guide: get someone to your favorite café.' },
   's-a2-friend': { fn: 'evaluative', theme: 'Daily life', hook: 'Describe your best friend so well we could find them.' },
   's-b1-change': { fn: 'evaluative', theme: 'Culture' },
   's-b1-challenge': { fn: 'interactional', theme: 'Daily life' },
@@ -154,11 +154,11 @@ Lena: Ha! Let's buy a train [pass] before we go.`,
     ],
   },
   writing: {
-    A1: [{ id: 'w-a1-game', fn: 'evaluative', title: 'My Favourite Game', theme: 'Gaming', hook: 'Sell us your favourite game in a few sentences.', prompt: 'Write about your favourite game (video game, board game or sport). What is it? Who do you play with? Why do you like it?', hint: 'Say the name of the game, who you play with and one reason you love it.', minWords: 30, maxWords: 60, register: 'neutral', hints: ['My favourite game is …', 'I play it with …', 'I like it because …'] }],
+    A1: [{ id: 'w-a1-game', fn: 'evaluative', title: 'My Favorite Game', theme: 'Gaming', hook: 'Sell us your favorite game in a few sentences.', prompt: 'Write about your favorite game (video game, board game or sport). What is it? Who do you play with? Why do you like it?', hint: 'Say the name of the game, who you play with and one reason you love it.', minWords: 30, maxWords: 60, register: 'neutral', hints: ['My favorite game is …', 'I play it with …', 'I like it because …'] }],
     A2: [{ id: 'w-a2-gadget', fn: 'evaluative', title: 'A Gadget I Love', theme: 'Tech', hook: 'The one device you would save from a fire.', prompt: 'Write about a gadget you use every day. When did you get it? What do you use it for? Is it better than your old one?', hint: 'Say when you got it and what you use it for, then compare it with your old one.', minWords: 50, maxWords: 90, register: 'informal', hints: ['I got my … last year.', 'I use it to …', "It's faster than …"] }],
   },
   speaking: {
-    A1: [{ id: 's-a1-game', fn: 'evaluative', title: "Let's Talk Games", theme: 'Gaming', hook: 'Pitch a game you love, in 30 seconds.', prompt: 'Talk about a game you like. What is it called? What do you do in the game? Who do you play with?', hint: 'Say the game\'s name, what you do in it and who you play with.', targetSec: 30, hints: ['My favourite game is …', 'In the game, you …', 'I play with …'] }],
+    A1: [{ id: 's-a1-game', fn: 'evaluative', title: "Let's Talk Games", theme: 'Gaming', hook: 'Pitch a game you love, in 30 seconds.', prompt: 'Talk about a game you like. What is it called? What do you do in the game? Who do you play with?', hint: 'Say the game\'s name, what you do in it and who you play with.', targetSec: 30, hints: ['My favorite game is …', 'In the game, you …', 'I play with …'] }],
     A2: [{ id: 's-a2-trip', fn: 'interactional', title: 'Dream Trip', theme: 'Travel', hook: 'Money is no problem. Where are you going?', prompt: 'Describe a dream trip. Where are you going to go? Who with? What are you going to see and eat?', hint: 'Use "I\'m going to ..." to say where you go, who comes with you and what you do.', targetSec: 45, hints: ["I'm going to go to …", "We're going to visit …", 'I really want to try …'] }],
   },
 };

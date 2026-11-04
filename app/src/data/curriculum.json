@@ -79,7 +79,7 @@
               { "word": "next to", "meaning": "very close to, at the side of", "example": "The café is next to the park." },
               { "word": "opposite", "meaning": "on the other side, facing", "example": "The bank is opposite the station." },
               { "word": "bus stop", "meaning": "the place where a bus stops", "example": "There's a bus stop near my house." },
-              { "word": "neighbourhood", "meaning": "the area around your home", "example": "My neighbourhood is quiet." },
+              { "word": "neighborhood", "meaning": "the area around your home", "example": "My neighborhood is quiet." },
               { "word": "living room", "meaning": "the main room for relaxing at home", "example": "We watch TV in the living room." },
               { "word": "supermarket", "meaning": "a large shop for food and household things", "example": "I go to the supermarket on Saturdays." }
             ] }
@@ -254,7 +254,7 @@
             { "id": "B1.2-G1", "title": "First and second conditional", "explanation": "Real possibility: If + present, will. Imaginary situation: If + past, would. Never put 'would' in the if-clause.", "example": "If it rains, we'll stay in. If I had more time, I would travel more." },
             { "id": "B1.2-G2", "title": "Passive voice (present and past)", "explanation": "Focus on the action rather than who did it: be + past participle.", "example": "The report was sent yesterday. Breakfast is served at eight." },
             { "id": "B1.2-G3", "title": "Relative clauses: who, which, that, where", "explanation": "Define nouns with who for people, which/that for things and where for places.", "example": "The colleague who helped me is from Spain." },
-            { "id": "B1.2-G4", "title": "Reported speech (statements and requests)", "explanation": "When reporting, move the tense one step back: 'I'm tired' becomes She said she was tired.", "example": "He told me that the meeting had been cancelled." }
+            { "id": "B1.2-G4", "title": "Reported speech (statements and requests)", "explanation": "When reporting, move the tense one step back: 'I'm tired' becomes She said she was tired.", "example": "He told me that the meeting had been canceled." }
           ],
           "lexical_domains": [
             { "id": "B1.2-LX1", "title": "Email and workplace communication", "items": [
@@ -276,7 +276,7 @@
           ],
           "can_do_statements": [
             { "id": "B1.2-CD1", "skill": "speaking", "function": "evaluative", "text": "Can discuss hypothetical situations and their consequences." },
-            { "id": "B1.2-CD2", "skill": "speaking", "function": "transactional", "text": "Can deal with most situations while travelling, including making a complaint." },
+            { "id": "B1.2-CD2", "skill": "speaking", "function": "transactional", "text": "Can deal with most situations while traveling, including making a complaint." },
             { "id": "B1.2-CD3", "skill": "writing", "function": "transactional", "text": "Can write a clear professional email making a request or a complaint." },
             { "id": "B1.2-CD4", "skill": "writing", "function": "evaluative", "text": "Can write a short report on a familiar topic giving advantages and disadvantages." }
           ],
@@ -304,7 +304,7 @@
           "grammar_targets": [
             { "id": "B2.1-G1", "title": "Contrast and concession: despite, whereas, even though", "explanation": "Use despite/in spite of + noun or -ing, even though + clause, and whereas to contrast two situations.", "example": "Despite the cost, the plan makes sense. Even though it's risky, it's worth trying." },
             { "id": "B2.1-G2", "title": "Modals of speculation (present)", "explanation": "Use must (almost certain), might/could (possible) and can't (impossible) + verb to speculate about now.", "example": "She must be busy; she can't be at home." },
-            { "id": "B2.1-G3", "title": "Narrative tenses: past continuous and past perfect", "explanation": "Use the past continuous for background action and the past perfect for an earlier event.", "example": "I was driving home when I realised I had left my phone at work." },
+            { "id": "B2.1-G3", "title": "Narrative tenses: past continuous and past perfect", "explanation": "Use the past continuous for background action and the past perfect for an earlier event.", "example": "I was driving home when I realized I had left my phone at work." },
             { "id": "B2.1-G4", "title": "Gerund vs infinitive with meaning change", "explanation": "Some verbs change meaning: stop doing vs stop to do, remember doing vs remember to do.", "example": "I stopped smoking. I stopped to buy a coffee." }
           ],
           "lexical_domains": [
@@ -339,7 +339,7 @@
           "speaking_scenarios": [
             { "id": "B2.1-SC1", "type": "professional", "title": "Remote work debate", "setting": "Your team debates whether to keep working remotely three days a week.", "task": "Present both sides, give your recommendation and respond to one objection.", "target_can_do": "B2.1-CD1", "target_grammar": "B2.1-G1" },
             { "id": "B2.1-SC2", "type": "interview", "title": "Scholarship interview", "setting": "A panel interviews you for a scholarship abroad.", "task": "Explain your goals, a challenge you overcame and how the scholarship would help.", "target_can_do": "B2.1-CD2", "target_grammar": "B2.1-G3" },
-            { "id": "B2.1-SC3", "type": "daily", "title": "Car-free city centres", "setting": "A local radio show asks listeners for their opinions.", "task": "Argue for or against banning cars from the city centre, with evidence and a counter-argument.", "target_can_do": "B2.1-CD1", "target_grammar": "B2.1-G2" }
+            { "id": "B2.1-SC3", "type": "daily", "title": "Car-free city centers", "setting": "A local radio show asks listeners for their opinions.", "task": "Argue for or against banning cars from the city center, with evidence and a counter-argument.", "target_can_do": "B2.1-CD1", "target_grammar": "B2.1-G2" }
           ]
         },
         {
@@ -433,7 +433,7 @@
           ],
           "speaking_scenarios": [
             { "id": "C1.1-SC1", "type": "professional", "title": "Project pitch", "setting": "You pitch a new product idea to senior management in five minutes.", "task": "Open with impact, use one inversion and one cleft sentence, handle a sceptical question.", "target_can_do": "C1.1-CD1", "target_grammar": "C1.1-G1" },
-            { "id": "C1.1-SC2", "type": "interview", "title": "Senior-level interview", "setting": "A behavioural interview for a team-lead role.", "task": "Describe a difficult decision you made, what you would do differently and what you learned.", "target_can_do": "C1.1-CD2", "target_grammar": "C1.1-G3" },
+            { "id": "C1.1-SC2", "type": "interview", "title": "Senior-level interview", "setting": "A behavioral interview for a team-lead role.", "task": "Describe a difficult decision you made, what you would do differently and what you learned.", "target_can_do": "C1.1-CD2", "target_grammar": "C1.1-G3" },
             { "id": "C1.1-SC3", "type": "daily", "title": "A controversial story", "setting": "Friends discuss a controversial news story over dinner.", "task": "Give a nuanced view, hedge where you are unsure and use two idioms naturally.", "target_can_do": "C1.1-CD2", "target_grammar": "C1.1-G4" }
           ]
         },
@@ -444,7 +444,7 @@
             { "id": "C1.2-G1", "title": "Subjunctive", "explanation": "Use the base verb after formal suggestions and requirements: It is essential that he be informed. I suggest she apply.", "example": "The board recommended that the policy be reviewed." },
             { "id": "C1.2-G2", "title": "Advanced discourse markers", "explanation": "Signal precise logical moves with that said, by the same token, notwithstanding, in light of and be that as it may.", "example": "The data is limited. That said, the trend is clear." },
             { "id": "C1.2-G3", "title": "Participle clauses", "explanation": "Replace long 'and... and...' chains with participle clauses: Having finished..., Given that..., Faced with...", "example": "Faced with rising costs, the company changed its strategy." },
-            { "id": "C1.2-G4", "title": "Nominalisation", "explanation": "In academic and formal writing, turn verbs into nouns: 'prices rose quickly' becomes 'the rapid rise in prices'.", "example": "The rapid growth of remote work has transformed city centres." }
+            { "id": "C1.2-G4", "title": "Nominalisation", "explanation": "In academic and formal writing, turn verbs into nouns: 'prices rose quickly' becomes 'the rapid rise in prices'.", "example": "The rapid growth of remote work has transformed city centers." }
           ],
           "lexical_domains": [
             { "id": "C1.2-LX1", "title": "Academic and abstract vocabulary", "items": [
@@ -466,9 +466,9 @@
           ],
           "can_do_statements": [
             { "id": "C1.2-CD1", "skill": "speaking", "function": "evaluative", "text": "Can argue abstract and complex topics with precise discourse control." },
-            { "id": "C1.2-CD2", "skill": "speaking", "function": "interactional", "text": "Can lead a discussion, summarising and redirecting contributions." },
+            { "id": "C1.2-CD2", "skill": "speaking", "function": "interactional", "text": "Can lead a discussion, summarizing and redirecting contributions." },
             { "id": "C1.2-CD3", "skill": "writing", "function": "evaluative", "text": "Can write clear academic or professional texts using nominalisation and cohesion." },
-            { "id": "C1.2-CD4", "skill": "writing", "function": "transactional", "text": "Can summarise and synthesise information from several sources." }
+            { "id": "C1.2-CD4", "skill": "writing", "function": "transactional", "text": "Can summarize and synthesise information from several sources." }
           ],
           "l1_interference_alerts": [
             { "id": "C1.2-L1", "wrong": "We made a research and we found and we saw that...", "right": "Having conducted the research, we found that...", "note": "Instead of long Turkish-style 'and' chains, use participle clauses and nominalisation." },
@@ -476,7 +476,7 @@
             { "id": "C1.2-L3", "wrong": "This subject is very important for me.", "right": "This issue is of particular importance to me.", "note": "In academic or formal style, choose more precise phrasing than 'very important for me'." }
           ],
           "speaking_scenarios": [
-            { "id": "C1.2-SC1", "type": "professional", "title": "Chairing a tense meeting", "setting": "Two departments disagree about budget priorities and you chair the meeting.", "task": "Open the meeting, summarise both positions neutrally, redirect a digression and propose next steps.", "target_can_do": "C1.2-CD2", "target_grammar": "C1.2-G2" },
+            { "id": "C1.2-SC1", "type": "professional", "title": "Chairing a tense meeting", "setting": "Two departments disagree about budget priorities and you chair the meeting.", "task": "Open the meeting, summarize both positions neutrally, redirect a digression and propose next steps.", "target_can_do": "C1.2-CD2", "target_grammar": "C1.2-G2" },
             { "id": "C1.2-SC2", "type": "interview", "title": "Academic panel", "setting": "A panel questions you about a project or idea you know well.", "task": "Explain its rationale and limitations, using nominalisation and at least one subjunctive.", "target_can_do": "C1.2-CD1", "target_grammar": "C1.2-G1" },
             { "id": "C1.2-SC3", "type": "daily", "title": "Is technology making us less human?", "setting": "A philosophical café debate.", "task": "Argue a position on this abstract question with examples, concessions and a clear conclusion.", "target_can_do": "C1.2-CD1", "target_grammar": "C1.2-G3" }
           ]
@@ -517,7 +517,7 @@
           ],
           "can_do_statements": [
             { "id": "C2.1-CD1", "skill": "speaking", "function": "evaluative", "text": "Can resolve ambiguity and convey finer shades of meaning precisely." },
-            { "id": "C2.1-CD2", "skill": "speaking", "function": "interactional", "text": "Can use irony and understatement deliberately and recognise them in others." },
+            { "id": "C2.1-CD2", "skill": "speaking", "function": "interactional", "text": "Can use irony and understatement deliberately and recognize them in others." },
             { "id": "C2.1-CD3", "skill": "writing", "function": "evaluative", "text": "Can write sophisticated texts with a deliberate and consistent style." },
             { "id": "C2.1-CD4", "skill": "writing", "function": "interactional", "text": "Can write engaging narratives using stylistic devices." }
           ],
@@ -528,7 +528,7 @@
           ],
           "speaking_scenarios": [
             { "id": "C2.1-SC1", "type": "professional", "title": "Diplomatic negative feedback", "setting": "You must tell a valued partner that their work was not good enough.", "task": "Deliver the message clearly but diplomatically, using understatement and precise word choice.", "target_can_do": "C2.1-CD1", "target_grammar": "C2.1-G3" },
-            { "id": "C2.1-SC2", "type": "daily", "title": "An anecdote with irony", "setting": "Friends swap stories about travel disasters.", "task": "Tell a story with humour, irony and a well-timed understatement.", "target_can_do": "C2.1-CD2", "target_grammar": "C2.1-G1" },
+            { "id": "C2.1-SC2", "type": "daily", "title": "An anecdote with irony", "setting": "Friends swap stories about travel disasters.", "task": "Tell a story with humor, irony and a well-timed understatement.", "target_can_do": "C2.1-CD2", "target_grammar": "C2.1-G1" },
             { "id": "C2.1-SC3", "type": "interview", "title": "Media interview", "setting": "A journalist asks you about a sensitive topic in your field.", "task": "Answer precisely, avoid being misquoted and resolve an ambiguous question.", "target_can_do": "C2.1-CD1", "target_grammar": "C2.1-G2" }
           ]
         },

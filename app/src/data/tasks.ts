@@ -8,7 +8,7 @@ import { FUNCTIONAL } from './tasks-functions';
 // Reading question types:
 //   mc     - options[] + answer (index)
 //   yesno  - answer: 'yes' | 'no'
-//   short  - accept: [[...any of these], [...and any of these]] (normalised substring match)
+//   short  - accept: [[...any of these], [...and any of these]] (normalized substring match)
 
 export const READING = {
   A1: [
@@ -84,7 +84,7 @@ On Sunday, Deniz walked along the sea before she went back to Ankara. She was ti
       title: 'Working from Home: Not for Everyone',
       text: `When Mert's company allowed staff to work from home three days a week, he was delighted. No more crowded metro, no more expensive lunches. For the first month, he felt more productive than ever.
 
-However, things slowly changed. Without colleagues around him, Mert found it hard to separate work from free time. He started answering emails late at night and skipping his evening runs. He also missed the small conversations by the coffee machine, which, he realised, had often given him new ideas.
+However, things slowly changed. Without colleagues around him, Mert found it hard to separate work from free time. He started answering emails late at night and skipping his evening runs. He also missed the small conversations by the coffee machine, which, he realized, had often given him new ideas.
 
 Now Mert goes to the office on the days he has meetings, and he works from a library on the others. "Home is for living," he says. "I need a different place to think about work."`,
       questions: [
@@ -97,7 +97,7 @@ Now Mert goes to the office on the days he has meetings, and he works from a lib
       vocab: [
         { word: 'productive', cefr: 'B1', meaning: 'getting a lot done', example: 'I feel more productive in the morning.', alternative: 'efficient, prolific (C1)' },
         { word: 'separate … from …', cefr: 'B1', meaning: 'keep two things apart', example: 'It is hard to separate work from free time.', alternative: 'draw a line between' },
-        { word: 'realise', cefr: 'B1', meaning: 'suddenly understand or notice', example: 'He realised the chats gave him ideas.', alternative: 'come to the realisation that (C1)' },
+        { word: 'realize', cefr: 'B1', meaning: 'suddenly understand or notice', example: 'He realized the chats gave him ideas.', alternative: 'come to the realisation that (C1)' },
       ],
     },
   ],
@@ -242,7 +242,7 @@ for (const levels of Object.values(BANKS)) {
 export function tasksFor(skill, level, interests = []) {
   const bank = BANKS[skill];
   const order = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-  // Tasks in the learner's favourite themes come first.
+  // Tasks in the learner's favorite themes come first.
   const rank = (t) => (interests.includes(t.theme) ? interests.indexOf(t.theme) : interests.length);
   const sorted = (list) => [...list].sort((a, b) => rank(a) - rank(b));
   for (let i = order.indexOf(level); i >= 0; i--) if (bank[order[i]]) return { level: order[i], tasks: sorted(bank[order[i]]) };

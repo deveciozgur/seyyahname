@@ -80,7 +80,7 @@ function buildPrompt({ mode, text, level, task, profile, topErrors, canDos = [] 
           : '- ACTFL (B2-C2): sociolinguistic appropriacy, idiomaticity and cultural fit are required. Flag register mismatches, unidiomatic collocations and culturally odd phrasing in tone notes and grammar items, and score them.',
       '- ipa: give British IPA between slashes for the key corrected word (grammar) and for each upgrade word (vocabulary).',
       '- pronunciation: up to 5 words from the learner text that a Turkish speaker may mispronounce, with IPA and a one-line tip.',
-      mode === 'speaking' ? '- This is a speech-to-text transcript: ignore punctuation and capitalisation, and judge spoken grammar, collocations and fluency.' : '',
+      mode === 'speaking' ? '- This is a speech-to-text transcript: ignore punctuation and capitalization, and judge spoken grammar, collocations and fluency.' : '',
       '- If a recurring error appears again, list it first.',
       canDos.length
         ? `- can_do_ids: list the ids of the Can-Do statements below that this response clearly and successfully demonstrates (task achieved, meaning clear). Be strict: if unsure, leave it out. Empty list if none.\n<curriculum_can_dos band="${profile.curriculum?.band ?? profile.sub_band}">\n${canDos.map((c) => `${c.id}: ${c.text}`).join('\n')}\n</curriculum_can_dos>`

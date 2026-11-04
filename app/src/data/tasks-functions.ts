@@ -118,7 +118,7 @@ Selin takes a lot of photos at concerts, so in the end she decides that the came
       { id: 'w-a1-teacher', fn: 'transactional', theme: 'Daily life', hook: 'You are sick today. Tell your teacher in a few lines.', title: 'A Message to Your Teacher', prompt: 'You cannot come to your English class today. Write to your teacher. Say why, and ask about the homework.', hint: 'Say sorry, give the reason you can\'t come, then ask about the homework.', minWords: 25, maxWords: 50, register: 'neutral', hints: ['Dear …,', "I'm sorry, I can't come to class today because …", 'What is the homework?'] },
     ],
     A2: [
-      { id: 'w-a2-return', fn: 'transactional', theme: 'Tech', hook: 'The headphones arrived. The wrong colour, and broken.', title: 'Return an Online Order', prompt: 'You bought headphones online, but they are the wrong colour and one side does not work. Write to the shop. Explain the problem and say what you want.', hint: 'Explain the two problems clearly, then say what you want: a refund or a new pair.', minWords: 50, maxWords: 90, register: 'neutral', hints: ['I ordered … on …', 'Unfortunately, …', 'Could you please …?'] },
+      { id: 'w-a2-return', fn: 'transactional', theme: 'Tech', hook: 'The headphones arrived. The wrong color, and broken.', title: 'Return an Online Order', prompt: 'You bought headphones online, but they are the wrong color and one side does not work. Write to the shop. Explain the problem and say what you want.', hint: 'Explain the two problems clearly, then say what you want: a refund or a new pair.', minWords: 50, maxWords: 90, register: 'neutral', hints: ['I ordered … on …', 'Unfortunately, …', 'Could you please …?'] },
       { id: 'w-a2-cities', fn: 'evaluative', theme: 'Travel', hook: 'A friend has one week. Help them pick a city.', title: 'Istanbul or Izmir?', prompt: 'A friend is visiting Turkey for one week. Compare two cities and say which one you think is better for them, and why.', hint: 'Compare the two cities with words like "bigger" and "cheaper", then give your pick.', minWords: 50, maxWords: 90, register: 'informal', hints: ['Istanbul is bigger than …', 'Izmir is more relaxing …', 'I think … is better for you because …'] },
     ],
   },
@@ -215,7 +215,7 @@ Lisa: Maybe a new [controller]? His old one is broken.
 Kerem: Good idea, but a board game is [cheaper].
 Lisa: True, but he plays video games every [day].
 Kerem: OK, you're right. A controller is more [useful].
-Lisa: Let's buy a blue one. It's his favourite [colour].`,
+Lisa: Let's buy a blue one. It's his favorite [color].`,
         questions: [
           { id: 1, q: 'Why does Lisa want to buy a controller?', options: ['It is cheap.', 'His old one is broken.', 'He asked for it.'], answer: 1 },
           { id: 2, q: 'What do they decide?', options: ['a board game', 'a blue controller', 'a video game'], answer: 1 },
@@ -228,7 +228,7 @@ Lisa: Let's buy a blue one. It's his favourite [colour].`,
     A1: [
       { id: 's-a1-order', fn: 'transactional', theme: 'Daily life', hook: 'You are at the counter. The barista is waiting.', title: 'At the Café', prompt: 'Order a drink and something to eat at a café. Say what size you want, ask the price, and say thank you.', hint: 'Say what you want and the size, ask the price, and finish with "thank you".', targetSec: 30, hints: ["Hi, can I have a …, please?", 'A small / big …', 'How much is it?'] },
       { id: 's-a1-ticket', fn: 'transactional', theme: 'Travel', hook: 'The train leaves in ten minutes. Get your ticket!', title: 'Buy a Train Ticket', prompt: 'You are at a train station. Buy a ticket: say where you want to go, one way or return, and ask the time of the next train.', hint: 'Say where you\'re going, choose single or return, then ask when the next train leaves.', targetSec: 30, hints: ['A ticket to …, please.', 'One way / return.', 'What time is the next train?'] },
-      { id: 's-a1-food', fn: 'evaluative', theme: 'Daily life', hook: 'Your favourite food and the one you never eat.', title: 'Food I Love and Hate', prompt: 'Talk about food you love and food you do not like. Give a simple reason for each.', hint: 'Name a food you love and one you don\'t, and give a simple reason with "because".', targetSec: 30, hints: ['I love … because …', "I don't like …", "It's too …"] },
+      { id: 's-a1-food', fn: 'evaluative', theme: 'Daily life', hook: 'Your favorite food and the one you never eat.', title: 'Food I Love and Hate', prompt: 'Talk about food you love and food you do not like. Give a simple reason for each.', hint: 'Name a food you love and one you don\'t, and give a simple reason with "because".', targetSec: 30, hints: ['I love … because …', "I don't like …", "It's too …"] },
     ],
     A2: [
       { id: 's-a2-reschedule', fn: 'transactional', theme: 'Daily life', hook: 'Something came up. Move your appointment politely.', title: 'Change an Appointment', prompt: 'Call a hair salon or a doctor. You have an appointment on Tuesday but you cannot go. Explain, and ask for a new day and time.', hint: 'Apologize, explain why you can\'t come on Tuesday, then suggest a new day and time.', targetSec: 45, hints: ["Hello, I have an appointment on Tuesday at …", "I'm sorry, but I can't …", 'Is Thursday possible?'] },

@@ -58,7 +58,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
   const [mc, setMc] = useState({});
   const [checked, setChecked] = useState(false);
   const activity = useActivity(onActivitySaved);
-  const playToken = useRef(0); // ignores events from utterances that were cancelled
+  const playToken = useRef(0); // ignores events from utterances that were canceled
 
   useEffect(() => () => hasTTS && speechSynthesis.cancel(), []);
 
@@ -207,7 +207,7 @@ export default function ListeningModule({ level, tasks, onActivitySaved, passedI
         </ol>
         {!reveal && (
           <p className="flex items-center gap-2 border-t border-line px-6 py-3.5 text-[13px] text-ink-3 sm:px-9">
-            <EyeSlash size={16} /> The transcript stays blurred until you check, so you practise listening instead of reading.
+            <EyeSlash size={16} /> The transcript stays blurred until you check, so you practice listening instead of reading.
           </p>
         )}
       </Panel>

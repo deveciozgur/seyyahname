@@ -43,7 +43,7 @@ export const CAN_DO = {
     },
     C1: {
       transactional: 'Can understand detailed instructions and specialised texts outside their field, re-reading difficult parts.',
-      interactional: 'Can understand any correspondence, recognising subtle shifts in tone and relationship.',
+      interactional: 'Can understand any correspondence, recognizing subtle shifts in tone and relationship.',
       evaluative: 'Can understand long, demanding texts and appreciate distinctions of style and implicit meaning.',
     },
     C2: {
@@ -80,7 +80,7 @@ export const CAN_DO = {
     },
     C2: {
       transactional: 'Can write complex reports and documents in an appropriate, effective style.',
-      interactional: 'Can write with complete appropriacy for any social context, including humour and nuance.',
+      interactional: 'Can write with complete appropriacy for any social context, including humor and nuance.',
       evaluative: 'Can write sophisticated critical appraisals with a logical structure that helps the reader.',
     },
   },
@@ -108,11 +108,11 @@ export const CAN_DO = {
     C1: {
       transactional: 'Can understand complex technical information and specifications delivered at natural speed.',
       interactional: 'Can follow extended discourse even when relationships are only implied.',
-      evaluative: 'Can recognise a wide range of idiomatic expressions and shifts in register, appreciating attitude.',
+      evaluative: 'Can recognize a wide range of idiomatic expressions and shifts in register, appreciating attitude.',
     },
     C2: {
       transactional: 'Can understand any kind of spoken language, including fast native speech, without difficulty.',
-      interactional: 'Can follow nuanced social interaction including humour, irony and cultural references.',
+      interactional: 'Can follow nuanced social interaction including humor, irony and cultural references.',
       evaluative: 'Can critically evaluate subtle, implicit argumentation in any spoken genre.',
     },
   },
@@ -128,7 +128,7 @@ export const CAN_DO = {
       evaluative: 'Can make simple comparisons and say what they prefer and why.',
     },
     B1: {
-      transactional: 'Can deal with most situations likely to arise when travelling or arranging services.',
+      transactional: 'Can deal with most situations likely to arise when traveling or arranging services.',
       interactional: 'Can narrate experiences and describe feelings, reactions and challenges with some detail.',
       evaluative: 'Can give brief reasons and explanations for opinions, plans and advice.',
     },

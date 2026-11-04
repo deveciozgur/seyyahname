@@ -154,7 +154,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
   const targetSec = shield ? Math.ceil(task.targetSec / 2) : task.targetSec;
   const progress = Math.min(1, r.elapsed / targetSec);
 
-  async function analyse() {
+  async function analyze() {
     r.stop();
     setLoading(true);
     setError(null);
@@ -299,7 +299,7 @@ export default function SpeakingModule({ level, tasks, onActivitySaved, passedId
         </Panel>
 
         <div className="flex flex-wrap gap-2">
-          <Button onClick={analyse} disabled={!transcript || loading || r.recording}>
+          <Button onClick={analyze} disabled={!transcript || loading || r.recording}>
             <MagicWand size={16} /> Analyze
           </Button>
           <Button variant="secondary" onClick={() => go(index)} disabled={r.recording}>

@@ -9,7 +9,7 @@
   The theme is set on <html data-theme="dark|light"> by the inline script in layout.tsx
   (stored choice, else the system setting) and switched with the sun/moon toggle.
 
-  Colour carries meaning, never decoration:
+  Color carries meaning, never decoration:
     amber   = champagne/bronze accent: progress, CEFR A band, hints
     emerald = strengths, correct answers, vocabulary upgrades, CEFR B band
     indigo  = recasts, pronunciation / phonetics, CEFR C band
@@ -164,7 +164,7 @@ summary,
   outline-offset: 2px;
 }
 
-/* Hairline accent across the top edge of a card (Concept C). Set --edge to a colour token. */
+/* Hairline accent across the top edge of a card (Concept C). Set --edge to a color token. */
 .edge-top {
   position: relative;
 }

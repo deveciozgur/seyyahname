@@ -1,7 +1,7 @@
 'use client';
 
 // The signed-in app frame, shared by every page through app/(coach)/layout.tsx: learner sheet and
-// navigation on the left, the page in the centre and, from 1280px, the coach chat as a persistent right
+// navigation on the left, the page in the center and, from 1280px, the coach chat as a persistent right
 // column. Because it lives in the layout, the frame and the chat never unmount while the learner moves
 // between pages; pages read the profile and actions from useCoach().
 import { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from 'react';

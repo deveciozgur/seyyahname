@@ -4,6 +4,7 @@
 
 
 import { LEVELS } from './store.ts';
+import { CAPITALIZATION, isCapitalization } from './spelling.ts';
 
 // [pattern, replacement (string or fn), category, rule]
 const GRAMMAR_RULES: [RegExp, string | ((...m: string[]) => string), string, string][] = [
@@ -33,7 +34,7 @@ const GRAMMAR_RULES: [RegExp, string | ((...m: string[]) => string), string, str
   [/\b(very|so) (like|love)\b/gi, (_m, _a, v) => `really ${v}`, 'Adverbs', 'Use "really" (or "very much" at the end): I really like it / I like it very much.'],
   [/\ba ([aeiou][a-z]+)\b/gi, (m, w) => (/^(uni|use|eu|one|once)/i.test(w) ? m : `an ${w}`), 'Articles', 'Use "an" before a vowel sound: an apple, an hour.'],
   [/\ban ([bcdfghjklmnpqrstvwxyz][a-z]+)\b/gi, (m, w) => (/^(h(our|onest|onou?r))/i.test(w) ? m : `a ${w}`), 'Articles', 'Use "a" before a consonant sound: a book, a university.'],
-  [/(?<=^|[\s.!?,"(])i(?=\s|'m|'ve|'ll|'d|,|\.|!|\?|$)/g, 'I', 'Capitalisation', 'The pronoun "I" is always a capital letter.'],
+  [/(?<=^|[\s.!?,"(])i(?=\s|'m|'ve|'ll|'d|,|\.|!|\?|$)/g, 'I', CAPITALIZATION, 'The pronoun "I" is always a capital letter.'],
 ];
 
 const IRREGULAR_BASE = { went: 'go', goes: 'go', did: 'do', does: 'do', had: 'have', has: 'have', saw: 'see', came: 'come', ate: 'eat', made: 'make', took: 'take' };
@@ -79,7 +80,8 @@ const UPGRADES = {
   also: [['B1', 'in addition', 'In addition, I speak German.'], ['B2', 'furthermore', 'Furthermore, the plan is cheap.']],
 };
 
-const MECHANICS = new Set(['Capitalisation', 'Punctuation']);
+// Includes the British label older ledgers and feedback may still carry.
+const MECHANICS = new Set([CAPITALIZATION, 'Capitalisation', 'Punctuation']);
 
 const CONNECTORS = ['and', 'but', 'because', 'so', 'then', 'also', 'however', 'although', 'though', 'while', 'whereas', 'therefore', 'moreover', 'furthermore', 'in addition', 'as a result', 'on the other hand', 'nevertheless', 'unless', 'if', 'when', 'since', 'despite', 'in spite of'];
 const ADVANCED_CONNECTORS = ['however', 'although', 'whereas', 'therefore', 'moreover', 'furthermore', 'nevertheless', 'on the other hand', 'as a result', 'despite', 'in spite of'];
@@ -186,7 +188,7 @@ export function analyzeGrammar(text) {
   for (const s of sentences(text)) {
     if (/^[a-z]/.test(s) && !/^i\b/.test(s)) {
       const after = s.charAt(0).toUpperCase() + s.slice(1);
-      issues.push({ before: s.split(' ').slice(0, 4).join(' '), after: after.split(' ').slice(0, 4).join(' '), rule: 'Start every sentence with a capital letter.', category: 'Capitalisation', context: s });
+      issues.push({ before: s.split(' ').slice(0, 4).join(' '), after: after.split(' ').slice(0, 4).join(' '), rule: 'Start every sentence with a capital letter.', category: CAPITALIZATION, context: s });
     }
   }
   const trimmed = text.trim();
@@ -326,7 +328,7 @@ export function findStrengths(text, grammar, task: any = {}) {
   const ws = words(text);
   if (task.minWords && ws.length >= task.minWords) out.push(`You reached the target length (${ws.length} words). That stamina is what builds fluency.`);
   if (ws.length >= 20 && new Set(ws).size / ws.length >= 0.7) out.push('You used lots of different words, so your vocabulary range is showing.');
-  if (/\bI\b/.test(text) && !cats.has('Capitalisation')) out.push('Every "I" is a capital letter. Clean and careful.');
+  if (/\bI\b/.test(text) && ![...cats].some(isCapitalization)) out.push('Every "I" is a capital letter. Clean and careful.');
   if (!out.length) out.push(`You wrote ${ws.length} word${ws.length === 1 ? '' : 's'} in English and kept going. Every sentence you try builds the habit.`);
   return out.slice(0, 3);
 }
@@ -338,7 +340,7 @@ export function recastText(text, grammar) {
   let out = text;
   for (const g of grammar) {
     if (!g.before?.trim() || g.before === g.after) continue;
-    const re = new RegExp(`(?<![\\p{L}\\p{N}])${escapeRe(g.before.trim())}(?![\\p{L}\\p{N}])`, g.category === 'Capitalisation' ? 'gu' : 'giu');
+    const re = new RegExp(`(?<![\\p{L}\\p{N}])${escapeRe(g.before.trim())}(?![\\p{L}\\p{N}])`, isCapitalization(g.category) ? 'gu' : 'giu');
     out = out.replace(re, g.after.trim());
   }
   return out;

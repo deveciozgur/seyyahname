@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, ArrowBendDownRight, ArrowCounterClockwise, ArrowRight, Lightbulb } from '@phosphor-icons/react';
-import { MASTERY, normalize } from '@/lib/cefr';
+import { MASTERY, normalize, usSpelling } from '@/lib/cefr';
 import { useActivity } from '@/lib/useActivity';
 import { Button, Panel, SaveReceipt, Score, TaskPicker, TaskTitle } from './ui';
 
@@ -11,8 +11,9 @@ export function isCorrect(q, answer) {
   if (answer == null || answer === '') return false;
   if (q.type === 'mc') return Number(answer) === q.answer;
   if (q.type === 'yesno') return answer === q.answer;
-  const a = ` ${normalize(answer)} `;
-  return q.accept.every((group) => group.some((opt) => a.includes(normalize(opt))));
+  // British and US spellings both count (see usSpelling).
+  const a = ` ${usSpelling(normalize(answer))} `;
+  return q.accept.every((group) => group.some((opt) => a.includes(usSpelling(normalize(opt)))));
 }
 
 const correctText = (q) => (q.type === 'mc' ? q.options[q.answer] : q.type === 'yesno' ? (q.answer === 'yes' ? 'Yes' : 'No') : q.accept.map((g) => g[0]).join(', '));

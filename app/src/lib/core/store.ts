@@ -18,6 +18,7 @@ import { onActivity, onQuickPlay, onReview } from './motivation.ts';
 import { normalizeProfile, overallBand, validateProfile } from './schema.ts';
 import { addDays, intervalDays, preview, schedule, toQuality } from './srs.ts';
 import { applyEvidence, curriculumState, maxBand } from './curriculum.ts';
+import { isCapitalization } from './spelling.ts';
 import { BANDS, FUNCTIONS, FUNCTION_INFO, LEVELS, SKILLS, bandLevel, nextBand } from '../cefr-data.ts';
 
 export { LEVELS, SKILLS, addDays };
@@ -73,6 +74,8 @@ export function today(d = new Date()) {
 const clock = (d = new Date()) => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const norm = (s) => String(s ?? '').toLowerCase().replace(/[^\p{L}\p{N}\s']/gu, '').replace(/\s+/g, ' ').trim();
+/** Ledger categories match exactly, except that the old British "Capitalisation" equals "Capitalization". */
+const sameCategory = (a, b) => a === b || (isCapitalization(a) && isCapitalization(b));
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 // ---------- tables by header name ----------
@@ -336,7 +339,7 @@ async function logErrorsUnlocked(entries) {
   const logged = [];
   for (const e of entries) {
     if (!e.before || !e.after) continue;
-    const existing = active.find((r) => norm(r.before) === norm(e.before) || (r.category === e.category && norm(r.after) === norm(e.after)));
+    const existing = active.find((r) => norm(r.before) === norm(e.before) || (sameCategory(r.category, e.category) && norm(r.after) === norm(e.after)));
     if (existing) {
       existing.count += 1;
       existing.lastSeen = date;
@@ -354,7 +357,7 @@ async function logErrorsUnlocked(entries) {
 }
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-/** Whether `text` contains `phrase` as whole words. Capitalisation patterns are matched case-sensitively. */
+/** Whether `text` contains `phrase` as whole words. Capitalization patterns are matched case-sensitively. */
 function containsPhrase(text, phrase, caseSensitive) {
   const p = String(phrase ?? '').trim().replace(/[.!?]+$/, '');
   if (!p) return false;
@@ -374,7 +377,7 @@ async function creditCorrectUseUnlocked(response, skipIds) {
   for (const e of ledger.active) {
     // The session where the pattern happened never counts; later sessions count once each.
     if (skipIds.has(e.id) || e.lastCorrect === date || e.lastSeen === date) continue;
-    const cs = e.category === 'Capitalisation';
+    const cs = isCapitalization(e.category);
     if (containsPhrase(response, e.after, cs) && !containsPhrase(response, e.before, cs)) {
       e.streak += 1;
       e.lastCorrect = date;
@@ -416,7 +419,7 @@ export function nextMilestone(profile, active) {
   if (top) parts.push(`polish "${top.category}" (${top.before} → ${top.after})`);
   const c = candidates[0];
   if (c) parts.push(`${cap(c.s)} needs ${c.missing.map((f) => `one ${FUNCTION_INFO[f].label}`).join(', ')} ${profile.skills[c.s]} task at 80%+ to reach ${nextBand(profile.skill_bands[c.s])}`);
-  return parts.length ? cap(parts.join('; ')) + '.' : 'Keep practising.';
+  return parts.length ? cap(parts.join('; ')) + '.' : 'Keep practicing.';
 }
 
 /** Exactly five lines, regenerated from the day's data. */

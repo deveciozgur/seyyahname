@@ -82,13 +82,13 @@ In the evening, a woman knocked on his door. She was holding his phone! She foun
 
 Aylin believes that adults have some advantages over children. "I know why I'm learning, so I stay motivated," she explains. "I also understand grammar rules more quickly." However, she admits that pronunciation has been harder. Some sounds still feel strange in her mouth.
 
-Her advice is simple: practise a little every day rather than a lot once a week, and don't be afraid of making mistakes. "Mistakes are just proof that you are trying," she says.`,
+Her advice is simple: practice a little every day rather than a lot once a week, and don't be afraid of making mistakes. "Mistakes are just proof that you are trying," she says.`,
         questions: [
           { id: 1, type: 'mc', q: 'How did Aylin\'s friends react to her plan?', options: ['They wanted to join her.', 'They thought it was strange.', 'They offered to teach her.'], answer: 1 },
           { id: 2, type: 'mc', q: 'What has been the most difficult part for her?', options: ['Grammar', 'Motivation', 'Pronunciation'], answer: 2 },
           { id: 3, type: 'short', q: 'Which country has she visited twice?', accept: [['mexico']] },
           { id: 4, type: 'mc', q: 'What does "admits" suggest in "she admits that pronunciation has been harder"?', options: ['She is proud of it.', 'She accepts something negative is true.', 'She is not sure.'], answer: 1 },
-          { id: 5, type: 'mc', q: 'What is her main advice?', options: ['Study a lot once a week.', 'Avoid mistakes at all costs.', 'Practise a little every day.'], answer: 2 },
+          { id: 5, type: 'mc', q: 'What is her main advice?', options: ['Study a lot once a week.', 'Avoid mistakes at all costs.', 'Practice a little every day.'], answer: 2 },
         ],
         vocab: [
           { word: 'hold a conversation', cefr: 'B1', meaning: 'keep a conversation going', example: 'She can hold a real conversation in Spanish.', alternative: 'converse fluently (C1)' },
@@ -121,7 +121,7 @@ Not everything was easy, though. Meetings had to be shorter, and some workers fo
     B2: [
       {
         id: 'r-b2-boredom',
-        title: 'In Defence of Boredom',
+        title: 'In Defense of Boredom',
         text: `We have become remarkably good at never being bored. A queue, a short train ride, even a pause in conversation can now be filled instantly with a screen. On the face of it, this seems like progress: why waste time doing nothing?
 
 Psychologists, however, are increasingly suggesting that boredom serves a purpose. In one study, participants who first completed a dull task, copying numbers from a phone book, later came up with more creative uses for everyday objects than those who had not. The researchers argue that a mind left without stimulation begins to wander, and that wandering is where unexpected connections are made.
@@ -145,7 +145,7 @@ This is not an argument for endless tedium. But it may be worth resisting the ur
         title: 'Tiny Forests in Big Cities',
         text: `Across Europe, a surprising kind of green space is appearing between car parks and apartment blocks: forests the size of a tennis court. Based on a method developed by the Japanese botanist Akira Miyawaki, these "tiny forests" are planted densely with dozens of native species, so that they grow quickly and need little maintenance after the first few years.
 
-Supporters claim that the forests cool the surrounding streets, absorb rainwater and attract insects and birds that had all but disappeared from the area. They are also cheap enough for schools and neighbourhood groups to plant themselves, which gives local people a sense of ownership.
+Supporters claim that the forests cool the surrounding streets, absorb rainwater and attract insects and birds that had all but disappeared from the area. They are also cheap enough for schools and neighborhood groups to plant themselves, which gives local people a sense of ownership.
 
 Critics are more cautious. Some ecologists point out that the most dramatic claims about growth rates come from the method's own promoters, and that a few hundred square metres of trees cannot offset the loss of larger habitats. Nevertheless, even sceptics tend to agree that a tiny forest is better than another strip of concrete.`,
         questions: [
@@ -165,9 +165,9 @@ Critics are more cautious. Some ecologists point out that the most dramatic clai
   },
 
   writing: {
-    A1: [{ id: 'w-a1-place', title: 'My Favourite Place', prompt: 'Write about your favourite place in your city. Where is it? What is there? Why do you like it?', hint: 'Name the place first, then say what is there and give one reason you like it.', minWords: 30, maxWords: 60, register: 'neutral', hints: ['My favourite place is …', 'It is near …', 'There is a …', 'I like it because …'] }],
+    A1: [{ id: 'w-a1-place', title: 'My Favorite Place', prompt: 'Write about your favorite place in your city. Where is it? What is there? Why do you like it?', hint: 'Name the place first, then say what is there and give one reason you like it.', minWords: 30, maxWords: 60, register: 'neutral', hints: ['My favorite place is …', 'It is near …', 'There is a …', 'I like it because …'] }],
     A2: [
-      { id: 'w-a2-note', title: 'A Note to a Neighbour', prompt: 'You are going away for a week. Write a note to your neighbour. Ask them to water your plants and take your post. Say thank you.', hint: 'Say why you\'re away, ask for two favors politely, then say thank you.', minWords: 40, maxWords: 80, register: 'neutral', hints: ['Hi …,', "I'm going to … next week.", 'Could you please …?', 'Thanks a lot!'] },
+      { id: 'w-a2-note', title: 'A Note to a Neighbor', prompt: 'You are going away for a week. Write a note to your neighbor. Ask them to water your plants and take your post. Say thank you.', hint: 'Say why you\'re away, ask for two favors politely, then say thank you.', minWords: 40, maxWords: 80, register: 'neutral', hints: ['Hi …,', "I'm going to … next week.", 'Could you please …?', 'Thanks a lot!'] },
       { id: 'w-a2-summer', title: 'Plans for Next Summer', prompt: 'Write about your plans for next summer. Where are you going to go? Who with? What are you going to do there?', hint: 'Use "I\'m going to ..." for each plan: where, who with and what you\'ll do.', minWords: 50, maxWords: 90, register: 'informal', hints: ["Next summer I'm going to …", 'We are going to stay …', "I can't wait to …"] },
     ],
     B1: [
@@ -199,8 +199,8 @@ Customer: Here you are. [Thank] you!`,
         vocab: [{ word: 'Can I have …?', cefr: 'A1', meaning: 'polite way to ask for something', example: 'Can I have a tea, please?', alternative: "I'd like … (A2), Could I get … (B1)" }],
       },
       {
-        id: 'l-a1-neighbour',
-        title: 'A New Neighbour',
+        id: 'l-a1-neighbor',
+        title: 'A New Neighbor',
         rate: 0.8,
         script: `Anna: Hi! Are you new here?
 Murat: Yes, I live in flat [five]. I'm Murat.
@@ -253,7 +253,7 @@ Tom: No, the water was too [cold]!`,
         id: 'l-b1-doctor',
         title: 'Booking a Doctor\'s Appointment',
         rate: 1,
-        script: `Receptionist: Good morning, City Health Centre. How can I help?
+        script: `Receptionist: Good morning, City Health Center. How can I help?
 Patient: Hi, I'd like to make an [appointment] with Dr Yılmaz, please.
 Receptionist: She's fully booked [today], I'm afraid. Is it urgent?
 Patient: Not really. I've had a [cough] for about two weeks.
@@ -261,7 +261,7 @@ Receptionist: I can offer you Thursday at [ten] past nine.
 Patient: That's fine. Should I bring anything?
 Receptionist: Just your ID card and a list of any [medicine] you're taking.`,
         questions: [
-          { id: 1, q: 'Why can\'t the patient see the doctor today?', options: ['She is on holiday.', 'She is fully booked.', 'The centre is closed.'], answer: 1 },
+          { id: 1, q: 'Why can\'t the patient see the doctor today?', options: ['She is on holiday.', 'She is fully booked.', 'The center is closed.'], answer: 1 },
           { id: 2, q: 'What should the patient bring?', options: ['ID and a list of medicine', 'Only money', 'A letter from work'], answer: 0 },
         ],
         vocab: [{ word: 'fully booked', cefr: 'B1', meaning: 'no free places left', example: "She's fully booked today.", alternative: 'at full capacity (B2)' }],
@@ -271,14 +271,14 @@ Receptionist: Just your ID card and a list of any [medicine] you're taking.`,
         title: 'Changing a Train Ticket',
         rate: 1,
         script: `Clerk: Next, please.
-Passenger: Hi, I've got a ticket for the 3 o'clock to Ankara, but my meeting has been [cancelled].
+Passenger: Hi, I've got a ticket for the 3 o'clock to Ankara, but my meeting has been [canceled].
 Clerk: Would you like a [refund], or do you want to change it?
 Passenger: Could I change it to [tomorrow] morning?
 Clerk: There's a train at 8:15. There's a small [fee] of twenty lira for changes.
 Passenger: That's fine. Is it possible to get a window [seat]?
 Clerk: Yes, carriage 4, seat 12.`,
         questions: [
-          { id: 1, q: 'Why does the passenger want to change the ticket?', options: ['The train is late.', 'The meeting was cancelled.', 'They lost the ticket.'], answer: 1 },
+          { id: 1, q: 'Why does the passenger want to change the ticket?', options: ['The train is late.', 'The meeting was canceled.', 'They lost the ticket.'], answer: 1 },
           { id: 2, q: 'How much does the change cost?', options: ['nothing', 'twenty lira', 'twelve lira'], answer: 1 },
         ],
         vocab: [{ word: 'refund', cefr: 'B1', meaning: 'money given back to you', example: 'Would you like a refund?', alternative: 'reimbursement (C1)' }],
