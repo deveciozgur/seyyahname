@@ -35,7 +35,8 @@ here instead; this file is read by Claude Code only.
   `node landing/build-css.mjs` (config: `landing/tailwind.config.js`). The script stops without writing if its
   markers do not appear exactly once.
 - Icons are Phosphor SVGs in the sprite right after `<body>`; add a `<symbol>` to use a new one.
-- Deploy by uploading `index.html` alone (it is the only file in `landing-page.zip`).
+- Deploy by uploading `index.html` and `favicon.ico` (the two files in `landing-page.zip`). The page head carries the
+  icon inline; `favicon.ico` is the same mark for clients that request `/favicon.ico` directly.
 
 ## UI rules (from the UI UX Pro Max reviews of both surfaces)
 
