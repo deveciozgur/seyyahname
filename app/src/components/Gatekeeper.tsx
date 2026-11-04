@@ -5,9 +5,12 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight, Eye, EyeSlash, LockSimple, CircleNotch, Check } from '@phosphor-icons/react';
 import { api } from '@/api';
 
-type Phase = 'idle' | 'submitting' | 'success' | 'error';
+// error: the PIN was rejected (or locked out); retry: the check itself failed (network, timeout, server).
+type Phase = 'idle' | 'submitting' | 'success' | 'error' | 'retry';
 
 const INVALID = 'Invalid security PIN. Access denied.';
+const OFFLINE = "Couldn't reach the server. Check your connection and try again.";
+const TIMEOUT = 'The server took too long to respond. Try again in a moment.';
 
 /** The Seyyahname mark: a rounded tile with a champagne-to-silver sheen and an inner ring. */
 function Emblem() {
@@ -44,7 +47,7 @@ function cellSize(digits: number) {
  * auto-advance, backspace navigation and paste-to-submit; any other secret uses one masked field.
  * The PIN is checked on the server (rate-limited); a correct PIN sets an HttpOnly, signed session cookie.
  */
-export default function Gatekeeper({ next = null, digits = null }: { next?: string | null; digits?: number | null }) {
+export default function Gatekeeper({ next = null, digits = null, configured = true }: { next?: string | null; digits?: number | null; configured?: boolean }) {
   const router = useRouter();
   const segmented = typeof digits === 'number';
   const count = digits ?? 0;
@@ -56,6 +59,7 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
   const [shakeKey, setShakeKey] = useState(0);
   const refs = useRef<(HTMLInputElement | null)[]>([]);
   const field = useRef<HTMLInputElement>(null);
+  const submitButton = useRef<HTMLButtonElement>(null);
 
   const focusCell = (i: number) => {
     const el = refs.current[Math.max(0, Math.min(count - 1, i))];
@@ -64,9 +68,22 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
   };
 
   useEffect(() => {
+    if (!configured) return;
     if (segmented) focusCell(0);
     else field.current?.focus();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // When the on-screen keyboard shrinks the viewport, keep the field being typed in on screen
+  // (not every mobile browser scrolls it into view by itself).
+  useEffect(() => {
+    const target = window.visualViewport ?? window;
+    const keepVisible = () => {
+      const el = document.activeElement;
+      if (el instanceof HTMLInputElement && el.form) el.scrollIntoView({ block: 'center' });
+    };
+    target.addEventListener('resize', keepVisible);
+    return () => target.removeEventListener('resize', keepVisible);
+  }, []);
 
   const busy = phase === 'submitting' || phase === 'success';
   const value = segmented ? cells.join('') : secret;
@@ -89,12 +106,22 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
         }, 420);
       } catch (err) {
         const status = (err as { status?: number })?.status;
-        setError(status === 429 || status === 503 ? (err as Error).message : INVALID);
-        setPhase('error');
-        setShakeKey((k) => k + 1);
-        setCells(Array(count).fill(''));
-        setSecret('');
-        requestAnimationFrame(() => (segmented ? focusCell(0) : field.current?.focus()));
+        if (status === 401 || status === 429) {
+          // Rejected or locked out: clear the PIN and start again.
+          setError(status === 429 ? (err as Error).message : INVALID);
+          setPhase('error');
+          setShakeKey((k) => k + 1);
+          setCells(Array(count).fill(''));
+          setSecret('');
+          requestAnimationFrame(() => (segmented ? focusCell(0) : field.current?.focus()));
+        } else {
+          // The check never completed: the server's own message for 5xx (e.g. missing configuration),
+          // otherwise a network failure or a timeout. Keep the PIN so a retry is one keypress.
+          const timedOut = (err as { name?: string })?.name === 'TimeoutError';
+          setError(status ? (err as Error).message : timedOut ? TIMEOUT : OFFLINE);
+          setPhase('retry');
+          requestAnimationFrame(() => submitButton.current?.focus());
+        }
       }
     },
     [busy, count, next, router, segmented], // eslint-disable-line react-hooks/exhaustive-deps
@@ -110,7 +137,7 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
       nextCells[i++] = d;
     }
     setCells(nextCells);
-    if (phase === 'error') setPhase('idle');
+    if (phase === 'error' || phase === 'retry') setPhase('idle');
     if (nextCells.every(Boolean)) submit(nextCells.join(''));
     else focusCell(i);
   }
@@ -140,11 +167,12 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
   const failed = phase === 'error';
 
   return (
-    <main className="unlock-canvas relative flex min-h-[100dvh] flex-col overflow-x-hidden overflow-y-auto bg-[#08080a] px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] text-zinc-100">
+    <div className="unlock-canvas relative flex min-h-[100dvh] flex-col overflow-x-hidden overflow-y-auto bg-[#08080a] px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] text-zinc-100">
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0%,transparent_70%)]" />
       <div aria-hidden className="unlock-dots pointer-events-none fixed inset-0" />
 
       <div className="relative m-auto flex w-full max-w-[420px] flex-col items-center py-6">
+        <main className="w-full">
         <form
           key={shakeKey}
           onSubmit={(e) => {
@@ -154,22 +182,33 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
           className={`w-full rounded-2xl border border-white/[0.08] bg-zinc-950/60 p-5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.8)] backdrop-blur-2xl transition-opacity duration-500 min-[381px]:p-6 sm:p-8 ${shakeKey ? 'animate-shake' : 'animate-rise'} ${success ? 'opacity-90' : ''}`}
           aria-describedby="unlock-help"
         >
+          {/* Short viewports (a phone with its keyboard open) drop the badge and emblem so the PIN stays in view. */}
           <div className="flex flex-col items-center text-center">
-            <span className="inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 font-mono text-[12px] tracking-widest text-zinc-400 uppercase">
+            <span className="inline-flex items-center rounded-full [@media(max-height:560px)]:hidden border border-white/[0.08] bg-white/[0.04] px-3 py-1 font-mono text-[12px] tracking-widest text-zinc-400 uppercase">
               {/* Pulses twice (4s), then stays solid: motion that ends within 5s needs no pause control. */}
               <span className="mr-2 inline-block size-1.5 animate-pulse rounded-full bg-emerald-500 [animation-iteration-count:2]" aria-hidden />
               Restricted workspace
             </span>
-            <div className="mt-6">
+            <div className="mt-6 [@media(max-height:560px)]:hidden">
               <Emblem />
             </div>
-            <h1 className="mt-3 text-xl font-semibold tracking-tight text-balance text-white">Seyyahname Studio</h1>
+            <h1 className="mt-3 text-xl font-semibold tracking-tight text-balance text-white [@media(max-height:560px)]:mt-0">Seyyahname Studio</h1>
             <p id="unlock-help" className="mt-1.5 text-sm leading-relaxed text-balance text-zinc-400">
-              {segmented ? `Enter your ${count}-digit security PIN to unlock the workspace.` : 'Enter your security PIN to unlock the workspace.'}
+              {!configured
+                ? "This workspace isn't set up yet."
+                : segmented
+                  ? `Enter your ${count}-digit security PIN to unlock the workspace.`
+                  : 'Enter your security PIN to unlock the workspace.'}
             </p>
           </div>
 
-          <fieldset disabled={busy} className="mt-7">
+          {!configured ? (
+            // No APP_SECRET_PIN on the server: tell whoever runs it what to do instead of offering a PIN that can't work.
+            <p className="mt-6 rounded-xl border border-amber-400/20 bg-amber-400/[0.06] px-4 py-3 text-left text-sm leading-relaxed text-zinc-300">
+              Set <code className="font-mono text-amber-200">APP_SECRET_PIN</code> in the server environment (or the <code className="font-mono text-amber-200">.env</code> file), then restart the app.
+            </p>
+          ) : (
+          <fieldset disabled={busy} className="mt-7 [@media(max-height:560px)]:mt-5">
             <legend className="sr-only">Security PIN</legend>
             {segmented ? (
               <div className="flex justify-center gap-2 min-[381px]:gap-2.5 sm:gap-3" onPaste={(e) => (e.preventDefault(), fill(0, e.clipboardData.getData('text')))}>
@@ -210,7 +249,7 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
                   value={secret}
                   onChange={(e) => {
                     setSecret(e.target.value);
-                    if (phase === 'error') setPhase('idle');
+                    if (phase === 'error' || phase === 'retry') setPhase('idle');
                   }}
                   autoComplete="current-password"
                   aria-label="Security PIN"
@@ -231,10 +270,11 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
             )}
 
             <p role="alert" aria-live="assertive" className="mt-2 min-h-[1.25rem] text-center text-xs text-rose-400">
-              {failed && error}
+              {(failed || phase === 'retry') && error}
             </p>
 
             <button
+              ref={submitButton}
               type="submit"
               disabled={!complete || busy}
               // Waiting for the PIN: muted but readable. While verifying it stays white, since that state is progress.
@@ -257,15 +297,19 @@ export default function Gatekeeper({ next = null, digits = null }: { next?: stri
               )}
             </button>
           </fieldset>
+          )}
         </form>
+        </main>
 
-        <a href="https://seyyahname.com" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center px-3 text-xs text-zinc-400 transition-colors hover:text-zinc-300">
-          ← Back to seyyahname.com
-        </a>
-        <p className="mt-1 flex items-center justify-center gap-1.5 font-mono text-[12px] text-zinc-400/80">
-          <LockSimple size={12} weight="fill" aria-hidden /> TLS-encrypted, signed session
-        </p>
+        <footer className="flex flex-col items-center">
+          <a href="https://seyyahname.com" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center px-3 text-xs text-zinc-400 transition-colors hover:text-zinc-300">
+            ← Back to seyyahname.com
+          </a>
+          <p className="mt-1 flex items-center justify-center gap-1.5 font-mono text-[12px] text-zinc-400/80">
+            <LockSimple size={12} weight="fill" aria-hidden /> TLS-encrypted, signed session
+          </p>
+        </footer>
       </div>
-    </main>
+    </div>
   );
 }

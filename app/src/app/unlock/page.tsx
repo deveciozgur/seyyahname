@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Gatekeeper from '@/components/Gatekeeper';
 import { env } from '@/lib/server/env';
+import { warnMissingConfig } from '@/lib/server/http';
 
 export const metadata: Metadata = { title: { absolute: 'Unlock · Seyyahname Studio' }, alternates: { canonical: '/unlock' } };
 
@@ -17,5 +18,6 @@ function pinDigits(pin: string): number | null {
 export default async function UnlockPage({ searchParams }: { searchParams: Promise<{ next?: string | string[] }> }) {
   const { next } = await searchParams;
   const target = typeof next === 'string' && APP_PATHS.includes(next) ? next : null;
-  return <Gatekeeper next={target} digits={pinDigits(env.pin)} />;
+  warnMissingConfig();
+  return <Gatekeeper next={target} digits={pinDigits(env.pin)} configured={Boolean(env.pin)} />;
 }

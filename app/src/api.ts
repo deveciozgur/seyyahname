@@ -61,7 +61,8 @@ export const api = {
     aiReady = s.ai;
     return s;
   },
-  verify: (pin: string) => request<VerifyResponse>('/api/auth', { body: { pin } }),
+  // A server that never answers must not leave the lock screen on "Verifying…" forever.
+  verify: (pin: string) => request<VerifyResponse>('/api/auth', { body: { pin }, signal: AbortSignal.timeout(15_000) }),
   async logout() {
     await request<VerifyResponse>('/api/auth', { method: 'DELETE' });
     files.loaded = false;
