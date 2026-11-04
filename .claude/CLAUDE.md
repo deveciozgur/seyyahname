@@ -19,6 +19,9 @@ here instead; this file is read by Claude Code only.
 - `npm run build`: uses `next build --webpack` (Turbopack's PostCSS worker panics on the Hostinger host). `postbuild`
   copies `public/`, `.next/static/` and `CLAUDE.md` into `.next/standalone`.
 - `npm start`: `node .next/standalone/server.js`.
+- The signed-in pages (`app/src/app/(coach)/layout.tsx`) are `force-dynamic` on purpose. Prerendered pages go out
+  with `s-maxage=31536000`, and Hostinger's CDN caches them in front of the `proxy.ts` gate: it served the Studio frame to
+  signed-out visitors and would keep serving stale HTML after a deploy.
 - `npm test`: Node's test runner over `src/lib/core/*.test.ts` and `src/lib/server/*.test.ts`.
 - `npm run typecheck`: `tsc --noEmit`. `noUnusedLocals` and `noUnusedParameters` are on and act as the lint gate
   (there is no ESLint config).
