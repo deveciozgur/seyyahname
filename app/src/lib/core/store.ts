@@ -353,8 +353,6 @@ async function logErrorsUnlocked(entries) {
   return logged;
 }
 
-export const logErrors = (entries) => exclusive(() => logErrorsUnlocked(entries));
-
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** Whether `text` contains `phrase` as whole words. Capitalisation patterns are matched case-sensitively. */
 function containsPhrase(text, phrase, caseSensitive) {

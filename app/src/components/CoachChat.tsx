@@ -1,17 +1,15 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Marked } from 'marked';
 import { PaperPlaneRight, Stop, Sparkle, ArrowCounterClockwise, ChatsCircle } from '@phosphor-icons/react';
 import { streamChat } from '@/api';
 import type { ChatMessage } from '@/lib/api-contract';
-import { demotedHeading } from '@/lib/markdown';
+import { createMarkdown } from '@/lib/markdown';
 import { readStored, writeStored } from '@/lib/useActivity';
 import { Button, Panel } from './ui';
 
-const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-// Replies can quote the learner, so raw HTML is shown as text, never rendered.
-const marked = new Marked({ gfm: true, breaks: true, renderer: { html: ({ text }) => escapeHtml(text), heading: demotedHeading } });
+// Replies can quote the learner: raw HTML is shown as text (see createMarkdown).
+const marked = createMarkdown({ breaks: true });
 
 /** A reply as plain text for screen readers (DOMParser builds an inert document: no scripts, no requests). */
 function plainText(markdown: string) {

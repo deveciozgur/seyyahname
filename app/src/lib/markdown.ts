@@ -1,4 +1,6 @@
-import type { RendererObject } from 'marked';
+import { Marked, type RendererObject } from 'marked';
+
+const escapeHtml = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
 /**
  * Markdown (session logs, coach replies) always sits under the page's own <h1>, so every heading
@@ -9,3 +11,11 @@ export const demotedHeading: RendererObject['heading'] = function ({ tokens, dep
   const level = Math.min(depth + 1, 6);
   return `<h${level} class="md-h${depth}">${this.parser.parseInline(tokens)}</h${level}>\n`;
 };
+
+/**
+ * The one Markdown renderer for learner content. Session logs and coach replies can quote the learner,
+ * so raw HTML in the source is shown as text, never rendered. `breaks` keeps single line breaks (chat).
+ */
+export function createMarkdown({ breaks = false } = {}) {
+  return new Marked({ gfm: true, breaks, renderer: { html: ({ text }) => escapeHtml(text), heading: demotedHeading } });
+}

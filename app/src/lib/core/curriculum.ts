@@ -38,7 +38,6 @@ const CAN_DO_INDEX = new Map(SUB_BANDS.flatMap((b) => b.can_do_statements.map((c
 export const getBand = (id: string): SubBand | undefined => BY_ID.get(id);
 export const canDoById = (id: string) => CAN_DO_INDEX.get(id);
 export const ALL_CAN_DOS = [...CAN_DO_INDEX.values()];
-export const levelOf = (bandId: string) => curriculum.levels.find((l) => l.sub_bands.some((b) => b.id === bandId));
 
 /** The higher of two sub-bands (unknown values lose). */
 export const maxBand = (a: string, b: string) => (BANDS.indexOf(b) > BANDS.indexOf(a) ? b : a);

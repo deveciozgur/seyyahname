@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 import { BookOpenText, PenNib, Headphones, Microphone, CheckCircle, TrendUp, FileText, WarningCircle, Check, SealCheck, Lightbulb } from '@phosphor-icons/react';
-import { FUNCTIONS, FUNCTION_INFO, LEVELS, MASTERY, band, canDoStatement, levelIndex } from '@/lib/cefr';
+import { FUNCTIONS, FUNCTION_INFO, MASTERY, band, canDoStatement } from '@/lib/cefr';
 import { WinsBurst } from './momentum';
 import { canDoById } from '@/lib/core/curriculum';
 import { FUNCTION_LABELS, fnLabel, skillLabel } from '@/lib/labels';
@@ -21,19 +21,6 @@ export function LevelBadge({ level, size = 'sm', className = '' }) {
   const b = bandClasses(level);
   const sz = size === 'lg' ? 'px-2.5 py-1 text-sm' : 'px-2 py-0.5 text-[12px]';
   return <span className={`inline-flex items-center rounded-full font-mono font-medium tracking-wide ${b.soft} ${b.text} ${sz} ${className}`}>{level}</span>;
-}
-
-/** Six ticks from A1 to C2, filled up to the current level. */
-export function CefrLadder({ level, label }) {
-  const idx = levelIndex(level);
-  const b = bandClasses(level);
-  return (
-    <div className="flex items-center gap-[3px]" role="meter" aria-label={label ?? `Level ${level}`} aria-valuemin={1} aria-valuemax={6} aria-valuenow={idx + 1} aria-valuetext={level}>
-      {LEVELS.map((l, i) => (
-        <span key={l} title={l} className={`h-[5px] flex-1 rounded-full transition-colors duration-500 ${i <= idx ? b.fill : 'bg-line'}`} />
-      ))}
-    </div>
-  );
 }
 
 export function Panel({ as: Tag = 'div', className = '', children, ...props }: { as?: React.ElementType; className?: string; children?: React.ReactNode; [prop: string]: unknown }) {

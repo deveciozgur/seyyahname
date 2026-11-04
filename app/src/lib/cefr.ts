@@ -13,8 +13,6 @@ export const LEVEL_INFO = {
 };
 
 export const levelIndex = (l) => LEVELS.indexOf(l);
-export const levelProgress = (l) => ((levelIndex(l) + 1) / LEVELS.length) * 100;
-export const nextLevel = (l) => LEVELS[Math.min(LEVELS.length - 1, levelIndex(l) + 1)];
 export const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // Normalises answers for lenient matching: lower-case, no punctuation, single spaces.

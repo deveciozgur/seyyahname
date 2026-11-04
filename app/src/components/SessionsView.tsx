@@ -1,16 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Marked } from 'marked';
 import { FileText } from '@phosphor-icons/react';
 import { api } from '@/api';
-import { demotedHeading } from '@/lib/markdown';
+import { createMarkdown } from '@/lib/markdown';
 import { Panel, Skeleton } from './ui';
 
-const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-
-// Session logs contain the learner's own answers, so raw HTML is shown as text, never rendered.
-const marked = new Marked({ gfm: true, renderer: { html: ({ text }) => escapeHtml(text), heading: demotedHeading } });
+// Session logs contain the learner's own answers: raw HTML is shown as text (see createMarkdown).
+const marked = createMarkdown();
 
 const fmtDate = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 

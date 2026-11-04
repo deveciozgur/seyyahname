@@ -3,8 +3,6 @@
 import { motion } from 'motion/react';
 import {
   Flame,
-  Lightning,
-  Smiley,
   Sparkle,
   CheckCircle,
   Star,
@@ -19,8 +17,7 @@ import {
   GameController,
   SealCheck,
 } from '@phosphor-icons/react';
-import { BANDS, FUNCTIONS, SKILLS, nextBand } from '@/lib/cefr';
-
+import { BANDS, FUNCTIONS, SKILLS } from '@/lib/cefr';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -114,64 +111,4 @@ export function slotsFilled(profile) {
     return n + Math.max(0, BANDS.indexOf(band) - base) * 3 + FUNCTIONS.filter((f) => prog[f]).length;
   }, 0);
   return Math.min(12, units);
-}
-
-/**
- * Live progress toward the next sub-band: each passed Transactional, Interactional or Evaluative task
- * in a skill fills one of 12 slots (CLAUDE.md, section 3).
- */
-export function MomentumBar({ profile, compact = false }) {
-  const from = profile.sub_band;
-  const to = nextBand(from);
-  const filled = slotsFilled(profile);
-  const value = filled / 12;
-  const detail = `${filled}/12 functional steps`;
-
-  return (
-    <div className="space-y-1.5" aria-label={`Progress ${from} → ${to}: ${detail}`}>
-      <div className="flex items-baseline justify-between text-xs">
-        <span className="font-mono font-medium">
-          {from} <span className="text-ink-3">→</span> {to}
-        </span>
-        <span className="text-ink-3">{detail}</span>
-      </div>
-      <div className={`relative overflow-hidden rounded-full bg-line ${compact ? 'h-1.5' : 'h-2.5'}`}>
-        <motion.div
-          className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-amber"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: Math.max(0.02, value) }}
-          transition={{ duration: 1, ease }}
-        />
-        <motion.div
-          key={detail}
-          className="absolute inset-y-0 w-10 bg-gradient-to-r from-transparent via-white/25 to-transparent"
-          initial={{ left: '-10%', opacity: 0.9 }}
-          animate={{ left: '110%', opacity: 0 }}
-          transition={{ duration: 1.4, ease: 'easeOut' }}
-          aria-hidden
-        />
-      </div>
-    </div>
-  );
-}
-
-export function MomentumStats({ profile }) {
-  const g = profile.gamification ?? {};
-  const items = [
-    { icon: Flame, label: 'Streak (days)', value: g.streak_days ?? 0, tone: 'text-amber' },
-    { icon: Lightning, label: 'Total XP', value: g.xp_total ?? 0, tone: 'text-amber' },
-    { icon: Smiley, label: 'Confidence', value: `${g.confidence_index ?? 80}`, tone: 'text-emerald' },
-  ];
-  return (
-    <dl className="grid grid-cols-3 gap-2">
-      {items.map(({ icon: Icon, label, value, tone }) => (
-        <div key={label} className="rounded-[10px] bg-sunk/60 px-2.5 py-2">
-          <dt className="flex items-center gap-1 text-[12px] text-ink-3">
-            <Icon size={12} weight="fill" className={tone} /> {label}
-          </dt>
-          <dd className="text-xl font-semibold tabular-nums">{value}</dd>
-        </div>
-      ))}
-    </dl>
-  );
 }
