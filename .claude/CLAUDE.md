@@ -65,9 +65,9 @@ here instead; this file is read by Claude Code only.
 
 ## UI UX Pro Max skill
 
-- Installed in `.claude/skills/ui-ux-pro-max` with `npx ui-ux-pro-max-cli@2.15.0 init --ai claude`. The CLI also
-  copies six companion skills (banner-design, brand, design, design-system, slides, ui-styling); they were removed on
-  purpose. Running `init` or `update` again adds them back.
+- Installed in `.claude/skills/ui-ux-pro-max` with `npx ui-ux-pro-max-cli@2.15.0 init --ai claude`, together with its
+  six companion skills (banner-design, brand, design, design-system, slides, ui-styling). To reinstall or update
+  without touching the existing folders, run `init` in an empty folder and copy only the skills you need.
 - Search it with `python3 -B .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --domain ux` (`-B` keeps
   `__pycache__` out of the tree).
 - Its generated design-system suggestion (claymorphism, purple primary) does not fit this product; keep the existing
