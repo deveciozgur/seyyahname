@@ -39,6 +39,12 @@ here instead; this file is read by Claude Code only.
 - CI uses Node 22; local development on Node 24 also works (`engines` is `>=20.9`).
 - `npm start` (standalone) does not read `.env.local`; pass variables on the command line. Production cookies are
   `Secure`: Chrome accepts that on localhost, Safari may not.
+- To test signed-in routes, `POST /api/auth` with `{"pin": …}` and the `x-requested-with: seyyahname` header, then
+  send the returned cookie. Read the PIN from `.env.local` inside the script; never print it.
+- Windows: stopping `npm run dev` from a tool can leave Next's `start-server.js` child listening on port 3000; check the
+  port and stop that process. `core.autocrlf` is `true`, so files copied in with LF endings differ only by line endings.
+- `npm ci` warns that `@google/genai` and `protobufjs` install scripts are not in npm's allow-scripts list; the app
+  does not need them approved.
 
 ## Landing page
 
@@ -69,10 +75,15 @@ here instead; this file is read by Claude Code only.
   six companion skills (banner-design, brand, design, design-system, slides, ui-styling). To reinstall or update
   without touching the existing folders, run `init` in an empty folder and copy only the skills you need.
 - Search it with `python3 -B .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --domain ux` (`-B` keeps
-  `__pycache__` out of the tree).
+  `__pycache__` out of the tree). On Windows `python3` is the Microsoft Store alias; use `python -B` or `py -3 -B`.
+- The companion skills' Python scripts follow the same `-B` rule; `design`'s logo and icon generators need a Gemini
+  key.
 - Its generated design-system suggestion (claymorphism, purple primary) does not fit this product; keep the existing
   dark, champagne-accent direction.
 
 ## Git
 
 - Work on `main` and push to `origin main`. Commit as `gamedev.ist`, the author of the existing history.
+- Conventional commit messages (`fix(app): …`, `docs(claude): …`). Commit, push and deploy only after the owner
+  approves. Never change Hostinger settings, `.github/workflows/ci.yml` or production environment variables.
+- Fetch before committing: `origin/main` also receives commits from the cloud sessions and GitHub web uploads.
