@@ -27,3 +27,6 @@ next-env.d.ts
 *.log
 .DS_Store
 __pycache__/
+
+# graphify output (knowledge graph, local only)
+graphify-out/

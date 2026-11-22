@@ -1,0 +1,4 @@
+# graphify: what the knowledge graph skips (code is still read in full)
+# third-party Claude skills, not this project's own content
+.claude/
+.agents/
