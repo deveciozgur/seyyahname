@@ -46,6 +46,8 @@ here instead; this file is read by Claude Code only.
   port and stop that process. `core.autocrlf` is `true`, so files copied in with LF endings differ only by line endings.
 - `npm ci` warns that `@google/genai` and `protobufjs` install scripts are not in npm's allow-scripts list; the app
   does not need them approved.
+- graphify (`/graphify`) keeps a local knowledge graph in `graphify-out/` (git-ignored); use it for architecture
+  questions. `.graphifyignore` leaves `.claude/` and `.agents/` (third-party skill docs) out of the graph.
 
 ## Landing page
 
