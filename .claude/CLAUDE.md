@@ -10,6 +10,7 @@ here instead; this file is read by Claude Code only.
 - `app/`: the web app (Next.js 16 App Router, `output: 'standalone'`, Node server). Read `app/AGENTS.md` before
   writing Next.js code: this Next version differs from older docs.
 - `landing/index.html`: the marketing page for seyyahname.com, one self-contained file.
+- `DEPLOYMENT.md` (Hostinger setup, environment table) and `app/README.md` are the deployment references.
 - Learner data at the repo root: `profile.json`, `vocabulary.md`, `error_ledger.md`, `sessions/`. Their formats are
   fixed by section 6 of the root `CLAUDE.md`; the app reads and writes the same files (`DATA_DIR` in production).
 - UI copy is US English. Keep the proper nouns Özgür Deveci, Kadıköy, Ayşe and Yılmaz as they are.
@@ -52,8 +53,9 @@ here instead; this file is read by Claude Code only.
   `node landing/build-css.mjs` (config: `landing/tailwind.config.js`). The script stops without writing if its
   markers do not appear exactly once.
 - Icons are Phosphor SVGs in the sprite right after `<body>`; add a `<symbol>` to use a new one.
-- Deploy by uploading `index.html` and `favicon.ico` (the two files in `landing-page.zip`). The page head carries the
-  icon inline; `favicon.ico` is the same mark for clients that request `/favicon.ico` directly.
+- Deploy by uploading `landing/index.html` and `landing/favicon.ico` (zip them as `landing-page.zip` if the panel
+  wants an archive; the zip is not kept in the repo). The page head carries the icon inline; `favicon.ico` is the same
+  mark for clients that request `/favicon.ico` directly.
 
 ## UI rules (from the UI UX Pro Max reviews of both surfaces)
 
